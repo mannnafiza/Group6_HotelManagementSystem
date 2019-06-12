@@ -10,14 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.csis.Controller.Validate;
 
 import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.JLabel;
-import java.awt.Canvas;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
@@ -28,6 +24,8 @@ public class Home {
 	private JFrame frame;
 	private JTextField txtFieldName;
 	private JPasswordField pswrdField;
+	private String userName = "";
+	private String password = "";
 
 	/**
 	 * Launch the application.
@@ -101,7 +99,7 @@ public class Home {
 		pswrdField = new JPasswordField();
 		pswrdField.setBounds(162, 192, 199, 25);
 		frame.getContentPane().add(pswrdField);
-		pswrdField.setText("Kulbirk");
+		pswrdField.setText("Kul1irk");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,14));		
 		pswrdField.setForeground(color);
 		
@@ -132,8 +130,25 @@ public class Home {
 		//lblClickHereTo.setForeground(new Color(205,205,205));
 		frame.getContentPane().add(lblClickHereTo);
 		
+		userName = txtFieldName.getText();
+		password = pswrdField.getText();
+		
+		//Create an instance of Validate class and pass all the inputs given by the user
+		Validate validate = new Validate(userName,password);
 		
 		
+		btnLogin.addActionListener(new ActionListener()
+		{		  
+		  @Override public void actionPerformed(ActionEvent e)
+		  { 
+			  // TODO Auto-generated  method stub
+		  
+			  if(validate.isLoginDataValid()) 
+			  {
+				  System.out.println("All inputs are valid."); 
+			  } 
+		  }
+		});
 	}
 	
 	

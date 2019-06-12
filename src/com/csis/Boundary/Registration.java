@@ -5,11 +5,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.csis.Controller.Validate;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,8 +31,13 @@ public class Registration {
 	private JFrame frame;
 	private JTextField txtFieldName;
 	private JPasswordField pswrdField;
-	private JTextField textField;
-
+	private JTextField txtFieldCity;
+	private ButtonGroup btngrp = new ButtonGroup();
+	private String userName = "";
+	private String password = "";
+	private String gender = "";
+	private String city = "";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,7 +110,7 @@ public class Registration {
 		pswrdField = new JPasswordField();
 		pswrdField.setBounds(162, 156, 199, 25);
 		frame.getContentPane().add(pswrdField);
-		pswrdField.setText("Kulbirk");
+		pswrdField.setText("K7  hbhrk");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,12));		
 		pswrdField.setForeground(color);
 		
@@ -135,11 +142,12 @@ public class Registration {
 		frame.getContentPane().add(lblClickHereTo);
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setBounds(161, 194, 93, 23);
+		frame.getContentPane().add(rdbtnMale);
 		rdbtnMale.setBackground(new Color(95, 158, 160));
 		rdbtnMale.setForeground(Color.WHITE);
 		rdbtnMale.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rdbtnMale.setBounds(161, 194, 93, 23);
-		frame.getContentPane().add(rdbtnMale);
+		rdbtnMale.setSelected(true);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
 		rdbtnFemale.setBackground(new Color(95, 158, 160));
@@ -148,13 +156,13 @@ public class Registration {
 		rdbtnFemale.setBounds(256, 194, 105, 23);
 		frame.getContentPane().add(rdbtnFemale);
 		
-		textField = new JTextField();
-		textField.setText("Kulbirk");
-		textField.setForeground(new Color(51, 153, 102));
-		textField.setFont(new Font("Serif", Font.PLAIN, 16));
-		textField.setColumns(10);
-		textField.setBounds(162, 235, 199, 25);
-		frame.getContentPane().add(textField);
+		txtFieldCity = new JTextField();
+		txtFieldCity.setText("Burnaby");
+		txtFieldCity.setForeground(new Color(51, 153, 102));
+		txtFieldCity.setFont(new Font("Serif", Font.PLAIN, 16));
+		txtFieldCity.setColumns(10);
+		txtFieldCity.setBounds(162, 235, 199, 25);
+		frame.getContentPane().add(txtFieldCity);
 		
 		JLabel lblGenderIcon = new JLabel("");
 		img = new ImageIcon(this.getClass().getResource("/genderIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -168,7 +176,31 @@ public class Registration {
 		lblLocationIcon.setBounds(101, 235, 29, 25);
 		frame.getContentPane().add(lblLocationIcon);
 		
+		btngrp.add(rdbtnMale);
+		btngrp.add(rdbtnFemale);
 		
+		if(rdbtnMale.isSelected())
+			gender = "male";
+		else if(rdbtnFemale.isSelected())
+			gender = "Female";
+		
+		String password = pswrdField.getText();
+		
+		//Create an instance of Validate class and pass all the inputs given by the user
+		Validate validate = new Validate(txtFieldName.getText(), password, gender, txtFieldCity.getText());
+		
+		btnSignUp.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				if(validate.isSignUpDataValid())
+				{
+					System.out.println("All the inputs are valid.");
+				}
+			}			
+		});
 		
 	}
 }
