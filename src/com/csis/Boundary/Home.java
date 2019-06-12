@@ -99,7 +99,7 @@ public class Home {
 		pswrdField = new JPasswordField();
 		pswrdField.setBounds(162, 192, 199, 25);
 		frame.getContentPane().add(pswrdField);
-		pswrdField.setText("Kul1irk");
+		//pswrdField.setText("Kul1irk");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,14));		
 		pswrdField.setForeground(color);
 		

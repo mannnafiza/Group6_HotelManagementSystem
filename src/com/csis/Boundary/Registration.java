@@ -34,10 +34,10 @@ public class Registration {
 	private JTextField txtFieldCity;
 	private ButtonGroup btngrp = new ButtonGroup();
 	private String userName = "";
-	private String password = "";
+	private String password;
 	private String gender = "";
 	private String city = "";
-	
+	String strPassword = ""; 
 	/**
 	 * Launch the application.
 	 */
@@ -110,18 +110,15 @@ public class Registration {
 		pswrdField = new JPasswordField();
 		pswrdField.setBounds(162, 156, 199, 25);
 		frame.getContentPane().add(pswrdField);
-		pswrdField.setText("K7  hbhrk");
+		//pswrdField.setText("hh");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,12));		
 		pswrdField.setForeground(color);
 		
 		JButton btnSignUp = new JButton("Sign Up");
 		btnSignUp.setBounds(162, 277, 80, 23);
 		frame.getContentPane().add(btnSignUp);
-		//btnLogin.setBorder(new CustomBorder(8,2));
-		//btnLogin.setBackground(new Color(255,255,255));
 		btnSignUp.setForeground(color);
-	
-		
+			
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(281, 277, 80, 23);
 		frame.getContentPane().add(btnCancel);
@@ -184,16 +181,26 @@ public class Registration {
 		else if(rdbtnFemale.isSelected())
 			gender = "Female";
 		
-		String password = pswrdField.getText();
+	
+		
+		try {
+			strPassword = new String(pswrdField.getPassword());
+		
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		
 		
 		//Create an instance of Validate class and pass all the inputs given by the user
-		Validate validate = new Validate(txtFieldName.getText(), password, gender, txtFieldCity.getText());
+		Validate validate = new Validate(txtFieldName.getText(), strPassword , gender, txtFieldCity.getText());
 		
 		btnSignUp.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				System.out.println("Password: " + strPassword);
 				// TODO Auto-generated method stub
 				if(validate.isSignUpDataValid())
 				{
