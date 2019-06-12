@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 
 public class Home {
@@ -128,27 +130,62 @@ public class Home {
 		lblClickHereTo.setBounds(261, 310, 129, 25);
 		lblClickHereTo.setForeground(Color.white);
 		//lblClickHereTo.setForeground(new Color(205,205,205));
-		frame.getContentPane().add(lblClickHereTo);
-		
-		userName = txtFieldName.getText();
-		password = pswrdField.getText();
-		
-		//Create an instance of Validate class and pass all the inputs given by the user
-		Validate validate = new Validate(userName,password);
-		
+		frame.getContentPane().add(lblClickHereTo);	
 		
 		btnLogin.addActionListener(new ActionListener()
 		{		  
 		  @Override public void actionPerformed(ActionEvent e)
 		  { 
 			  // TODO Auto-generated  method stub
-		  
+			  userName = txtFieldName.getText();
+			  password = new String(pswrdField.getPassword());
+				
+			  //Create an instance of Validate class and pass all the inputs given by the user
+			  Validate validate = new Validate(userName,password);
+			  
 			  if(validate.isLoginDataValid()) 
 			  {
 				  System.out.println("All inputs are valid."); 
 			  } 
 		  }
 		});
+		
+		lblClickHereTo.addMouseListener(new MouseListener()
+				{
+
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+						Registration registration = new Registration();
+						registration.main(null);
+					}
+			
+				});
 	}
 	
 	

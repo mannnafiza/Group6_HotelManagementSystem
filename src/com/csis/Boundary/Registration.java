@@ -17,9 +17,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Canvas;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
@@ -34,10 +39,10 @@ public class Registration {
 	private JTextField txtFieldCity;
 	private ButtonGroup btngrp = new ButtonGroup();
 	private String userName = "";
-	private String password;
+	private String password = "";
 	private String gender = "";
 	private String city = "";
-	String strPassword = ""; 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,7 +108,7 @@ public class Registration {
 		txtFieldName.setBounds(162, 113, 199, 25);
 		frame.getContentPane().add(txtFieldName);
 		txtFieldName.setColumns(10);
-		txtFieldName.setText("Kulbirk");
+		//txtFieldName.setText("Kulbirk");
 		txtFieldName.setFont(new Font("Serif",Font.PLAIN,16));		
 		txtFieldName.setForeground(color);
 
@@ -154,7 +159,7 @@ public class Registration {
 		frame.getContentPane().add(rdbtnFemale);
 		
 		txtFieldCity = new JTextField();
-		txtFieldCity.setText("Burnaby");
+		//txtFieldCity.setText("Burnaby");
 		txtFieldCity.setForeground(new Color(51, 153, 102));
 		txtFieldCity.setFont(new Font("Serif", Font.PLAIN, 16));
 		txtFieldCity.setColumns(10);
@@ -181,32 +186,63 @@ public class Registration {
 		else if(rdbtnFemale.isSelected())
 			gender = "Female";
 		
-	
-		
-		try {
-			strPassword = new String(pswrdField.getPassword());
-		
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
 		
 		
-		
-		//Create an instance of Validate class and pass all the inputs given by the user
-		Validate validate = new Validate(txtFieldName.getText(), strPassword , gender, txtFieldCity.getText());
 		
 		btnSignUp.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				System.out.println("Password: " + strPassword);
 				// TODO Auto-generated method stub
+				userName = txtFieldName.getText();
+				password = new String(pswrdField.getPassword());
+				city = txtFieldCity.getText();
+				
+				//Create an instance of Validate class and pass all the inputs given by the user
+				Validate validate = new Validate(userName, new String(pswrdField.getPassword()) , gender, city);
 				if(validate.isSignUpDataValid())
 				{
 					System.out.println("All the inputs are valid.");
 				}
 			}			
+		});
+		
+		lblClickHereTo.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				Home login = new Home();
+				login.main(null);
+			}
+	
 		});
 		
 	}
