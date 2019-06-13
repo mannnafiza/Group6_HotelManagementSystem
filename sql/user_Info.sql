@@ -1,5 +1,5 @@
 create table user_Info (
-	id INT,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	userName VARCHAR(50),
 	password VARCHAR(9),
 	gender VARCHAR(50),
