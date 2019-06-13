@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
 
 import java.awt.Color;
@@ -24,6 +25,7 @@ import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -42,6 +44,7 @@ public class Registration {
 	private String password = "";
 	private String gender = "";
 	private String city = "";
+	private DBHelper db = new DBHelper();
 	
 	/**
 	 * Launch the application.
@@ -181,10 +184,6 @@ public class Registration {
 		btngrp.add(rdbtnMale);
 		btngrp.add(rdbtnFemale);
 		
-		if(rdbtnMale.isSelected())
-			gender = "male";
-		else if(rdbtnFemale.isSelected())
-			gender = "Female";
 		
 		
 		
@@ -198,15 +197,54 @@ public class Registration {
 				userName = txtFieldName.getText();
 				password = new String(pswrdField.getPassword());
 				city = txtFieldCity.getText();
+				if(rdbtnMale.isSelected())
+					gender = "male";
+				else if(rdbtnFemale.isSelected())
+					gender = "Female";
+				
 				
 				//Create an instance of Validate class and pass all the inputs given by the user
-				Validate validate = new Validate(userName, new String(pswrdField.getPassword()) , gender, city);
+				Validate validate = new Validate(userName, password , gender, city);
 				if(validate.isSignUpDataValid())
 				{
 					System.out.println("All the inputs are valid.");
+					Authenticate auth = new Authenticate();
+					auth.setUsername(userName);
+					if(auth.matchUserName())
+					{
+						System.out.println("The username already exists, choose a different one.");
+						JOptionPane jop = new JOptionPane();
+						jop.showMessageDialog(null,"The username already exists, choose a different one.");
+					}else
+					{
+						//store the user inputs in the user_Info table
+						db.insertNewUser(userName, password, gender, city);
+						ArrayList<String> newList = new ArrayList<>();
+						newList = db.getUserProfile(userName);
+						
+						//to see the profile of newly added user
+						for(String str: newList)
+						{
+							System.out.println(str);
+						}
+					}
 				}
 			}			
 		});
+		
+		//ActionListener to reset all the input fields
+				btnCancel.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent arg0)
+					{
+						// TODO Auto-generated method stub
+						txtFieldName.setText("");
+						pswrdField.setText("");
+						rdbtnMale.setSelected(true);
+						txtFieldCity.setText("");
+					}		
+				});
 		
 		lblClickHereTo.addMouseListener(new MouseListener()
 		{

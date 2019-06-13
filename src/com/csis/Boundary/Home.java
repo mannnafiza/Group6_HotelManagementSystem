@@ -10,10 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
@@ -94,7 +96,7 @@ public class Home {
 		txtFieldName.setBounds(162, 140, 199, 25);
 		frame.getContentPane().add(txtFieldName);
 		txtFieldName.setColumns(10);
-		txtFieldName.setText("Kulbirk");
+		//txtFieldName.setText("Kulbirk");
 		txtFieldName.setFont(new Font("Serif",Font.PLAIN,16));		
 		txtFieldName.setForeground(color);
 
@@ -132,6 +134,7 @@ public class Home {
 		//lblClickHereTo.setForeground(new Color(205,205,205));
 		frame.getContentPane().add(lblClickHereTo);	
 		
+		//ActionListener to process all the input values given by the user
 		btnLogin.addActionListener(new ActionListener()
 		{		  
 		  @Override public void actionPerformed(ActionEvent e)
@@ -146,10 +149,44 @@ public class Home {
 			  if(validate.isLoginDataValid()) 
 			  {
 				  System.out.println("All inputs are valid."); 
+				  
+				  //create an instance of Authenticate class to verify userName and password inputs
+				  Authenticate auth = new Authenticate();
+					auth.setUsername(userName);
+					auth.setPassword(password);
+					
+					if(auth.matchUserName() && auth.matchpassword())
+					{
+						System.out.println("Login Successful");
+						JOptionPane jop = new JOptionPane();
+						jop.showMessageDialog(null,"Login Successful");
+						
+						//reservation class to be called upon successful login 
+						
+					}else
+					{
+						System.out.println("Login Unsuccessful");
+						JOptionPane jop = new JOptionPane();
+						jop.showMessageDialog(null,"Wrong username or password.");
+					}
+						
 			  } 
 		  }
 		});
 		
+		//ActionListener to reset all the input fields
+		btnCancel.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				txtFieldName.setText("");
+				pswrdField.setText("");
+			}		
+		});
+		
+		//Switch the screen to Registration, if the user is new to the hotel's website
 		lblClickHereTo.addMouseListener(new MouseListener()
 				{
 
