@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.csis.Controller.BanquetReservation;
 import com.csis.Controller.MeetingReservation;
 import com.csis.Controller.RoomReservation;
 
@@ -185,6 +186,41 @@ public class Reservation {
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+			
+		});
+		
+		lblBanquet.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				BanquetReservation banqReserve = new BanquetReservation();
+				banqReserve.main(null);	
 			}
 			
 		});
