@@ -5,11 +5,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MeetingReservation {
 
@@ -101,6 +105,12 @@ public class MeetingReservation {
 		frame.getContentPane().add(rdbtnNo);
 		
 		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane option = new JOptionPane();
+				option.showMessageDialog(null, "Confirmed!");
+			}
+		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
 		btnConfirm.setBounds(144, 360, 89, 23);
 		frame.getContentPane().add(btnConfirm);
