@@ -7,10 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class RoomReservation {
 
@@ -68,26 +72,36 @@ public class RoomReservation {
 		lvlRoomType.setBounds(23, 122, 80, 35);
 		frame.getContentPane().add(lvlRoomType);
 		
+		JLabel lblDate = new JLabel("Date");
+		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDate.setForeground(Color.WHITE);
+		lblDate.setBounds(351, 143, 46, 14);
+		lblDate.setBackground(new Color(95, 158, 160));
+		frame.getContentPane().add(lblDate);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//JDateChooser dateChooser = new JDateChooser();
+		
 		JLabel lblDuration = new JLabel("Duration");
 		lblDuration.setForeground(Color.WHITE);
 		lblDuration.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDuration.setBounds(353, 134, 70, 23);
+		lblDuration.setBounds(351, 193, 70, 23);
 		frame.getContentPane().add(lblDuration);
 		
 		JSpinner spinDuration = new JSpinner();
-		spinDuration.setBounds(433, 137, 29, 20);
+		spinDuration.setBounds(431, 189, 29, 35);
 		frame.getContentPane().add(spinDuration);
 		
 		JLabel lblMeal = new JLabel("Meal ");
 		lblMeal.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblMeal.setForeground(Color.WHITE);
-		lblMeal.setBounds(353, 194, 87, 14);
+		lblMeal.setBounds(353, 245, 87, 14);
 		frame.getContentPane().add(lblMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		rdbtnYes.setBounds(353, 215, 109, 23);
+		rdbtnYes.setBounds(353, 266, 109, 23);
 		rdbtnYes.setBackground(new Color(95, 158, 160));
 		frame.getContentPane().add(rdbtnYes);
 		
@@ -95,7 +109,7 @@ public class RoomReservation {
 		rdbtnNo.setForeground(Color.WHITE);
 		rdbtnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnNo.setBackground(new Color(95, 158, 160));
-		rdbtnNo.setBounds(353, 241, 109, 23);
+		rdbtnNo.setBounds(353, 292, 109, 23);
 		frame.getContentPane().add(rdbtnNo);
 		
 		JCheckBox chkAddService = new JCheckBox("Additional Services");
@@ -106,9 +120,21 @@ public class RoomReservation {
 		frame.getContentPane().add(chkAddService);
 		
 		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO: get and Validate all data
+				JOptionPane option =  new JOptionPane();
+				option.showMessageDialog(null, "Confirmed!");
+			}
+		});
 		btnConfirm.setBounds(223, 371, 89, 23);
 		btnConfirm.setForeground(color);
 		frame.getContentPane().add(btnConfirm);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(401, 137, 91, 20);
+		frame.getContentPane().add(dateChooser);
+		
+		
 	}
 }
