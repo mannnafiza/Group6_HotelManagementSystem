@@ -6,19 +6,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
+
+import com.csis.Entities.Room;
 import com.toedter.calendar.JDateChooser;
 
 public class RoomReservation {
 
 	private JFrame frame;
+	Room roomData = new Room();
 
 	/**
 	 * Launch the application.
@@ -62,9 +75,15 @@ public class RoomReservation {
 		lblRmReserveTitle.setBounds(208, 44, 232, 25);
 		frame.getContentPane().add(lblRmReserveTitle);
 		
-		JList listRoomType = new JList();
+		//bahr kdna
+		String[] roomTypes = {"Executive King Double", "Executive Queen Double", "Executive Queen Single",
+				"Deluxe King Double", "Deluxe Queen Double", "Deluxe Queen Single", "Regular Double", "Regular Single"};
+		
+		
+		JList listRoomType = new JList(roomTypes);
 		listRoomType.setBounds(113, 121, 138, 153);
 		frame.getContentPane().add(listRoomType);
+		
 		
 		JLabel lvlRoomType = new JLabel("Room Type");
 		lvlRoomType.setForeground(Color.WHITE);
@@ -80,7 +99,6 @@ public class RoomReservation {
 		frame.getContentPane().add(lblDate);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//JDateChooser dateChooser = new JDateChooser();
 		
 		JLabel lblDuration = new JLabel("Duration");
 		lblDuration.setForeground(Color.WHITE);
@@ -128,20 +146,147 @@ public class RoomReservation {
 		lbldays.setBounds(361, 215, 46, 14);
 		frame.getContentPane().add(lbldays);
 		
+		/**
+		 * set Listeners
+		 */
+		getListValue(listRoomType);
+		getServiceInfo(chkAddService);
+		getMealInfo(rdbtnYes, rdbtnNo);
+		getReservationDate(dateChooser);
+		
+		
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
+				getStayDuration(spinDuration);
+				System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
+				+ " " + roomData.isMeal() + " " + roomData.getReserveDate());
 				//TODO: get and Validate all data
-				JOptionPane option =  new JOptionPane();
-				option.showMessageDialog(null, "Confirmed!");
+				//JOptionPane.showMessageDialog(null, "Confirmed!");
 			}
 		});
 		btnConfirm.setBounds(223, 371, 89, 23);
 		btnConfirm.setForeground(color);
 		frame.getContentPane().add(btnConfirm);
 		
+	}
+	
+
+
+	protected void getReservationDate(JDateChooser dateChooser) {
+		// TODO Auto-generated method stub
+		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				// TODO Auto-generated method stub
+				Date date = (Date) event.getNewValue();
+				roomData.setReserveDate(date);
+			}
+			
+		});
+	}
+
+	protected void getMealInfo(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
+		// TODO Auto-generated method stub
 		
+		ButtonGroup radioGroup = new ButtonGroup();
+		radioGroup.add(rdbtnYes);
+		radioGroup.add(rdbtnNo);
 		
+		class VoteActionListener implements ActionListener {
+		      public void actionPerformed(ActionEvent ex) {
+		      String choice = radioGroup.getSelection().getActionCommand();
+		      }
+		    }
+
+		  class VoteItemListener implements ItemListener {
+		   			@Override
+			public void itemStateChanged(ItemEvent ex) {
+				// TODO Auto-generated method stub
+				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
+		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
+		        if(item.equals("Yes")) {
+			    	  roomData.setMeal(true);
+			      }else {
+			    	  roomData.setMeal(false);
+			      }
+			}
+		    }
+
+		    ActionListener al = new VoteActionListener();
+		    rdbtnYes.addActionListener(al);
+		    rdbtnNo.addActionListener(al);
+
+		    ItemListener il = new VoteItemListener();
+		    rdbtnYes.addItemListener(il);
+		    rdbtnNo.addItemListener(il);
+		  
 		
+	}
+
+	protected void getStayDuration(JSpinner spinDuration) {
+		// TODO Auto-generated method stub
+		roomData.setDuration(Integer.parseInt(spinDuration.getValue().toString()));
+	}
+
+	protected void getServiceInfo(JCheckBox chkAddService) {
+		// TODO Auto-generated method stub
+		chkAddService.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO Auto-generated method stub
+				AbstractButton absButton = (AbstractButton) event.getSource();
+				boolean serviceStatus = absButton.isSelected();
+				roomData.setAddService(serviceStatus);
+			}
+			
+		});
+	}
+
+	//TODO: check for default choice (it shows null value)
+	public void getListValue(JList listRoomType) {
+		listRoomType.addListSelectionListener(new ListSelectionListener() {
+						
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getValueIsAdjusting() == true) {
+					switch(listRoomType.getSelectedIndex()) {
+					case 0:
+						roomData.setRoomType("Executive King Double");
+						break;
+					case 1:
+						roomData.setRoomType("Executive Queen Double");
+						break;
+					case 2:
+						roomData.setRoomType("Executive Queen Single");
+						break;
+					case 3:
+						roomData.setRoomType("Deluxe King Double");
+						break;
+					case 4:
+						roomData.setRoomType("Deluxe Queen Double");
+						break;
+					case 5:
+						roomData.setRoomType("Deluxe Queen Single");
+						break;
+					case 6:
+						roomData.setRoomType("Regular Double");
+						break;
+					case 7:
+						roomData.setRoomType("Regular Single");
+						break;
+					default:
+						roomData.setRoomType("Invalid choice for room type");
+						break;
+							
+					}
+				}
+			}
+			
+		});
 	}
 }

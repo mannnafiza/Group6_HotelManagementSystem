@@ -9,7 +9,7 @@ public class Room {
 	private boolean addService;
 	private Date reserveDate;
 	
-	Room(){
+	public Room(){
 		
 	}
 
