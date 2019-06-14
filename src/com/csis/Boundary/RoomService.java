@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
 
 import java.awt.Font;
@@ -31,7 +32,9 @@ public class RoomService {
 	private JTextField textFieldCustomerName;
 	private JTextField textFieldRoomNumber;
 	private Validate validate = new Validate();
-
+    private String	CustomerName = "";
+    
+    
 	/**
 	 * Launch the application.
 	 */
@@ -180,34 +183,44 @@ public class RoomService {
 						boolean checked = checkboxMeal.getState();
 						boolean checked2 = checkboxHouseKeeping.getState();
 
-						if (textFieldRoomNumber.getText().equals("") && textFieldCustomerName.getText().equals("")){
-
-							JOptionPane.showMessageDialog(frame, "Please enter your name and room number.");
-
+						if (textFieldRoomNumber.getText().equals("") && textFieldCustomerName.getText().equals("") && textFieldTime.getText().equals(" ")){
+							
+							JOptionPane.showMessageDialog(frame, "Please enter your name , room number and time .");
+							
 						     }
-						     else {
-						    	   if ( checkboxMeal.getState() == true  ) {
-//								    	 btnProceed.setEnabled(true);
-								        String names = JOptionPane.showInputDialog(
-										"What kind meal "+ textFieldCustomerName.getText()  +" want?");
-								        JOptionPane.showMessageDialog(frame, "Thanks for your request");
+						  else 
+						   { 
+							  Authenticate auth = new Authenticate();
+								auth.setUsername(CustomerName);
+							// if( auth.matchUserName() ) {
+								
+//								 JOptionPane jop = new JOptionPane();
+//									jop.showMessageDialog(null,"The username already exists, choose a different one.");
+//						       
+							     if ( checkboxMeal.getState() == true ) {
+//							   	 btnProceed.setEnabled(true);
+							       String names = JOptionPane.showInputDialog(
+									"What kind meal "+ textFieldCustomerName.getText()  +" want?");
+							        JOptionPane.showMessageDialog(frame, "Thanks for your request");
 						    		 
-						    	   }else if (checkboxHouseKeeping.getState() == true) {
+						           }
+						            else if (checkboxHouseKeeping.getState() == true) {
 						    		   String names = JOptionPane.showInputDialog(
 												"What type of service "+ textFieldCustomerName.getText() +" for house Keeping");
-										        JOptionPane.showMessageDialog(frame, "Thanks for your request");
-						    	   }else if( !textFieldTime.getText().equals(" ")) {
-								        JOptionPane.showMessageDialog(frame, "Please mention the time  when you need service");
-						    	   }
+								 		        JOptionPane.showMessageDialog(frame, "Thanks for your request");
+						    	    }
+						            else {
 						    	   
-						    	   else {
-						    	   
-							        JOptionPane.showMessageDialog(frame, "Please select your request type. Thanks");
+							            JOptionPane.showMessageDialog(frame, "Please select your request type. Thanks");
 						    	   }
-						
-					}
-			
-					}		
+//							  }
+//							 else {
+//								 JOptionPane jop = new JOptionPane();
+//									jop.showMessageDialog(null,"Your name does not exit in our reservation system.");
+//								 
+//							 }
+						   }
+						}
 				}
 				);
 	}
