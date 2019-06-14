@@ -7,6 +7,9 @@ public class Validate {
 	private String gender = "";
 	private String city = "";
 	
+	
+	
+	
 	/**
 	 * @param userName
 	 * @param password
