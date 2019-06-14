@@ -85,23 +85,23 @@ public class RoomReservation {
 		JLabel lblDuration = new JLabel("Duration");
 		lblDuration.setForeground(Color.WHITE);
 		lblDuration.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDuration.setBounds(351, 193, 70, 23);
+		lblDuration.setBounds(351, 193, 89, 23);
 		frame.getContentPane().add(lblDuration);
 		
 		JSpinner spinDuration = new JSpinner();
-		spinDuration.setBounds(431, 189, 29, 35);
+		spinDuration.setBounds(433, 189, 29, 35);
 		frame.getContentPane().add(spinDuration);
 		
 		JLabel lblMeal = new JLabel("Meal ");
 		lblMeal.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblMeal.setForeground(Color.WHITE);
-		lblMeal.setBounds(353, 245, 87, 14);
+		lblMeal.setBounds(351, 277, 87, 14);
 		frame.getContentPane().add(lblMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		rdbtnYes.setBounds(353, 266, 109, 23);
+		rdbtnYes.setBounds(353, 298, 109, 23);
 		rdbtnYes.setBackground(new Color(95, 158, 160));
 		frame.getContentPane().add(rdbtnYes);
 		
@@ -109,7 +109,7 @@ public class RoomReservation {
 		rdbtnNo.setForeground(Color.WHITE);
 		rdbtnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnNo.setBackground(new Color(95, 158, 160));
-		rdbtnNo.setBounds(353, 292, 109, 23);
+		rdbtnNo.setBounds(353, 324, 109, 23);
 		frame.getContentPane().add(rdbtnNo);
 		
 		JCheckBox chkAddService = new JCheckBox("Additional Services");
@@ -118,6 +118,15 @@ public class RoomReservation {
 		chkAddService.setBounds(23, 324, 192, 23);
 		chkAddService.setBackground(new Color(95, 158, 160));
 		frame.getContentPane().add(chkAddService);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(401, 137, 91, 20);
+		frame.getContentPane().add(dateChooser);
+		
+		JLabel lbldays = new JLabel("(days)");
+		lbldays.setForeground(Color.WHITE);
+		lbldays.setBounds(361, 215, 46, 14);
+		frame.getContentPane().add(lbldays);
 		
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
@@ -131,9 +140,7 @@ public class RoomReservation {
 		btnConfirm.setForeground(color);
 		frame.getContentPane().add(btnConfirm);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(401, 137, 91, 20);
-		frame.getContentPane().add(dateChooser);
+		
 		
 		
 	}
