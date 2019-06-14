@@ -4,10 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import java.awt.Checkbox;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class RoomService {
 
 	private JFrame frame;
+	private JTextField textFieldT;
+	private JTextField textFieldCN;
+	private JTextField textFieldRN;
 
 	/**
 	 * Launch the application.
@@ -41,13 +47,56 @@ public class RoomService {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel label = new JLabel("Room Service  System");
-		label.setBounds(161, 21, 106, 31);
-		frame.getContentPane().add(label);
+		JLabel labelRSS = new JLabel("Room Service  System");
+		labelRSS.setBounds(148, 11, 106, 31);
+		frame.getContentPane().add(labelRSS);
 		
-		JLabel label_1 = new JLabel("Request Type :");
-		label_1.setBounds(46, 56, 74, 24);
-		frame.getContentPane().add(label_1);
+		JLabel labelRT = new JLabel("Request Type :");
+		labelRT.setBounds(39, 107, 95, 31);
+		frame.getContentPane().add(labelRT);
+		
+		Checkbox checkboxM = new Checkbox("Meal");
+		checkboxM.setBounds(140, 107, 95, 31);
+		frame.getContentPane().add(checkboxM);
+		
+		Checkbox checkboxHK = new Checkbox("HouseKeeping");
+		checkboxHK.setBounds(245, 107, 95, 31);
+		frame.getContentPane().add(checkboxHK);
+		
+		JLabel lblRequestTime = new JLabel("Request Time : ");
+		lblRequestTime.setBounds(39, 138, 75, 20);
+		frame.getContentPane().add(lblRequestTime);
+		
+		textFieldT = new JTextField();
+		textFieldT.setText("00:00 ");
+		textFieldT.setBounds(134, 138, 49, 20);
+		frame.getContentPane().add(textFieldT);
+		textFieldT.setColumns(10);
+		
+		JLabel lblMinutes = new JLabel("Minutes");
+		lblMinutes.setBounds(193, 141, 46, 14);
+		frame.getContentPane().add(lblMinutes);
+		
+		JLabel lblCustomerName = new JLabel("Customer Name :");
+		lblCustomerName.setBounds(39, 53, 95, 20);
+		frame.getContentPane().add(lblCustomerName);
+		
+		JLabel lblRoomNumber = new JLabel("Room Number :");
+		lblRoomNumber.setBounds(39, 79, 75, 31);
+		frame.getContentPane().add(lblRoomNumber);
+		
+		textFieldCN = new JTextField();
+		textFieldCN.setBounds(134, 53, 86, 20);
+		frame.getContentPane().add(textFieldCN);
+		textFieldCN.setColumns(10);
+		
+		textFieldRN = new JTextField();
+		textFieldRN.setBounds(134, 84, 86, 20);
+		frame.getContentPane().add(textFieldRN);
+		textFieldRN.setColumns(10);
+		
+		JButton btnProceed = new JButton("Proceed");
+		btnProceed.setBounds(140, 182, 89, 23);
+		frame.getContentPane().add(btnProceed);
 	}
-
 }
