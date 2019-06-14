@@ -7,7 +7,7 @@ public class Meeting {
 	private int duration;
 	private boolean meal;
 	
-	Meeting(){
+	public Meeting(){
 		
 	}
 

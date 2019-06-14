@@ -7,7 +7,7 @@ public class Banquet {
 	private boolean meal;
 	private boolean addService;
 	
-	Banquet(){
+	public Banquet(){
 		
 	}
 

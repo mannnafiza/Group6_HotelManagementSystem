@@ -8,16 +8,27 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+
+import com.csis.Entities.Banquet;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class BanquetReservation {
 
 	private JFrame frame;
+	Banquet banquetData = new Banquet();
 
 	/**
 	 * Launch the application.
@@ -61,6 +72,7 @@ public class BanquetReservation {
 		
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(129, 113, 91, 20);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
 		frame.getContentPane().add(dateChooser);
 		
 		JLabel lblMeal = new JLabel("Meal ");
@@ -96,16 +108,94 @@ public class BanquetReservation {
 		chkAddService.setBounds(44, 317, 192, 23);
 		frame.getContentPane().add(chkAddService);
 		
+		/**
+		 * set listeners
+		 */
+		setDateListener(dateChooser);
+		setMealListener(rdbtnYes, rdbtnNo);
+		setAddServiceListener(chkAddService);
+		
+		
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane option = new JOptionPane();
-				option.showMessageDialog(null, "confirmed!");
+				System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
+//				JOptionPane option = new JOptionPane();
+//				option.showMessageDialog(null, "confirmed!");
 			}
 		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
 		btnConfirm.setBounds(150, 371, 89, 23);
 		frame.getContentPane().add(btnConfirm);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	protected String displayDate() {
+		String actualDate = DateFormat.getDateInstance().format(banquetData.getDate());
+		return actualDate;
+	}
+
+	private void setAddServiceListener(JCheckBox chkAddService) {
+		// TODO Auto-generated method stub
+		chkAddService.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO Auto-generated method stub
+				AbstractButton absButton = (AbstractButton) event.getSource();
+				boolean serviceStatus = absButton.isSelected();
+				banquetData.setAddService(serviceStatus);
+			}
+			
+		});
+	}
+
+	private void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
+		// TODO Auto-generated method stub
+		ButtonGroup radioGroup = new ButtonGroup();
+		radioGroup.add(rdbtnYes);
+		radioGroup.add(rdbtnNo);
+		
+		class BanquetActionListener implements ActionListener {
+		      public void actionPerformed(ActionEvent ex) {
+		      String choice = radioGroup.getSelection().getActionCommand();
+		      }
+		    }
+
+		  class BanquetItemListener implements ItemListener {
+		   			@Override
+			public void itemStateChanged(ItemEvent ex) {
+				// TODO Auto-generated method stub
+				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
+		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
+		        if(item.equals("Yes")) {
+			    	  banquetData.setMeal(true);
+			      }else {
+			    	  banquetData.setMeal(false);
+			      }
+			}
+		    }
+
+		    ActionListener al = new BanquetActionListener();
+		    rdbtnYes.addActionListener(al);
+		    rdbtnNo.addActionListener(al);
+
+		    ItemListener il = new BanquetItemListener();
+		    rdbtnYes.addItemListener(il);
+		    rdbtnNo.addItemListener(il);
+	}
+
+	private void setDateListener(JDateChooser dateChooser) {
+		// TODO Auto-generated method stub
+		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				// TODO Auto-generated method stub
+				Date date = (Date) event.getNewValue();
+				banquetData.setDate(date);;
+				}
+			
+		});
 	}
 }

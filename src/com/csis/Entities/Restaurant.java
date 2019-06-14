@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Restaurant {
 	private Date date;
-	//private String time;
 	private int noOfGuest;
 	private String mealType;
+	private String reservationFor;
 	
-	Restaurant(){
+	public Restaurant(){
 		
 	}
 
@@ -35,6 +35,16 @@ public class Restaurant {
 	public void setMealType(String mealType) {
 		this.mealType = mealType;
 	}
+
+	public String getReservationFor() {
+		return reservationFor;
+	}
+
+	public void setReservationFor(String reservationFor) {
+		this.reservationFor = reservationFor;
+	}
+
+	
 	
 	
 }

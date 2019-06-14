@@ -8,16 +8,27 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+
+import com.csis.Entities.Meeting;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class MeetingReservation {
 
 	private JFrame frame;
+	Meeting meetingData = new Meeting();
 
 	/**
 	 * Launch the application.
@@ -67,6 +78,7 @@ public class MeetingReservation {
 		
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(164, 121, 91, 20);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
 		frame.getContentPane().add(dateChooser);
 		
 		JLabel labelMeetingDuration = new JLabel("Duration");
@@ -104,16 +116,84 @@ public class MeetingReservation {
 		rdbtnNo.setBounds(88, 281, 109, 23);
 		frame.getContentPane().add(rdbtnNo);
 		
+		/**
+		 * set listeners
+		 */
+		setReservationDateListener(dateChooser);
+		setMealListener(rdbtnYes, rdbtnNo);
+		
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane option = new JOptionPane();
-				option.showMessageDialog(null, "Confirmed!");
+				
+				setMeetingDuration(spinner);
+				System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
+//				JOptionPane option = new JOptionPane();
+//				option.showMessageDialog(null, "Confirmed!");
 			}
 		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
 		btnConfirm.setBounds(144, 360, 89, 23);
 		frame.getContentPane().add(btnConfirm);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	protected String displayDate() {
+		String actualDate = DateFormat.getDateInstance().format(meetingData.getReservedate());
+		return actualDate;
+	}
+
+	protected void setMeetingDuration(JSpinner spinner) {
+		// TODO Auto-generated method stub
+		meetingData.setDuration(Integer.parseInt(spinner.getValue().toString()));
+	}
+
+	private void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
+		// TODO Auto-generated method stub
+		ButtonGroup radioGroup = new ButtonGroup();
+		radioGroup.add(rdbtnYes);
+		radioGroup.add(rdbtnNo);
+		
+		class MeetingActionListener implements ActionListener {
+		      public void actionPerformed(ActionEvent ex) {
+		      String choice = radioGroup.getSelection().getActionCommand();
+		      }
+		    }
+
+		  class MeetingItemListener implements ItemListener {
+		   			@Override
+			public void itemStateChanged(ItemEvent ex) {
+				// TODO Auto-generated method stub
+				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
+		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
+		        if(item.equals("Yes")) {
+			    	  meetingData.setMeal(true);
+			      }else {
+			    	  meetingData.setMeal(false);
+			      }
+			}
+		    }
+
+		    ActionListener al = new MeetingActionListener();
+		    rdbtnYes.addActionListener(al);
+		    rdbtnNo.addActionListener(al);
+
+		    ItemListener il = new MeetingItemListener();
+		    rdbtnYes.addItemListener(il);
+		    rdbtnNo.addItemListener(il);
+	}
+
+	private void setReservationDateListener(JDateChooser dateChooser) {
+		// TODO Auto-generated method stub
+		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				// TODO Auto-generated method stub
+				Date date = (Date) event.getNewValue();
+				meetingData.setReservedate(date);;
+				}
+			
+		});
 	}
 }
