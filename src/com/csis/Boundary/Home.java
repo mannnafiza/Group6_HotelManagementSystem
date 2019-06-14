@@ -158,10 +158,12 @@ public class Home {
 					if(auth.matchUserName() && auth.matchpassword())
 					{
 						System.out.println("Login Successful");
-						JOptionPane jop = new JOptionPane();
-						jop.showMessageDialog(null,"Login Successful");
-						
+//						JOptionPane jop = new JOptionPane();
+//						jop.showMessageDialog(null,"Login Successful");
+//						
 						//reservation class to be called upon successful login 
+						Reservation reservation = new Reservation(userName);
+						reservation.main(null);
 						
 					}else
 					{
