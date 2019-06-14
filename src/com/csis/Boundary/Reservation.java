@@ -6,9 +6,14 @@ import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
+import com.csis.Controller.RoomReservation;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Reservation {
 
@@ -63,7 +68,7 @@ public class Reservation {
 		lblTitle.setText("Welcome " + username);
 		
 		JLabel lblRooms = new JLabel("");
-		lblRooms.setBounds(52, 131, 70, 62);
+		lblRooms.setBounds(51, 131, 70, 62);
 		Image imgRoom = new ImageIcon(this.getClass().getResource("/room.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblRooms.setIcon(new ImageIcon(imgRoom));
 		frame.getContentPane().add(lblRooms);
@@ -83,7 +88,7 @@ public class Reservation {
 		JLabel lblRoomText = new JLabel("Rooms");
 		lblRoomText.setForeground(Color.WHITE);
 		lblRoomText.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblRoomText.setBounds(52, 227, 57, 25);
+		lblRoomText.setBounds(64, 227, 57, 25);
 		frame.getContentPane().add(lblRoomText);
 		
 		JLabel lblRestaurant = new JLabel("");
@@ -111,5 +116,41 @@ public class Reservation {
 		frame.getContentPane().add(lblBanquetText);
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		lblRooms.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				RoomReservation rmReserve = new RoomReservation();
+				rmReserve.main(null);
+				
+			}
+			
+		});
 	}
 }
