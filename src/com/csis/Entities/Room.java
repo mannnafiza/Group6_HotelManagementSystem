@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Room {
 	private String roomType;
+	private int duration;
 	private boolean meal;
 	private boolean addService;
 	private Date reserveDate;
@@ -42,6 +43,14 @@ public class Room {
 
 	public void setReserveDate(Date reserveDate) {
 		this.reserveDate = reserveDate;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 	
 	
