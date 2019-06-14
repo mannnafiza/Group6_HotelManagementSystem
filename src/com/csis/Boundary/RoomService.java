@@ -1,9 +1,13 @@
 package com.csis.Boundary;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Checkbox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -47,6 +51,7 @@ public class RoomService {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		
 		JLabel labelRSS = new JLabel("Room Service  System");
 		labelRSS.setBounds(148, 11, 106, 31);
 		frame.getContentPane().add(labelRSS);
@@ -86,17 +91,68 @@ public class RoomService {
 		frame.getContentPane().add(lblRoomNumber);
 		
 		textFieldCN = new JTextField();
-		textFieldCN.setBounds(134, 53, 86, 20);
+		textFieldCN.setBounds(149, 53, 86, 20);
 		frame.getContentPane().add(textFieldCN);
 		textFieldCN.setColumns(10);
+
 		
 		textFieldRN = new JTextField();
-		textFieldRN.setBounds(134, 84, 86, 20);
+		textFieldRN.setBounds(149, 81, 86, 20);
 		frame.getContentPane().add(textFieldRN);
 		textFieldRN.setColumns(10);
 		
 		JButton btnProceed = new JButton("Proceed");
 		btnProceed.setBounds(140, 182, 89, 23);
 		frame.getContentPane().add(btnProceed);
+		
+//		frame.add(btnProceed);
+//		frame.pack();
+//        frame.setVisible(true);
+		
+		btnProceed.addActionListener(new ActionListener()
+				{
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+						
+//						String name = JOptionPane.showInputDialog(frame,
+//						"What kind meal name want? " , null);
+						
+						
+						boolean checked = checkboxM.getState();
+						boolean checked2 = checkboxHK.getState();
+
+						if (textFieldRN.getText().equals("") && textFieldCN.getText().equals("")){
+
+							JOptionPane.showMessageDialog(frame, "Please enter your name and room number.");
+
+						     }
+						     else {
+						    	   if ( checkboxM.getState() == true  ) {
+//								    	 btnProceed.setEnabled(true);
+								        String names = JOptionPane.showInputDialog(
+										"What kind meal "+ "textFieldCN " +" want?");
+								        JOptionPane.showMessageDialog(frame, "Thanks for your request");
+						    		 
+						    	   }else if (checkboxHK.getState() == true) {
+						    		   String names = JOptionPane.showInputDialog(
+												"What type of service "+ "textFieldCN " +" for house Keeping");
+										        JOptionPane.showMessageDialog(frame, "Thanks for your request");
+						    	   }else if( !textFieldT.getText().equals(" ")) {
+								        JOptionPane.showMessageDialog(frame, "Please mention the time  when you need service");
+						    	   }
+						    	   
+						    	   else {
+						    	   
+							        JOptionPane.showMessageDialog(frame, "Please select your request type. Thanks");
+						    	   }
+						
+					}
+			
+					}		
+				}
+				);
 	}
 }
