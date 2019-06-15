@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class DBHelper {
 
 	// dsn = data source name
-	private String dsn = "jdbc:mysql://localhost/Group6_HotelManagementSystem";
+	private String dsn = "jdbc:mysql://localhost:3306/Group6_HotelManagementSystem";
 	private String username = "root";
 	private String password = "";
 
@@ -26,6 +26,7 @@ public class DBHelper {
 		try {
 			// connect to the database with the proper info
 			this.conn = DriverManager.getConnection(dsn, username, password);
+			
 			if (this.conn.isClosed()) {
 				System.out.println("database connection was not established.");
 			} else
@@ -172,4 +173,6 @@ public class DBHelper {
 		  }
 	  }
 	 
+	  
+	  
 }

@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
+import com.csis.Entities.UserInfo;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -160,6 +161,10 @@ public class Home {
 						System.out.println("Login Successful");
 //						JOptionPane jop = new JOptionPane();
 //						jop.showMessageDialog(null,"Login Successful");
+						
+						//set user information
+						UserInfo user = new UserInfo();
+						user.setUsername(userName);
 //						
 						//reservation class to be called upon successful login 
 						Reservation reservation = new Reservation(userName);
