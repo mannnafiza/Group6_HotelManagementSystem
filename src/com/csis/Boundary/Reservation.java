@@ -11,6 +11,7 @@ import com.csis.Controller.BanquetReservation;
 import com.csis.Controller.MeetingReservation;
 import com.csis.Controller.RestaurantReservation;
 import com.csis.Controller.RoomReservation;
+import com.csis.Entities.UserInfo;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -21,7 +22,7 @@ import java.awt.event.MouseListener;
 public class Reservation {
 
 	private JFrame frame;
-	private String username;
+	
 
 	/**
 	 * Launch the application.
@@ -46,17 +47,13 @@ public class Reservation {
 		initialize();
 	}
 	
-	/**
-	 * Get the current username
-	 */
-	public Reservation(String username) {
-		this.username = username;
-	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		UserInfo user = new UserInfo();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 581, 391);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
@@ -66,9 +63,10 @@ public class Reservation {
 		JLabel lblTitle = new JLabel("Welcome");
 		lblTitle.setForeground(Color.WHITE);
 		lblTitle.setFont(new Font("Serif", Font.ITALIC, 20));
-		lblTitle.setBounds(216, 54, 100, 25);
+		lblTitle.setBounds(216, 54, 188, 25);
 		frame.getContentPane().add(lblTitle);
-		lblTitle.setText("Welcome " + username);
+		lblTitle.setText("Welcome " + user.getUsername());
+		System.out.println(user.getUsername());
 		
 		JLabel lblRooms = new JLabel("");
 		lblRooms.setBounds(51, 131, 70, 62);
@@ -120,112 +118,24 @@ public class Reservation {
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		lblRooms.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				RoomReservation rmReserve = new RoomReservation();
-				rmReserve.main(null);
-				
-			}
-			
-		});
+		/**
+		 * set listeners
+		 */
+		setRoomListener(lblRooms);
+		setMeetingListener(lblMeetings);
+		setBanquetListener(lblBanquet);
+		setRestaurantListener(lblRestaurant);
 		
-		lblMeetings.addMouseListener(new MouseListener() {
+	}
 
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				MeetingReservation meetReserve = new MeetingReservation();
-				meetReserve.main(null);
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		lblBanquet.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				BanquetReservation banqReserve = new BanquetReservation();
-				banqReserve.main(null);	
-			}
-			
-		});
-		
+	
+	
+	/**
+	 * listener for restaurant reservation
+	 * @param lblRestaurant
+	 */
+	private void setRestaurantListener(JLabel lblRestaurant) {
+		// TODO Auto-generated method stub
 		lblRestaurant.addMouseListener(new MouseListener() {
 
 			@Override
@@ -255,8 +165,131 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				RestaurantReservation restReserve =new RestaurantReservation();
-				restReserve.main(null);
+				RestaurantReservation.main(null);
+			}
+			
+		});
+	}
+
+	/**
+	 * listener for banquet reservation
+	 * @param lblBanquet
+	 */
+	private void setBanquetListener(JLabel lblBanquet) {
+		// TODO Auto-generated method stub
+		lblBanquet.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				BanquetReservation.main(null);	
+			}
+			
+		});
+	}
+
+	/**
+	 * listener for meeting reservation
+	 * @param lblMeetings
+	 */
+	private void setMeetingListener(JLabel lblMeetings) {
+		// TODO Auto-generated method stub
+		lblMeetings.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				MeetingReservation.main(null);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
+
+	/**
+	 * listener for room reservation
+	 * @param lblRooms
+	 */
+	private void setRoomListener(JLabel lblRooms) {
+		// TODO Auto-generated method stub
+		lblRooms.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				RoomReservation.main(null);
+				
 			}
 			
 		});

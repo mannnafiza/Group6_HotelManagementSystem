@@ -31,6 +31,7 @@ public class RestaurantReservation {
 
 	private JFrame frame;
 	Restaurant restaurantData = new Restaurant();
+	boolean errorMsg = true;
 
 	/**
 	 * Launch the application.
@@ -84,6 +85,7 @@ public class RestaurantReservation {
 		frame.getContentPane().add(dateChooser);
 		
 		JRadioButton rdbtnBreakfast = new JRadioButton("Breakfast");
+		rdbtnBreakfast.setSelected(true);
 		rdbtnBreakfast.setForeground(Color.WHITE);
 		rdbtnBreakfast.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnBreakfast.setBounds(175, 125, 91, 23);
@@ -134,6 +136,7 @@ public class RestaurantReservation {
 		frame.getContentPane().add(lblMealType);
 		
 		JRadioButton rdbtnVeg = new JRadioButton("Veg");
+		rdbtnVeg.setSelected(true);
 		rdbtnVeg.setForeground(Color.WHITE);
 		rdbtnVeg.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnVeg.setBounds(175, 282, 72, 23);
@@ -158,10 +161,13 @@ public class RestaurantReservation {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setNumberOfGuest(spinGuests);
-				System.out.println(restaurantData.getMealType() + " " + restaurantData.getNoOfGuest() + " " 
-				+ restaurantData.getDate() + " " + displayDate() );
-//				JOptionPane option = new JOptionPane();
-//				option.showMessageDialog(null, "confirmed!");
+				errorMsg = validateInfo(restaurantData.getDate(), restaurantData.getNoOfGuest());
+				if(!errorMsg) {
+					System.out.println(restaurantData.getMealType() + " " + restaurantData.getNoOfGuest() + " " 
+							+ restaurantData.getDate() + " " + displayDate() );
+				} else {
+					JOptionPane.showMessageDialog(null, "Please enter the valid data");
+				}	
 			}
 		});
 		button.setForeground(new Color(51, 153, 102));
@@ -274,5 +280,16 @@ public class RestaurantReservation {
 				}
 			
 		});
+	}
+	
+	protected boolean validateInfo(Date date, int noOfGuest) {
+		// TODO Auto-generated method stub
+		if(date == null)
+			errorMsg = true;
+		else if(noOfGuest <= 0)
+			errorMsg = true;
+		else
+			errorMsg = false;
+		return errorMsg;
 	}
 }

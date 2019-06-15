@@ -33,7 +33,11 @@ import com.toedter.calendar.JDateChooser;
 public class RoomReservation {
 
 	private JFrame frame;
+	String[] roomTypes = {"Executive King Double", "Executive Queen Double", "Executive Queen Single",
+					"Deluxe King Double", "Deluxe Queen Double", "Deluxe Queen Single", "Regular Double", "Regular Single"};
+	boolean errorMsg = true;
 	Room roomData = new Room();
+	
 
 	/**
 	 * Launch the application.
@@ -77,10 +81,6 @@ public class RoomReservation {
 		lblRmReserveTitle.setBounds(208, 44, 232, 25);
 		frame.getContentPane().add(lblRmReserveTitle);
 		
-		//bahr kdna
-		String[] roomTypes = {"Executive King Double", "Executive Queen Double", "Executive Queen Single",
-				"Deluxe King Double", "Deluxe Queen Double", "Deluxe Queen Single", "Regular Double", "Regular Single"};
-		
 		
 		JList listRoomType = new JList(roomTypes);
 		listRoomType.setBounds(113, 121, 184, 153);
@@ -119,6 +119,7 @@ public class RoomReservation {
 		frame.getContentPane().add(lblMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
+		rdbtnYes.setSelected(true);
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnYes.setBounds(353, 298, 109, 23);
@@ -163,10 +164,18 @@ public class RoomReservation {
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setStayDuration(spinDuration);
-				System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
-				+ " " + roomData.isMeal() + " " + displayDate());
+				
+				errorMsg = validateInfo(roomData.getRoomType(), roomData.getReserveDate(), roomData.getDuration());
+				if(!errorMsg) {
+					System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
+					+ " " + roomData.isMeal() + " " + displayDate());
+				}else {
+					JOptionPane.showMessageDialog(null, "Please enter the valid data");
+				}
+				
+				
 				//TODO: get and Validate all data
-				//JOptionPane.showMessageDialog(null, "Confirmed!");
+				
 			}
 		});
 		btnConfirm.setBounds(223, 371, 89, 23);
@@ -190,8 +199,9 @@ public class RoomReservation {
 			public void propertyChange(PropertyChangeEvent event) {
 				// TODO Auto-generated method stub
 				Date date = (Date) event.getNewValue();
-				roomData.setReserveDate(date);
-				}
+					roomData.setReserveDate(date);
+			}
+				
 			
 		});
 	}
@@ -236,7 +246,8 @@ public class RoomReservation {
 
 	protected void setStayDuration(JSpinner spinDuration) {
 		// TODO Auto-generated method stub
-		roomData.setDuration(Integer.parseInt(spinDuration.getValue().toString()));
+		int spinnerValue = Integer.parseInt(spinDuration.getValue().toString());
+		roomData.setDuration(spinnerValue);
 	}
 
 	protected void setServiceListener(JCheckBox chkAddService) {
@@ -262,40 +273,54 @@ public class RoomReservation {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getValueIsAdjusting() == true) {
-					switch(listRoomType.getSelectedIndex()) {
-					case 0:
-						roomData.setRoomType("Executive King Double");
-						break;
-					case 1:
-						roomData.setRoomType("Executive Queen Double");
-						break;
-					case 2:
-						roomData.setRoomType("Executive Queen Single");
-						break;
-					case 3:
-						roomData.setRoomType("Deluxe King Double");
-						break;
-					case 4:
-						roomData.setRoomType("Deluxe Queen Double");
-						break;
-					case 5:
-						roomData.setRoomType("Deluxe Queen Single");
-						break;
-					case 6:
-						roomData.setRoomType("Regular Double");
-						break;
-					case 7:
-						roomData.setRoomType("Regular Single");
-						break;
-					default:
-						roomData.setRoomType("Invalid choice for room type");
-						break;
-							
+						switch(listRoomType.getSelectedIndex()) {
+						case 0:
+							roomData.setRoomType("Executive King Double");
+							break;
+						case 1:
+							roomData.setRoomType("Executive Queen Double");
+							break;
+						case 2:
+							roomData.setRoomType("Executive Queen Single");
+							break;
+						case 3:
+							roomData.setRoomType("Deluxe King Double");
+							break;
+						case 4:
+							roomData.setRoomType("Deluxe Queen Double");
+							break;
+						case 5:
+							roomData.setRoomType("Deluxe Queen Single");
+							break;
+						case 6:
+							roomData.setRoomType("Regular Double");
+							break;
+						case 7:
+							roomData.setRoomType("Regular Single");
+							break;
+						default:
+							roomData.setRoomType("invalid");
+							break;
+								
+						
 					}
+					
 				}
 			}
 			
 		});
+	}
+	
+	public boolean validateInfo(String roomType, Date date, int duration) {
+		if(roomType==null)
+			errorMsg = true;
+	    else if(date == null)
+			errorMsg = true;
+		else if(duration<=0)
+			errorMsg =true;
+		else
+			errorMsg = false;
+		return errorMsg;
 	}
 	
 }

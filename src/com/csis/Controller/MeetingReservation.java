@@ -29,6 +29,7 @@ public class MeetingReservation {
 
 	private JFrame frame;
 	Meeting meetingData = new Meeting();
+	boolean errorMsg = true;
 
 	/**
 	 * Launch the application.
@@ -103,6 +104,7 @@ public class MeetingReservation {
 		frame.getContentPane().add(lblMeetingMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
+		rdbtnYes.setSelected(true);
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnYes.setBackground(new Color(95, 158, 160));
@@ -127,9 +129,14 @@ public class MeetingReservation {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				setMeetingDuration(spinner);
-				System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
-//				JOptionPane option = new JOptionPane();
-//				option.showMessageDialog(null, "Confirmed!");
+				errorMsg = validateInfo(meetingData.getReservedate(), meetingData.getDuration());
+				if(!errorMsg) {
+					System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
+				}else {
+					JOptionPane.showMessageDialog(null, "Please enter the valid data!");
+				}
+				
+				
 			}
 		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
@@ -138,6 +145,7 @@ public class MeetingReservation {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(meetingData.getReservedate());
 		return actualDate;
@@ -195,5 +203,18 @@ public class MeetingReservation {
 				}
 			
 		});
+	}
+	
+
+	protected boolean validateInfo(Date reservedate, int duration) {
+		// TODO Auto-generated method stub
+		if(reservedate == null) {
+			errorMsg = true;
+		}else if(duration <= 0) {
+			errorMsg = true;
+		}else {
+			errorMsg =false;
+		}
+		return errorMsg;
 	}
 }

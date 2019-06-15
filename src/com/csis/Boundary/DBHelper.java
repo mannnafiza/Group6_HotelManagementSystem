@@ -174,5 +174,35 @@ public class DBHelper {
 	  }
 	 
 	  
-	  
+	  //method to get id of user
+	  public int getUserId(String username) 
+		{
+		  int userId = 0;
+		  
+		  String sql = "SELECT * FROM user_Info where userName = ?";
+		  
+		  try {
+			  connectDB();
+		  
+			  //create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, username);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  userId =  rs.getInt("id");
+			  }
+		  
+		  disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return userId;
+		}
 }

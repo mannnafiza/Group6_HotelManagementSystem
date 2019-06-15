@@ -29,6 +29,7 @@ public class BanquetReservation {
 
 	private JFrame frame;
 	Banquet banquetData = new Banquet();
+	boolean errorMsg = true;
 
 	/**
 	 * Launch the application.
@@ -82,6 +83,7 @@ public class BanquetReservation {
 		frame.getContentPane().add(lblMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
+		rdbtnYes.setSelected(true);
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnYes.setBackground(new Color(95, 158, 160));
@@ -119,9 +121,14 @@ public class BanquetReservation {
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
-//				JOptionPane option = new JOptionPane();
-//				option.showMessageDialog(null, "confirmed!");
+				errorMsg =validateInfo(banquetData.getDate());
+				if(!errorMsg) {
+					System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
+				}else {
+					JOptionPane.showMessageDialog(null, "Please enter the valid data");
+				}
+				
+				
 			}
 		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
@@ -130,6 +137,8 @@ public class BanquetReservation {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	
+
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(banquetData.getDate());
 		return actualDate;
@@ -197,5 +206,11 @@ public class BanquetReservation {
 				}
 			
 		});
+	}
+	
+	protected boolean validateInfo(Date date) {
+		// TODO Auto-generated method stub
+		errorMsg = date == null ? true :false;
+		return errorMsg;
 	}
 }
