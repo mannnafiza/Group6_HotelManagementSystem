@@ -169,7 +169,7 @@ public class Home {
 						user.setId(helper.getUserId(userName));
 //						
 						//reservation class to be called upon successful login 
-						Reservation.main(null);
+						Reservation.main(null,user);
 						
 					}else
 					{

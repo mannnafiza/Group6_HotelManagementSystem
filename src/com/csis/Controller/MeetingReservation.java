@@ -29,7 +29,8 @@ public class MeetingReservation {
 
 	private JFrame frame;
 	Meeting meetingData = new Meeting();
-	boolean errorMsg = true;
+	String errorMsg;
+	boolean inputValid = false;
 
 	/**
 	 * Launch the application.
@@ -104,7 +105,6 @@ public class MeetingReservation {
 		frame.getContentPane().add(lblMeetingMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
-		rdbtnYes.setSelected(true);
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnYes.setBackground(new Color(95, 158, 160));
@@ -129,11 +129,11 @@ public class MeetingReservation {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				setMeetingDuration(spinner);
-				errorMsg = validateInfo(meetingData.getReservedate(), meetingData.getDuration());
-				if(!errorMsg) {
+				validateInfo(meetingData.getReservedate(), meetingData.getDuration(), meetingData.isMeal());
+				if(inputValid) {
 					System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
 				}else {
-					JOptionPane.showMessageDialog(null, "Please enter the valid data!");
+					JOptionPane.showMessageDialog(null, errorMsg);
 				}
 				
 				
@@ -175,9 +175,9 @@ public class MeetingReservation {
 				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
 		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
 		        if(item.equals("Yes")) {
-			    	  meetingData.setMeal(true);
+			    	  meetingData.setMeal("yes");
 			      }else {
-			    	  meetingData.setMeal(false);
+			    	  meetingData.setMeal("no");
 			      }
 			}
 		    }
@@ -206,15 +206,23 @@ public class MeetingReservation {
 	}
 	
 
-	protected boolean validateInfo(Date reservedate, int duration) {
+	protected boolean validateInfo(Date reservedate, int duration, String mealType) {
 		// TODO Auto-generated method stub
+		inputValid = true;
+		errorMsg = "Please enter the following field: ";
 		if(reservedate == null) {
-			errorMsg = true;
-		}else if(duration <= 0) {
-			errorMsg = true;
-		}else {
-			errorMsg =false;
+			errorMsg = "\nDate";
+			inputValid = false;
 		}
-		return errorMsg;
+		if(duration <= 0) {
+			errorMsg = "\nMeeting Duration";
+			inputValid = false;
+		}
+		if(mealType == null) {
+			errorMsg += "\nMeal Type";
+			inputValid = false;
+		}
+			
+		return inputValid;
 	}
 }

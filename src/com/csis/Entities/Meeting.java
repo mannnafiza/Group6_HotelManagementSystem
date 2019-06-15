@@ -5,7 +5,7 @@ import java.util.Date;
 public class Meeting {
 	private Date reservedate;
 	private int duration;
-	private boolean meal;
+	private String meal;
 	
 	public Meeting(){
 		
@@ -27,11 +27,11 @@ public class Meeting {
 		this.duration = duration;
 	}
 
-	public boolean isMeal() {
+	public String isMeal() {
 		return meal;
 	}
 
-	public void setMeal(boolean meal) {
+	public void setMeal(String meal) {
 		this.meal = meal;
 	}
 	

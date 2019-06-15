@@ -23,7 +23,6 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -35,7 +34,8 @@ public class RoomReservation {
 	private JFrame frame;
 	String[] roomTypes = {"Executive King Double", "Executive Queen Double", "Executive Queen Single",
 					"Deluxe King Double", "Deluxe Queen Double", "Deluxe Queen Single", "Regular Double", "Regular Single"};
-	boolean errorMsg = true;
+	String errorMsg;
+	boolean inputValid = false;
 	Room roomData = new Room();
 	
 
@@ -119,7 +119,6 @@ public class RoomReservation {
 		frame.getContentPane().add(lblMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
-		rdbtnYes.setSelected(true);
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnYes.setBounds(353, 298, 109, 23);
@@ -165,12 +164,12 @@ public class RoomReservation {
 			public void actionPerformed(ActionEvent arg0) {
 				setStayDuration(spinDuration);
 				
-				errorMsg = validateInfo(roomData.getRoomType(), roomData.getReserveDate(), roomData.getDuration());
-				if(!errorMsg) {
+				validateInfo(roomData.getRoomType(), roomData.getReserveDate(), roomData.getDuration(), roomData.isMeal());
+				if(inputValid) {
 					System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
 					+ " " + roomData.isMeal() + " " + displayDate());
 				}else {
-					JOptionPane.showMessageDialog(null, "Please enter the valid data");
+					JOptionPane.showMessageDialog(null, errorMsg);
 				}
 				
 				
@@ -226,9 +225,9 @@ public class RoomReservation {
 				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
 		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
 		        if(item.equals("Yes")) {
-			    	  roomData.setMeal(true);
+			    	  roomData.setMeal("yes");
 			      }else {
-			    	  roomData.setMeal(false);
+			    	  roomData.setMeal("no");
 			      }
 			}
 		    }
@@ -311,16 +310,31 @@ public class RoomReservation {
 		});
 	}
 	
-	public boolean validateInfo(String roomType, Date date, int duration) {
-		if(roomType==null)
-			errorMsg = true;
-	    else if(date == null)
-			errorMsg = true;
-		else if(duration<=0)
-			errorMsg =true;
-		else
-			errorMsg = false;
-		return errorMsg;
+	public boolean validateInfo(String roomType, Date date, int duration, String mealType) {
+		errorMsg = "Please enter the following field: ";
+		inputValid = true;
+		
+		if(roomType==null) {
+			errorMsg += "\nRoom Type";
+			inputValid = false;
+		}
+			
+	    if(date == null) {
+	    	errorMsg += "\nDate";
+	    	inputValid = false;
+	    }
+			
+		if(duration<=0) {
+			errorMsg += "\nStay Duration";
+			inputValid = false;
+		}
+		
+		if(mealType == null) {
+			errorMsg += "\nMeal Type";
+			inputValid = false;
+		}
+			
+		return inputValid;
 	}
 	
 }

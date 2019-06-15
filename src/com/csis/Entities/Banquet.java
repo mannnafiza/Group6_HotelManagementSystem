@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Banquet {
 	private Date date;
-	private boolean meal;
+	private String meal;
 	private boolean addService;
 	
 	public Banquet(){
@@ -19,11 +19,11 @@ public class Banquet {
 		this.date = date;
 	}
 
-	public boolean isMeal() {
+	public String isMeal() {
 		return meal;
 	}
 
-	public void setMeal(boolean meal) {
+	public void setMeal(String meal) {
 		this.meal = meal;
 	}
 

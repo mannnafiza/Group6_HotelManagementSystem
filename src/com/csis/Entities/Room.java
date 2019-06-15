@@ -5,7 +5,7 @@ import java.util.Date;
 public class Room {
 	private String roomType;
 	private int duration;
-	private boolean meal;
+	private String meal;
 	private boolean addService;
 	private Date reserveDate;
 	
@@ -21,11 +21,11 @@ public class Room {
 		this.roomType = roomType;
 	}
 
-	public boolean isMeal() {
+	public String isMeal() {
 		return meal;
 	}
 
-	public void setMeal(boolean meal) {
+	public void setMeal(String meal) {
 		this.meal = meal;
 	}
 

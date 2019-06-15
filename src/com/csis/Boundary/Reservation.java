@@ -22,16 +22,16 @@ import java.awt.event.MouseListener;
 public class Reservation {
 
 	private JFrame frame;
-	
+	UserInfo user;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Reservation window = new Reservation();
+					Reservation window = new Reservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,8 +43,10 @@ public class Reservation {
 	/**
 	 * Create the application.
 	 */
-	public Reservation() {
+	public Reservation(UserInfo user) {
+		this.user = user;	
 		initialize();
+		
 	}
 	
 	
@@ -53,7 +55,6 @@ public class Reservation {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		UserInfo user = new UserInfo();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 581, 391);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));

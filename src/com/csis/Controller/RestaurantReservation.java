@@ -31,7 +31,8 @@ public class RestaurantReservation {
 
 	private JFrame frame;
 	Restaurant restaurantData = new Restaurant();
-	boolean errorMsg = true;
+	String errorMsg;
+	boolean inputValid = false;
 
 	/**
 	 * Launch the application.
@@ -136,7 +137,6 @@ public class RestaurantReservation {
 		frame.getContentPane().add(lblMealType);
 		
 		JRadioButton rdbtnVeg = new JRadioButton("Veg");
-		rdbtnVeg.setSelected(true);
 		rdbtnVeg.setForeground(Color.WHITE);
 		rdbtnVeg.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnVeg.setBounds(175, 282, 72, 23);
@@ -161,12 +161,12 @@ public class RestaurantReservation {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setNumberOfGuest(spinGuests);
-				errorMsg = validateInfo(restaurantData.getDate(), restaurantData.getNoOfGuest());
-				if(!errorMsg) {
+				validateInfo(restaurantData.getDate(), restaurantData.getNoOfGuest(), restaurantData.getMealType());
+				if(inputValid) {
 					System.out.println(restaurantData.getMealType() + " " + restaurantData.getNoOfGuest() + " " 
-							+ restaurantData.getDate() + " " + displayDate() );
+							+ restaurantData.getDate() + " " + displayDate());
 				} else {
-					JOptionPane.showMessageDialog(null, "Please enter the valid data");
+					JOptionPane.showMessageDialog(null, errorMsg);
 				}	
 			}
 		});
@@ -250,7 +250,7 @@ public class RestaurantReservation {
 			public void itemStateChanged(ItemEvent ex) {
 				// TODO Auto-generated method stub
 				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
-		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
+		        //boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
 		        if(item.equals("Veg")) {
 			    	  restaurantData.setMealType("Veg");
 			      }else {
@@ -282,14 +282,22 @@ public class RestaurantReservation {
 		});
 	}
 	
-	protected boolean validateInfo(Date date, int noOfGuest) {
+	protected boolean validateInfo(Date date, int noOfGuest, String mealType) {
 		// TODO Auto-generated method stub
-		if(date == null)
-			errorMsg = true;
-		else if(noOfGuest <= 0)
-			errorMsg = true;
-		else
-			errorMsg = false;
-		return errorMsg;
+		errorMsg = "Please enter the following field: ";
+		inputValid = true;
+		if(noOfGuest <= 0) {
+			errorMsg += "\nNo.of Guests";
+			inputValid = false;
+		}
+		if(date == null) {
+			errorMsg += "\nDate";
+	    	inputValid = false;
+		}
+		if(mealType == null) {
+			errorMsg += "\nMeal Type";
+			inputValid = false;
+		}
+		return inputValid;
 	}
 }

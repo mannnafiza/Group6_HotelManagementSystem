@@ -29,7 +29,8 @@ public class BanquetReservation {
 
 	private JFrame frame;
 	Banquet banquetData = new Banquet();
-	boolean errorMsg = true;
+	boolean inputValid = false;
+	String errorMsg;
 
 	/**
 	 * Launch the application.
@@ -83,7 +84,6 @@ public class BanquetReservation {
 		frame.getContentPane().add(lblMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
-		rdbtnYes.setSelected(true);
 		rdbtnYes.setForeground(Color.WHITE);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnYes.setBackground(new Color(95, 158, 160));
@@ -121,11 +121,11 @@ public class BanquetReservation {
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				errorMsg =validateInfo(banquetData.getDate());
-				if(!errorMsg) {
+				validateInfo(banquetData.getDate(), banquetData.isMeal());
+				if(inputValid) {
 					System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
 				}else {
-					JOptionPane.showMessageDialog(null, "Please enter the valid data");
+					JOptionPane.showMessageDialog(null, errorMsg);
 				}
 				
 				
@@ -178,9 +178,9 @@ public class BanquetReservation {
 				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
 		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
 		        if(item.equals("Yes")) {
-			    	  banquetData.setMeal(true);
+			    	  banquetData.setMeal("yes");
 			      }else {
-			    	  banquetData.setMeal(false);
+			    	  banquetData.setMeal("no");
 			      }
 			}
 		    }
@@ -208,9 +208,19 @@ public class BanquetReservation {
 		});
 	}
 	
-	protected boolean validateInfo(Date date) {
+	protected boolean validateInfo(Date date, String mealType) {
 		// TODO Auto-generated method stub
-		errorMsg = date == null ? true :false;
-		return errorMsg;
+		errorMsg = "Please enter the following field: ";
+		inputValid = true;
+		if(date == null) {
+			errorMsg += "\nDate";
+			inputValid = false;
+		}
+		if(mealType == null) {
+			errorMsg += "\nMeal Type";
+			inputValid = false;
+		}
+			
+		return inputValid;
 	}
 }
