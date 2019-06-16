@@ -166,7 +166,7 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				RestaurantReservation.main(null);
+				RestaurantReservation.main(null, user);
 			}
 			
 		});
