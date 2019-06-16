@@ -242,7 +242,7 @@ public class Reservation {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				MeetingReservation.main(null);
+				MeetingReservation.main(null, user);
 			}
 
 			@Override

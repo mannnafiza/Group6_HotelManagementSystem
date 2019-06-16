@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.DBHelper;
 import com.csis.Entities.Meeting;
+import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
@@ -28,6 +30,7 @@ import java.awt.event.ActionEvent;
 public class MeetingReservation {
 
 	private JFrame frame;
+	UserInfo user;
 	Meeting meetingData = new Meeting();
 	String errorMsg;
 	boolean inputValid = false;
@@ -35,11 +38,11 @@ public class MeetingReservation {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MeetingReservation window = new MeetingReservation();
+					MeetingReservation window = new MeetingReservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +54,8 @@ public class MeetingReservation {
 	/**
 	 * Create the application.
 	 */
-	public MeetingReservation() {
+	public MeetingReservation(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -132,6 +136,18 @@ public class MeetingReservation {
 				validateInfo(meetingData.getReservedate(), meetingData.getDuration(), meetingData.isMeal());
 				if(inputValid) {
 					System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
+					
+					DBHelper helper = new DBHelper();
+					
+					try {
+						
+						java.sql.Date sqlDate = new java.sql.Date(meetingData.getReservedate().getTime());
+						helper.insertReservationInformation(user.getId(), user.getUsername(), "meeting","-", 0, meetingData.isMeal(),
+								"-", sqlDate, meetingData.getDuration(), false, 0, "-" );
+						JOptionPane.showMessageDialog(null, "Meeting Reservation confirmed");
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
+					}
 				}else {
 					JOptionPane.showMessageDialog(null, errorMsg);
 				}
