@@ -28,6 +28,7 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 
 import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Reservation;
 import com.csis.Entities.Room;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -201,9 +202,19 @@ public class RoomReservation {
 				
 			}
 		});
-		btnConfirm.setBounds(223, 371, 89, 23);
+		btnConfirm.setBounds(288, 371, 89, 23);
 		btnConfirm.setForeground(color);
 		frame.getContentPane().add(btnConfirm);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Reservation.main(null, user);
+			}
+		});
+		btnBack.setBounds(156, 371, 89, 23);
+		btnBack.setForeground(color);
+		frame.getContentPane().add(btnBack);
 		
 	
 	}

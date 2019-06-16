@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.util.Date;
 
 import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Reservation;
 import com.csis.Entities.Restaurant;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -196,6 +197,16 @@ public class RestaurantReservation {
 		button.setForeground(new Color(51, 153, 102));
 		button.setBounds(239, 328, 89, 23);
 		frame.getContentPane().add(button);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reservation.main(null, user);
+			}
+		});
+		btnBack.setForeground(new Color(51, 153, 102));
+		btnBack.setBounds(144, 328, 89, 23);
+		frame.getContentPane().add(btnBack);
 		
 		
 	}

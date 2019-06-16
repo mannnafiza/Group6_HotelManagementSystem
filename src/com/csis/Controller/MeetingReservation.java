@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 
 import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -163,8 +164,18 @@ public class MeetingReservation {
 			}
 		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
-		btnConfirm.setBounds(144, 360, 89, 23);
+		btnConfirm.setBounds(216, 360, 89, 23);
 		frame.getContentPane().add(btnConfirm);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reservation.main(null, user);
+			}
+		});
+		btnBack.setForeground(new Color(51, 153, 102));
+		btnBack.setBounds(95, 360, 89, 23);
+		frame.getContentPane().add(btnBack);
 		
 		
 	}
