@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DBHelper {
 
@@ -205,4 +206,47 @@ public class DBHelper {
 		  
 		  return userId;
 		}
+	  
+	  
+	//method to add new reservation info into the reservation_Info table at the time of reservation
+	  public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
+			  int stayDuration, String mealStatus, String mealType, Date resDate, int meetingDuration,
+			  boolean addService, int noOfGuest, String resFor){
+		  
+		  String insertSql = "INSERT INTO reservation_Info (userId, userName, resType, roomType, stayDuration, "
+		  		+ "mealStatus, mealType, resDate, meetingDuration, addService, noGuest, String resFor) " +
+	  				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		  
+		  try {
+			  connectDB();
+			  
+			  //create statement
+			  pstmt = conn.prepareStatement(insertSql);
+			  
+			  //set the parameters of query
+			  pstmt.setInt(1, userId);
+			  pstmt.setString(2, usrname);
+			  pstmt.setString(3, resType);
+			  pstmt.setString(4, roomType);
+			  pstmt.setInt(5, stayDuration);
+			  pstmt.setString(6, mealStatus);
+			  pstmt.setString(7, mealType);
+			  pstmt.setDate(8, (java.sql.Date) resDate);
+			  pstmt.setInt(9, meetingDuration);
+			  pstmt.setBoolean(10, addService);
+			  pstmt.setInt(11, noOfGuest);
+			  pstmt.setString(12, resFor);
+			  
+			  //execute			  
+			  pstmt.executeUpdate();
+			  
+			  disconnectDB();
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+	  }
+	  
 }
