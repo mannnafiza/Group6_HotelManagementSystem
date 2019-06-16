@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class DBHelper {
 
@@ -213,8 +213,7 @@ public class DBHelper {
 			  int stayDuration, String mealStatus, String mealType, Date resDate, int meetingDuration,
 			  boolean addService, int noOfGuest, String resFor){
 		  
-		  String insertSql = "INSERT INTO reservation_Info (userId, userName, resType, roomType, stayDuration, "
-		  		+ "mealStatus, mealType, resDate, meetingDuration, addService, noGuest, String resFor) " +
+		  String insertSql = "INSERT INTO reservation_Info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, meetingDuration, addService, noGuest, resFor) " +
 	  				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
 		  
 		  try {
@@ -231,7 +230,7 @@ public class DBHelper {
 			  pstmt.setInt(5, stayDuration);
 			  pstmt.setString(6, mealStatus);
 			  pstmt.setString(7, mealType);
-			  pstmt.setDate(8, (java.sql.Date) resDate);
+			  pstmt.setDate(8, resDate);
 			  pstmt.setInt(9, meetingDuration);
 			  pstmt.setBoolean(10, addService);
 			  pstmt.setInt(11, noOfGuest);

@@ -23,15 +23,19 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
+import com.csis.Boundary.DBHelper;
 import com.csis.Entities.Room;
+import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 
 public class RoomReservation {
 
 	private JFrame frame;
+	UserInfo user;
 	String[] roomTypes = {"Executive King Double", "Executive Queen Double", "Executive Queen Single",
 					"Deluxe King Double", "Deluxe Queen Double", "Deluxe Queen Single", "Regular Double", "Regular Single"};
 	String errorMsg;
@@ -42,11 +46,11 @@ public class RoomReservation {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RoomReservation window = new RoomReservation();
+					RoomReservation window = new RoomReservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +62,8 @@ public class RoomReservation {
 	/**
 	 * Create the application.
 	 */
-	public RoomReservation() {
+	public RoomReservation(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -80,6 +85,12 @@ public class RoomReservation {
 		lblRmReserveTitle.setFont(new Font("Serif", Font.ITALIC, 20));
 		lblRmReserveTitle.setBounds(208, 44, 232, 25);
 		frame.getContentPane().add(lblRmReserveTitle);
+		
+		JLabel lblUsername = new JLabel("");
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setBounds(479, 24, 76, 14);
+		lblUsername.setText(user.getUsername());
+		frame.getContentPane().add(lblUsername);
 		
 		
 		JList listRoomType = new JList(roomTypes);
@@ -168,6 +179,19 @@ public class RoomReservation {
 				if(inputValid) {
 					System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
 					+ " " + roomData.isMeal() + " " + displayDate());
+					
+					DBHelper helper = new DBHelper();
+					
+					try {
+						
+						java.sql.Date sqlDate = new java.sql.Date(roomData.getReserveDate().getTime());
+						
+						helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, 0, roomData.isAddService(), 0, "-");
+						JOptionPane.showMessageDialog(null, "Reservation Confirmed");
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
+					}
+					
 				}else {
 					JOptionPane.showMessageDialog(null, errorMsg);
 				}
@@ -181,6 +205,7 @@ public class RoomReservation {
 		btnConfirm.setForeground(color);
 		frame.getContentPane().add(btnConfirm);
 		
+	
 	}
 	
 
@@ -336,5 +361,4 @@ public class RoomReservation {
 			
 		return inputValid;
 	}
-	
 }
