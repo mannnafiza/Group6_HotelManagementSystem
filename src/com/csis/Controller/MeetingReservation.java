@@ -75,6 +75,13 @@ public class MeetingReservation {
 		lblMeetingReservation.setBounds(125, 54, 232, 25);
 		frame.getContentPane().add(lblMeetingReservation);
 		
+		JLabel lblUsername = new JLabel((String) null);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setBounds(344, 29, 76, 14);
+		lblUsername.setText(user.getUsername());
+		frame.getContentPane().add(lblUsername);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setForeground(Color.WHITE);
 		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -158,7 +165,8 @@ public class MeetingReservation {
 		btnConfirm.setForeground(new Color(51, 153, 102));
 		btnConfirm.setBounds(144, 360, 89, 23);
 		frame.getContentPane().add(btnConfirm);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 	}
 	
 

@@ -207,7 +207,7 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				BanquetReservation.main(null);	
+				BanquetReservation.main(null, user);	
 			}
 			
 		});

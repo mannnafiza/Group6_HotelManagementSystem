@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.DBHelper;
 import com.csis.Entities.Banquet;
+import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
@@ -28,6 +30,7 @@ import java.awt.event.ActionEvent;
 public class BanquetReservation {
 
 	private JFrame frame;
+	UserInfo user;
 	Banquet banquetData = new Banquet();
 	boolean inputValid = false;
 	String errorMsg;
@@ -35,11 +38,11 @@ public class BanquetReservation {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BanquetReservation window = new BanquetReservation();
+					BanquetReservation window = new BanquetReservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +54,8 @@ public class BanquetReservation {
 	/**
 	 * Create the application.
 	 */
-	public BanquetReservation() {
+	public BanquetReservation(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -64,6 +68,13 @@ public class BanquetReservation {
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		frame.getContentPane().setLayout(null);
+		
+		JLabel lblUsername = new JLabel((String) null);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setBounds(344, 11, 76, 14);
+		lblUsername.setText(user.getUsername());
+		frame.getContentPane().add(lblUsername);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setForeground(Color.WHITE);
@@ -124,17 +135,31 @@ public class BanquetReservation {
 				validateInfo(banquetData.getDate(), banquetData.isMeal());
 				if(inputValid) {
 					System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
-				}else {
-					JOptionPane.showMessageDialog(null, errorMsg);
+					
+					DBHelper helper = new DBHelper();
+					
+					try {
+						
+						java.sql.Date sqlDate = new java.sql.Date(banquetData.getDate().getTime());
+						helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
+								"-", sqlDate, 0, banquetData.isAddService(), 0, "-" );
+						JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
 				}
 				
 				
 			}
-		});
+				else {
+					JOptionPane.showMessageDialog(null, errorMsg);
+				}
+			}
+			});
 		btnConfirm.setForeground(new Color(51, 153, 102));
 		btnConfirm.setBounds(150, 371, 89, 23);
 		frame.getContentPane().add(btnConfirm);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 	}
 	
 	
