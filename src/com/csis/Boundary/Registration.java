@@ -277,11 +277,10 @@ public class Registration {
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				Home login = new Home();
-				login.main(null);
+				Home.main(null);
 			}
 	
 		});
-		
+
 	}
 }
