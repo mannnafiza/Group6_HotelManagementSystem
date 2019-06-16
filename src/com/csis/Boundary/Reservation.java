@@ -167,6 +167,7 @@ public class Reservation {
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				RestaurantReservation.main(null, user);
+				frame.dispose();
 			}
 			
 		});
@@ -208,6 +209,7 @@ public class Reservation {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				BanquetReservation.main(null, user);	
+				frame.dispose();
 			}
 			
 		});
@@ -242,13 +244,14 @@ public class Reservation {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				MeetingReservation.main(null, user);
+				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				MeetingReservation.main(null, user);
+				frame.dispose();
 			}
 			
 		});
@@ -290,7 +293,7 @@ public class Reservation {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				RoomReservation.main(null, user);
-				
+				frame.dispose();
 			}
 			
 		});

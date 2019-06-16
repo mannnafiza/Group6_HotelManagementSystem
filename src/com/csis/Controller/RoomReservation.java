@@ -210,6 +210,7 @@ public class RoomReservation {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Reservation.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(156, 371, 89, 23);

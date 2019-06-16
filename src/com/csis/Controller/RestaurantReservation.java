@@ -202,6 +202,7 @@ public class RestaurantReservation {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Reservation.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setForeground(new Color(51, 153, 102));

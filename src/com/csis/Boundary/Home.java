@@ -170,6 +170,7 @@ public class Home {
 //						
 						//reservation class to be called upon successful login 
 						Reservation.main(null,user);
+						frame.dispose();
 						
 					}else
 					{
