@@ -33,7 +33,8 @@ public class Home {
 	private String password = "";
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -170,6 +171,7 @@ public class Home {
 //						
 						//reservation class to be called upon successful login 
 						Reservation.main(null,user);
+						frame.dispose();
 						
 					}else
 					{

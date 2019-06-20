@@ -9,7 +9,10 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Reservation;
 import com.csis.Entities.Banquet;
+import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
@@ -28,18 +31,22 @@ import java.awt.event.ActionEvent;
 public class BanquetReservation {
 
 	private JFrame frame;
+	UserInfo user;
 	Banquet banquetData = new Banquet();
 	boolean inputValid = false;
 	String errorMsg;
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * Accepts current user's user name
+	 * @param args
+	 * @param user
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BanquetReservation window = new BanquetReservation();
+					BanquetReservation window = new BanquetReservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,8 +57,10 @@ public class BanquetReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
-	public BanquetReservation() {
+	public BanquetReservation(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -64,6 +73,13 @@ public class BanquetReservation {
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		frame.getContentPane().setLayout(null);
+		
+		JLabel lblUsername = new JLabel((String) null);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setBounds(344, 11, 76, 14);
+		lblUsername.setText(user.getUsername());
+		frame.getContentPane().add(lblUsername);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setForeground(Color.WHITE);
@@ -117,33 +133,67 @@ public class BanquetReservation {
 		setMealListener(rdbtnYes, rdbtnNo);
 		setAddServiceListener(chkAddService);
 		
-		
+		/**
+		 * set action listener for button
+		 */
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				validateInfo(banquetData.getDate(), banquetData.isMeal());
 				if(inputValid) {
 					System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
-				}else {
-					JOptionPane.showMessageDialog(null, errorMsg);
+					
+					DBHelper helper = new DBHelper();
+					
+					try {
+						
+						java.sql.Date sqlDate = new java.sql.Date(banquetData.getDate().getTime());
+						helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
+								"-", sqlDate, 0, banquetData.isAddService(), 0, "-" );
+						JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
 				}
 				
 				
 			}
-		});
+				else {
+					JOptionPane.showMessageDialog(null, errorMsg);
+				}
+			}
+			});
 		btnConfirm.setForeground(new Color(51, 153, 102));
-		btnConfirm.setBounds(150, 371, 89, 23);
+		btnConfirm.setBounds(221, 371, 89, 23);
 		frame.getContentPane().add(btnConfirm);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reservation.main(null, user);
+				frame.dispose();
+			}
+		});
+		btnBack.setForeground(new Color(51, 153, 102));
+		btnBack.setBounds(96, 371, 89, 23);
+		frame.getContentPane().add(btnBack);
+		
+		
 	}
 	
 	
-
+	/**
+	 * 
+	 * @return date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(banquetData.getDate());
 		return actualDate;
 	}
 
+	/**
+	 * set additional service requirement status
+	 * @param chkAddService
+	 */
 	private void setAddServiceListener(JCheckBox chkAddService) {
 		// TODO Auto-generated method stub
 		chkAddService.addActionListener(new ActionListener() {
@@ -159,6 +209,11 @@ public class BanquetReservation {
 		});
 	}
 
+	/**
+	 * set meal inclusive/exclusive
+	 * @param rdbtnYes
+	 * @param rdbtnNo
+	 */
 	private void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
 		// TODO Auto-generated method stub
 		ButtonGroup radioGroup = new ButtonGroup();
@@ -194,6 +249,10 @@ public class BanquetReservation {
 		    rdbtnNo.addItemListener(il);
 	}
 
+	/**
+	 * set the reservation date
+	 * @param dateChooser
+	 */
 	private void setDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -208,6 +267,12 @@ public class BanquetReservation {
 		});
 	}
 	
+	/**
+	 * validate the user inputs
+	 * @param date
+	 * @param mealType
+	 * @return
+	 */
 	protected boolean validateInfo(Date date, String mealType) {
 		// TODO Auto-generated method stub
 		errorMsg = "Please enter the following field: ";

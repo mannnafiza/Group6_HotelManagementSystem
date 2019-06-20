@@ -10,7 +10,10 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.util.Date;
 
+import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Reservation;
 import com.csis.Entities.Restaurant;
+import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -30,18 +33,22 @@ import java.awt.event.ActionEvent;
 public class RestaurantReservation {
 
 	private JFrame frame;
+	UserInfo user;
 	Restaurant restaurantData = new Restaurant();
 	String errorMsg;
 	boolean inputValid = false;
 
 	/**
 	 * Launch the application.
+	 * accept current user's user name
+	 * @param args
+	 * @param user
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RestaurantReservation window = new RestaurantReservation();
+					RestaurantReservation window = new RestaurantReservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,8 +59,10 @@ public class RestaurantReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
-	public RestaurantReservation() {
+	public RestaurantReservation(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -72,6 +81,13 @@ public class RestaurantReservation {
 		lblTitle.setFont(new Font("Serif", Font.ITALIC, 20));
 		lblTitle.setBounds(212, 41, 232, 25);
 		frame.getContentPane().add(lblTitle);
+		
+		JLabel lblUsername = new JLabel((String) null);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setBounds(458, 22, 76, 14);
+		lblUsername.setText(user.getUsername());
+		frame.getContentPane().add(lblUsername);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setForeground(Color.WHITE);
@@ -157,6 +173,9 @@ public class RestaurantReservation {
 		setMealListener(rdbtnVeg, rdbtnNonVeg);
 		setReservationForListener(rdbtnBreakfast, rdbtnBrunch, rdbtnLunch, rdbtnDinner);
 		
+		/**
+		 * set action listener for button
+		 */
 		JButton button = new JButton("Confirm");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -165,6 +184,18 @@ public class RestaurantReservation {
 				if(inputValid) {
 					System.out.println(restaurantData.getMealType() + " " + restaurantData.getNoOfGuest() + " " 
 							+ restaurantData.getDate() + " " + displayDate());
+					
+					DBHelper helper = new DBHelper();
+					try {
+						
+						java.sql.Date sqlDate = new java.sql.Date(restaurantData.getDate().getTime());
+						helper.insertReservationInformation(user.getId(), user.getUsername(), "restaurant","-", 0, "-",
+								restaurantData.getMealType(), sqlDate, 0, false, restaurantData.getNoOfGuest(), restaurantData.getReservationFor() );
+						JOptionPane.showMessageDialog(null, "Restaurant Reservation confirmed");
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
+					}
+					
 				} else {
 					JOptionPane.showMessageDialog(null, errorMsg);
 				}	
@@ -173,15 +204,37 @@ public class RestaurantReservation {
 		button.setForeground(new Color(51, 153, 102));
 		button.setBounds(239, 328, 89, 23);
 		frame.getContentPane().add(button);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reservation.main(null, user);
+				frame.dispose();
+			}
+		});
+		btnBack.setForeground(new Color(51, 153, 102));
+		btnBack.setBounds(144, 328, 89, 23);
+		frame.getContentPane().add(btnBack);
+		
+		
 	}
 
-
+	/**
+	 * 
+	 * @return date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(restaurantData.getDate());
 		return actualDate;
 	}
 	
+	/**
+	 * set the meal reservation type for restaurant
+	 * @param rdbtnBreakfast
+	 * @param rdbtnBrunch
+	 * @param rdbtnLunch
+	 * @param rdbtnDinner
+	 */
 	private void setReservationForListener(JRadioButton rdbtnBreakfast, JRadioButton rdbtnBrunch,
 			JRadioButton rdbtnLunch, JRadioButton rdbtnDinner) {
 		// TODO Auto-generated method stub
@@ -228,11 +281,20 @@ public class RestaurantReservation {
 		    rdbtnDinner.addItemListener(il);
 	}
 
+	/**
+	 * set the number of guests
+	 * @param spinGuests
+	 */
 	protected void setNumberOfGuest(JSpinner spinGuests) {
 		// TODO Auto-generated method stub
 		restaurantData.setNoOfGuest(Integer.parseInt(spinGuests.getValue().toString()));
 	}
 
+	/**
+	 * set the meal type veg/non-veg
+	 * @param rdbtnVeg
+	 * @param rdbtnNonVeg
+	 */
 	private void setMealListener(JRadioButton rdbtnVeg, JRadioButton rdbtnNonVeg) {
 		// TODO Auto-generated method stub
 		ButtonGroup radioGroup = new ButtonGroup();
@@ -268,6 +330,10 @@ public class RestaurantReservation {
 		    rdbtnNonVeg.addItemListener(il);
 	}
 
+	/**
+	 * set the reservation date
+	 * @param dateChooser
+	 */
 	private void setDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -282,6 +348,13 @@ public class RestaurantReservation {
 		});
 	}
 	
+	/**
+	 * validate the user inputs
+	 * @param date
+	 * @param noOfGuest
+	 * @param mealType
+	 * @return
+	 */
 	protected boolean validateInfo(Date date, int noOfGuest, String mealType) {
 		// TODO Auto-generated method stub
 		errorMsg = "Please enter the following field: ";

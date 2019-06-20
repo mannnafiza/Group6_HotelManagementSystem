@@ -9,7 +9,10 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
+import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
@@ -28,18 +31,22 @@ import java.awt.event.ActionEvent;
 public class MeetingReservation {
 
 	private JFrame frame;
+	UserInfo user;
 	Meeting meetingData = new Meeting();
 	String errorMsg;
 	boolean inputValid = false;
 
 	/**
 	 * Launch the application.
+	 * accept current user's user name
+	 * @param args
+	 * @param user
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MeetingReservation window = new MeetingReservation();
+					MeetingReservation window = new MeetingReservation(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,8 +57,10 @@ public class MeetingReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
-	public MeetingReservation() {
+	public MeetingReservation(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -70,6 +79,13 @@ public class MeetingReservation {
 		lblMeetingReservation.setFont(new Font("Serif", Font.ITALIC, 20));
 		lblMeetingReservation.setBounds(125, 54, 232, 25);
 		frame.getContentPane().add(lblMeetingReservation);
+		
+		JLabel lblUsername = new JLabel((String) null);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setBounds(344, 29, 76, 14);
+		lblUsername.setText(user.getUsername());
+		frame.getContentPane().add(lblUsername);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setForeground(Color.WHITE);
@@ -124,6 +140,9 @@ public class MeetingReservation {
 		setReservationDateListener(dateChooser);
 		setMealListener(rdbtnYes, rdbtnNo);
 		
+		/**
+		 * set action listener for button
+		 */
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -132,6 +151,18 @@ public class MeetingReservation {
 				validateInfo(meetingData.getReservedate(), meetingData.getDuration(), meetingData.isMeal());
 				if(inputValid) {
 					System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
+					
+					DBHelper helper = new DBHelper();
+					
+					try {
+						
+						java.sql.Date sqlDate = new java.sql.Date(meetingData.getReservedate().getTime());
+						helper.insertReservationInformation(user.getId(), user.getUsername(), "meeting","-", 0, meetingData.isMeal(),
+								"-", sqlDate, meetingData.getDuration(), false, 0, "-" );
+						JOptionPane.showMessageDialog(null, "Meeting Reservation confirmed");
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
+					}
 				}else {
 					JOptionPane.showMessageDialog(null, errorMsg);
 				}
@@ -140,22 +171,46 @@ public class MeetingReservation {
 			}
 		});
 		btnConfirm.setForeground(new Color(51, 153, 102));
-		btnConfirm.setBounds(144, 360, 89, 23);
+		btnConfirm.setBounds(216, 360, 89, 23);
 		frame.getContentPane().add(btnConfirm);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reservation.main(null, user);
+				frame.dispose();
+			}
+		});
+		btnBack.setForeground(new Color(51, 153, 102));
+		btnBack.setBounds(95, 360, 89, 23);
+		frame.getContentPane().add(btnBack);
+		
+		
 	}
 	
-
+	/**
+	 * 
+	 * @return date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(meetingData.getReservedate());
 		return actualDate;
 	}
 
+	/**
+	 * set the reservation hours 
+	 * @param spinner
+	 */
 	protected void setMeetingDuration(JSpinner spinner) {
 		// TODO Auto-generated method stub
 		meetingData.setDuration(Integer.parseInt(spinner.getValue().toString()));
 	}
 
+	/**
+	 * set the meal inclusive/exclusive
+	 * @param rdbtnYes
+	 * @param rdbtnNo
+	 */
 	private void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
 		// TODO Auto-generated method stub
 		ButtonGroup radioGroup = new ButtonGroup();
@@ -191,6 +246,10 @@ public class MeetingReservation {
 		    rdbtnNo.addItemListener(il);
 	}
 
+	/**
+	 * set the reservation date
+	 * @param dateChooser
+	 */
 	private void setReservationDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -205,7 +264,13 @@ public class MeetingReservation {
 		});
 	}
 	
-
+	/**
+	 * validate the user inputs
+	 * @param reservedate
+	 * @param duration
+	 * @param mealType
+	 * @return
+	 */
 	protected boolean validateInfo(Date reservedate, int duration, String mealType) {
 		// TODO Auto-generated method stub
 		inputValid = true;

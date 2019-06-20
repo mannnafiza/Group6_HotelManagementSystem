@@ -5,6 +5,25 @@ create table user_Info (
 	gender VARCHAR(50),
 	city VARCHAR(9)
 );
+
+create table reservation_Info (
+	resId INT AUTO_INCREMENT PRIMARY KEY,
+	userId INT NOT NULL,
+	userName VARCHAR(50),
+	resType VARCHAR(20),
+	roomType VARCHAR(50),
+	stayDuration INT,
+	mealStatus VARCHAR(10),
+	mealType VARCHAR(15),
+	resDate DATE,
+	meetingDuration INT,
+	addService BOOLEAN,
+	noGuest INT,
+	resFor VARCHAR(50),
+	FOREIGN KEY fk_uid(userId)
+	REFERENCES user_Info(id)	
+);
+
 insert into user_Info (id, userName, password, gender, city) values (1, 'Addie', 'Nafiza1', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Kulbir123', 'Male', 'Victoria');
 insert into user_Info (id, userName, password, gender, city) values (3, 'Bev', 'Aman123', 'Male', 'Richmond');

@@ -25,7 +25,10 @@ public class Reservation {
 	UserInfo user;
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * accepts current user's user name
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -42,6 +45,7 @@ public class Reservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
 	public Reservation(UserInfo user) {
 		this.user = user;	
@@ -166,7 +170,8 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				RestaurantReservation.main(null);
+				RestaurantReservation.main(null, user);
+				frame.dispose();
 			}
 			
 		});
@@ -207,7 +212,8 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				BanquetReservation.main(null);	
+				BanquetReservation.main(null, user);	
+				frame.dispose();
 			}
 			
 		});
@@ -242,13 +248,14 @@ public class Reservation {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				MeetingReservation.main(null);
+				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				MeetingReservation.main(null, user);
+				frame.dispose();
 			}
 			
 		});
@@ -289,8 +296,8 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				RoomReservation.main(null);
-				
+				RoomReservation.main(null, user);
+				frame.dispose();
 			}
 			
 		});
