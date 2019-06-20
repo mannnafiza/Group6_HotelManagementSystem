@@ -38,6 +38,9 @@ public class MeetingReservation {
 
 	/**
 	 * Launch the application.
+	 * accept current user's user name
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,6 +57,7 @@ public class MeetingReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
 	public MeetingReservation(UserInfo user) {
 		this.user = user;
@@ -136,6 +140,9 @@ public class MeetingReservation {
 		setReservationDateListener(dateChooser);
 		setMealListener(rdbtnYes, rdbtnNo);
 		
+		/**
+		 * set action listener for button
+		 */
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -181,17 +188,29 @@ public class MeetingReservation {
 		
 	}
 	
-
+	/**
+	 * 
+	 * @return date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(meetingData.getReservedate());
 		return actualDate;
 	}
 
+	/**
+	 * set the reservation hours 
+	 * @param spinner
+	 */
 	protected void setMeetingDuration(JSpinner spinner) {
 		// TODO Auto-generated method stub
 		meetingData.setDuration(Integer.parseInt(spinner.getValue().toString()));
 	}
 
+	/**
+	 * set the meal inclusive/exclusive
+	 * @param rdbtnYes
+	 * @param rdbtnNo
+	 */
 	private void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
 		// TODO Auto-generated method stub
 		ButtonGroup radioGroup = new ButtonGroup();
@@ -227,6 +246,10 @@ public class MeetingReservation {
 		    rdbtnNo.addItemListener(il);
 	}
 
+	/**
+	 * set the reservation date
+	 * @param dateChooser
+	 */
 	private void setReservationDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -241,7 +264,13 @@ public class MeetingReservation {
 		});
 	}
 	
-
+	/**
+	 * validate the user inputs
+	 * @param reservedate
+	 * @param duration
+	 * @param mealType
+	 * @return
+	 */
 	protected boolean validateInfo(Date reservedate, int duration, String mealType) {
 		// TODO Auto-generated method stub
 		inputValid = true;

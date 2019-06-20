@@ -25,7 +25,10 @@ public class Reservation {
 	UserInfo user;
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * accepts current user's user name
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -42,6 +45,7 @@ public class Reservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
 	public Reservation(UserInfo user) {
 		this.user = user;	

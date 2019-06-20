@@ -40,6 +40,9 @@ public class RestaurantReservation {
 
 	/**
 	 * Launch the application.
+	 * accept current user's user name
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,6 +59,7 @@ public class RestaurantReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
 	public RestaurantReservation(UserInfo user) {
 		this.user = user;
@@ -169,6 +173,9 @@ public class RestaurantReservation {
 		setMealListener(rdbtnVeg, rdbtnNonVeg);
 		setReservationForListener(rdbtnBreakfast, rdbtnBrunch, rdbtnLunch, rdbtnDinner);
 		
+		/**
+		 * set action listener for button
+		 */
 		JButton button = new JButton("Confirm");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -212,12 +219,22 @@ public class RestaurantReservation {
 		
 	}
 
-
+	/**
+	 * 
+	 * @return date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(restaurantData.getDate());
 		return actualDate;
 	}
 	
+	/**
+	 * set the meal reservation type for restaurant
+	 * @param rdbtnBreakfast
+	 * @param rdbtnBrunch
+	 * @param rdbtnLunch
+	 * @param rdbtnDinner
+	 */
 	private void setReservationForListener(JRadioButton rdbtnBreakfast, JRadioButton rdbtnBrunch,
 			JRadioButton rdbtnLunch, JRadioButton rdbtnDinner) {
 		// TODO Auto-generated method stub
@@ -264,11 +281,20 @@ public class RestaurantReservation {
 		    rdbtnDinner.addItemListener(il);
 	}
 
+	/**
+	 * set the number of guests
+	 * @param spinGuests
+	 */
 	protected void setNumberOfGuest(JSpinner spinGuests) {
 		// TODO Auto-generated method stub
 		restaurantData.setNoOfGuest(Integer.parseInt(spinGuests.getValue().toString()));
 	}
 
+	/**
+	 * set the meal type veg/non-veg
+	 * @param rdbtnVeg
+	 * @param rdbtnNonVeg
+	 */
 	private void setMealListener(JRadioButton rdbtnVeg, JRadioButton rdbtnNonVeg) {
 		// TODO Auto-generated method stub
 		ButtonGroup radioGroup = new ButtonGroup();
@@ -304,6 +330,10 @@ public class RestaurantReservation {
 		    rdbtnNonVeg.addItemListener(il);
 	}
 
+	/**
+	 * set the reservation date
+	 * @param dateChooser
+	 */
 	private void setDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -318,6 +348,13 @@ public class RestaurantReservation {
 		});
 	}
 	
+	/**
+	 * validate the user inputs
+	 * @param date
+	 * @param noOfGuest
+	 * @param mealType
+	 * @return
+	 */
 	protected boolean validateInfo(Date date, int noOfGuest, String mealType) {
 		// TODO Auto-generated method stub
 		errorMsg = "Please enter the following field: ";

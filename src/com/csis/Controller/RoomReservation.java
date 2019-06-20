@@ -46,6 +46,9 @@ public class RoomReservation {
 
 	/**
 	 * Launch the application.
+	 * accept current user's user name
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,6 +65,7 @@ public class RoomReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
 	public RoomReservation(UserInfo user) {
 		this.user = user;
@@ -170,7 +174,9 @@ public class RoomReservation {
 		setMealListener(rdbtnYes, rdbtnNo);
 		setReservationDateListener(dateChooser);
 		
-		
+		/**
+		 * set action listener for button
+		 */
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -221,12 +227,19 @@ public class RoomReservation {
 	}
 	
 
-
+	/**
+	 * 
+	 * @return the date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(roomData.getReserveDate());
 		return actualDate;
 	}
 
+	/**
+	 * set the selected date
+	 * @param dateChooser
+	 */
 	protected void setReservationDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -242,6 +255,11 @@ public class RoomReservation {
 		});
 	}
 
+	/**
+	 * set if meal inclusive/exclusive
+	 * @param rdbtnYes
+	 * @param rdbtnNo
+	 */
 	protected void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
 		// TODO Auto-generated method stub
 		
@@ -280,12 +298,20 @@ public class RoomReservation {
 		
 	}
 
+	/**
+	 * set the stay duration
+	 * @param spinDuration
+	 */
 	protected void setStayDuration(JSpinner spinDuration) {
 		// TODO Auto-generated method stub
 		int spinnerValue = Integer.parseInt(spinDuration.getValue().toString());
 		roomData.setDuration(spinnerValue);
 	}
 
+	/**
+	 * set the additional service requirement status
+	 * @param chkAddService
+	 */
 	protected void setServiceListener(JCheckBox chkAddService) {
 		// TODO Auto-generated method stub
 		chkAddService.addActionListener(new ActionListener() {
@@ -301,6 +327,10 @@ public class RoomReservation {
 		});
 	}
 
+	/**
+	 * set the room type selected
+	 * @param listRoomType
+	 */
 	//TODO: check for default choice (it shows null value)
 	public void setListListener(JList listRoomType) {
 		listRoomType.addListSelectionListener(new ListSelectionListener() {
@@ -347,6 +377,14 @@ public class RoomReservation {
 		});
 	}
 	
+	/**
+	 * validate the user inputs
+	 * @param roomType
+	 * @param date
+	 * @param duration
+	 * @param mealType
+	 * @return
+	 */
 	public boolean validateInfo(String roomType, Date date, int duration, String mealType) {
 		errorMsg = "Please enter the following field: ";
 		inputValid = true;

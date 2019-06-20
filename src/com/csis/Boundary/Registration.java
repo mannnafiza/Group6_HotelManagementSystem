@@ -47,7 +47,8 @@ public class Registration {
 	private DBHelper db = new DBHelper();
 	
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

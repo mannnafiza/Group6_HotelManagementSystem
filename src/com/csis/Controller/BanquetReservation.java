@@ -37,7 +37,10 @@ public class BanquetReservation {
 	String errorMsg;
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * Accepts current user's user name
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,6 +57,7 @@ public class BanquetReservation {
 
 	/**
 	 * Create the application.
+	 * @param user
 	 */
 	public BanquetReservation(UserInfo user) {
 		this.user = user;
@@ -129,7 +133,9 @@ public class BanquetReservation {
 		setMealListener(rdbtnYes, rdbtnNo);
 		setAddServiceListener(chkAddService);
 		
-		
+		/**
+		 * set action listener for button
+		 */
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -175,12 +181,19 @@ public class BanquetReservation {
 	}
 	
 	
-
+	/**
+	 * 
+	 * @return date from DATE
+	 */
 	protected String displayDate() {
 		String actualDate = DateFormat.getDateInstance().format(banquetData.getDate());
 		return actualDate;
 	}
 
+	/**
+	 * set additional service requirement status
+	 * @param chkAddService
+	 */
 	private void setAddServiceListener(JCheckBox chkAddService) {
 		// TODO Auto-generated method stub
 		chkAddService.addActionListener(new ActionListener() {
@@ -196,6 +209,11 @@ public class BanquetReservation {
 		});
 	}
 
+	/**
+	 * set meal inclusive/exclusive
+	 * @param rdbtnYes
+	 * @param rdbtnNo
+	 */
 	private void setMealListener(JRadioButton rdbtnYes, JRadioButton rdbtnNo) {
 		// TODO Auto-generated method stub
 		ButtonGroup radioGroup = new ButtonGroup();
@@ -231,6 +249,10 @@ public class BanquetReservation {
 		    rdbtnNo.addItemListener(il);
 	}
 
+	/**
+	 * set the reservation date
+	 * @param dateChooser
+	 */
 	private void setDateListener(JDateChooser dateChooser) {
 		// TODO Auto-generated method stub
 		dateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -245,6 +267,12 @@ public class BanquetReservation {
 		});
 	}
 	
+	/**
+	 * validate the user inputs
+	 * @param date
+	 * @param mealType
+	 * @return
+	 */
 	protected boolean validateInfo(Date date, String mealType) {
 		// TODO Auto-generated method stub
 		errorMsg = "Please enter the following field: ";
