@@ -24,6 +24,7 @@ import com.csis.Controller.Validate;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.SystemColor;
 
 public class RoomService {
 
@@ -63,6 +64,7 @@ public class RoomService {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		//frame.setBackground(UIManager.getColor("" ));
 		frame.setBackground(UIManager.getColor("Blue"));
 		frame.setBounds(100, 100, 445, 392);
@@ -132,7 +134,7 @@ public class RoomService {
 							
 			}
 		});
-		textFieldCustomerName.setBounds(166, 163, 109, 20);
+		textFieldCustomerName.setBounds(164, 163, 111, 20);
 		frame.getContentPane().add(textFieldCustomerName);
 		textFieldCustomerName.setColumns(10);
 
