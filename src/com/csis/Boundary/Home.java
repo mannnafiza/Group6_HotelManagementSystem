@@ -161,7 +161,7 @@ public class Home {
 					{
 						System.out.println("Login Successful");
 						JOptionPane jop = new JOptionPane();
-//						jop.showMessageDialog(null,"Login Successful");
+						jop.showMessageDialog(null,"Login Successful");
 						
 						//set user information
 						UserInfo user = new UserInfo();
@@ -229,6 +229,7 @@ public class Home {
 						// TODO Auto-generated method stub
 						
 						Registration.main(null);
+						frame.dispose();
 					}
 			
 				});
