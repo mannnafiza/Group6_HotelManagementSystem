@@ -227,7 +227,9 @@ public class Registration {
 						for(String str: newList)
 						{
 							System.out.println(str);
-						}
+						}	
+						Home.main(null);
+						frame.dispose();
 					}
 				}
 			}			
@@ -279,6 +281,7 @@ public class Registration {
 				// TODO Auto-generated method stub
 				
 				Home.main(null);
+				frame.dispose();
 			}
 	
 		});
