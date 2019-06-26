@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
+import com.csis.Entities.UserInfo;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -32,7 +33,8 @@ public class Home {
 	private String password = "";
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -161,7 +163,15 @@ public class Home {
 						JOptionPane jop = new JOptionPane();
 						jop.showMessageDialog(null,"Login Successful");
 						
+						//set user information
+						UserInfo user = new UserInfo();
+						DBHelper helper = new DBHelper();
+						user.setUsername(userName);
+						user.setId(helper.getUserId(userName));
+//						
 						//reservation class to be called upon successful login 
+						Reservation.main(null,user);
+						frame.dispose();
 						
 					}else
 					{
@@ -218,8 +228,8 @@ public class Home {
 					public void mouseReleased(MouseEvent arg0) {
 						// TODO Auto-generated method stub
 						
-						Registration registration = new Registration();
-						registration.main(null);
+						Registration.main(null);
+						frame.dispose();
 					}
 			
 				});

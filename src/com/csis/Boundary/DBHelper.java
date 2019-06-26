@@ -7,11 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class DBHelper {
 
 	// dsn = data source name
-	private String dsn = "jdbc:mysql://localhost/Group6_HotelManagementSystem";
+	private String dsn = "jdbc:mysql://localhost:3306/Group6_HotelManagementSystem";
 	private String username = "root";
 	private String password = "";
 
@@ -26,6 +27,7 @@ public class DBHelper {
 		try {
 			// connect to the database with the proper info
 			this.conn = DriverManager.getConnection(dsn, username, password);
+			
 			if (this.conn.isClosed()) {
 				System.out.println("database connection was not established.");
 			} else
@@ -172,4 +174,78 @@ public class DBHelper {
 		  }
 	  }
 	 
+	  
+	  //method to get id of user
+	  public int getUserId(String username) 
+		{
+		  int userId = 0;
+		  
+		  String sql = "SELECT * FROM user_Info where userName = ?";
+		  
+		  try {
+			  connectDB();
+		  
+			  //create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, username);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  userId =  rs.getInt("id");
+			  }
+		  
+		  disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return userId;
+		}
+	  
+	  
+	//method to add new reservation info into the reservation_Info table at the time of reservation
+	  public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
+			  int stayDuration, String mealStatus, String mealType, Date resDate, int meetingDuration,
+			  boolean addService, int noOfGuest, String resFor){
+		  
+		  String insertSql = "INSERT INTO reservation_Info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, meetingDuration, addService, noGuest, resFor) " +
+	  				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		  
+		  try {
+			  connectDB();
+			  
+			  //create statement
+			  pstmt = conn.prepareStatement(insertSql);
+			  
+			  //set the parameters of query
+			  pstmt.setInt(1, userId);
+			  pstmt.setString(2, usrname);
+			  pstmt.setString(3, resType);
+			  pstmt.setString(4, roomType);
+			  pstmt.setInt(5, stayDuration);
+			  pstmt.setString(6, mealStatus);
+			  pstmt.setString(7, mealType);
+			  pstmt.setDate(8, resDate);
+			  pstmt.setInt(9, meetingDuration);
+			  pstmt.setBoolean(10, addService);
+			  pstmt.setInt(11, noOfGuest);
+			  pstmt.setString(12, resFor);
+			  
+			  //execute			  
+			  pstmt.executeUpdate();
+			  
+			  disconnectDB();
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+	  }
+	  
 }

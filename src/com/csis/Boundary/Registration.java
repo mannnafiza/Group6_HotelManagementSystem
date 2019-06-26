@@ -47,7 +47,8 @@ public class Registration {
 	private DBHelper db = new DBHelper();
 	
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -226,7 +227,9 @@ public class Registration {
 						for(String str: newList)
 						{
 							System.out.println(str);
-						}
+						}	
+						Home.main(null);
+						frame.dispose();
 					}
 				}
 			}			
@@ -277,11 +280,11 @@ public class Registration {
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				Home login = new Home();
-				login.main(null);
+				Home.main(null);
+				frame.dispose();
 			}
 	
 		});
-		
+
 	}
 }
