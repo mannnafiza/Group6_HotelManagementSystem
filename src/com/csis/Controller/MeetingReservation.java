@@ -28,6 +28,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -38,7 +39,8 @@ public class MeetingReservation {
 	UserInfo user;
 	Meeting meetingData = new Meeting();
 	String errorMsg;
-	boolean inputValid = false;
+	boolean inputValid = false;	
+	DBHelper helper = new DBHelper();
 
 	/**
 	 * Launch the application.
@@ -185,8 +187,7 @@ public class MeetingReservation {
 				validateInfo(meetingData.getReservedate(), meetingData.getDuration(), meetingData.isMeal());
 				if(inputValid) {
 					System.out.println(displayDate() + " " + meetingData.getDuration() + " " + meetingData.isMeal());
-					
-					DBHelper helper = new DBHelper();
+				
 					
 					try {
 						
@@ -197,10 +198,14 @@ public class MeetingReservation {
 						Date sTime = smp.parse(time);
 						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
 						
+						if(!checkMeetingHallAvailability(sqlDate)) {
+							helper.insertReservationInformation(user.getId(), user.getUsername(), "meeting","-", 0, meetingData.isMeal(),
+									"-", sqlDate, sqlTime, meetingData.getDuration(), false, 0, "-" );
+							JOptionPane.showMessageDialog(null, "Meeting Reservation confirmed");
+						} else {
+							JOptionPane.showMessageDialog(null, "Meeting Hall already reserved for this date");
+						}
 						
-						helper.insertReservationInformation(user.getId(), user.getUsername(), "meeting","-", 0, meetingData.isMeal(),
-								"-", sqlDate, sqlTime, meetingData.getDuration(), false, 0, "-" );
-						JOptionPane.showMessageDialog(null, "Meeting Reservation confirmed");
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 					}
@@ -229,6 +234,12 @@ public class MeetingReservation {
 		
 		
 		
+	}
+	
+	
+	private boolean checkMeetingHallAvailability(java.sql.Date date) {
+		ArrayList<String> type = helper.getReservationType(date);
+		return type.contains("meeting");
 	}
 	
 	/**

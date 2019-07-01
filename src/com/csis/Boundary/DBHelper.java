@@ -250,4 +250,148 @@ public class DBHelper {
 		  }
 	  }
 	  
+	  /**
+	   * 
+	   * @param date
+	   * @return list of rooms for specific date
+	   */
+	  public ArrayList<String> getRoomList(Date date){
+		  String sql = "SELECT roomType from reservation_info where resDate = ?";
+		  ArrayList<String> roomType = new ArrayList<>();
+		  try {
+			  connectDB();
+			  
+			  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  roomType.add(rs.getString("roomType"));
+			  }
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+		  return roomType;
+	  }
+	  
+	 /**
+	  * 
+	  * @param date
+	  * @return type of reservation for specific date
+	  */
+	  public ArrayList<String> getReservationType(Date date) {
+		 String sql = "SELECT resType FROM reservation_info where resDate = ?";
+		 ArrayList<String> type = new ArrayList<>();
+		 
+		 try {
+			  connectDB();
+			  
+			  	  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				 type.add(rs.getString("resType"));
+			  }
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+		 return type;
+	  }
+	  
+	  /**
+	   * 
+	   * @param date
+	   * @param roomType
+	   * @return stay duration for specific room starting given date
+	   */
+	  public int  getStayDuration(Date date, String roomType) {
+		  String sql = "SELECT stayDuration FROM reservation_info WHERE date = ? AND roomType = ?";
+		  
+		  int duration = 0;
+		  try {
+			  connectDB();
+			  
+			  	  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				 duration = rs.getInt("stayDuration");
+			  }
+			
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+
+		  return duration;
+	  }
+	  
+	  /**
+	   * 
+	   * @param date
+	   * @param duration
+	   * @return end date for reservation
+	   */
+	  public Date getDate(Date date, int duration) {
+		  String sql = "SELECT DATE_ADD(?, ?)";
+		  
+		  Date endDate = null;
+		  
+		  try {
+			  connectDB();
+			  
+			  	  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  pstmt.setInt(2,  duration);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				 endDate = rs.getDate("resDate");
+			  }
+			
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+		  return endDate;
+	  }
+	  
+	  
+	  
 }

@@ -28,6 +28,7 @@ import java.beans.PropertyChangeListener;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -47,6 +48,7 @@ public class RoomReservation {
 	String errorMsg;
 	boolean inputValid = false;
 	Room roomData = new Room();
+	DBHelper helper = new DBHelper();
 	
 
 	/**
@@ -212,9 +214,10 @@ public class RoomReservation {
 					System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
 					+ " " + roomData.isMeal() + " " + displayDate());
 					
-					DBHelper helper = new DBHelper();
+					
 					
 					try {
+						
 						
 						java.sql.Date sqlDate = new java.sql.Date(roomData.getReserveDate().getTime());
 						
@@ -223,9 +226,17 @@ public class RoomReservation {
 						Date sTime = smp.parse(time);
 						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
 						
-						helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
+						System.out.println(sqlDate);
+						if(!checkAvailability(sqlDate, roomData.getRoomType())) {
+							helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
+							
+							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
+						} else {
+							JOptionPane.showMessageDialog(null, "Room already reserved for this date");
+						}
 						
-						JOptionPane.showMessageDialog(null, "Reservation Confirmed");
+						
+						
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 					}
@@ -264,6 +275,27 @@ public class RoomReservation {
 	
 	}
 	
+	
+	protected boolean checkAvailability(java.sql.Date sqlDate, String roomType) {
+		boolean result = false;
+		ArrayList<String> rooms = new ArrayList<>();
+		rooms = helper.getRoomList(sqlDate);
+		
+		return rooms.contains(roomType);
+		
+//		if(rooms.contains(roomType)) {
+//			int duration = helper.getStayDuration(sqlDate, roomType);
+//			java.sql.Date resEndDate = helper.getDate(sqlDate, duration);
+//			
+//			for(int i = 0; i < duration ; i++) {
+//				if(resEndDate == helper.getDate(sqlDate, i)) {
+//					result =  true;
+//				} else
+//					result =  false;
+//			}
+//		}
+//		return result;
+	}
 	
 
 	/**

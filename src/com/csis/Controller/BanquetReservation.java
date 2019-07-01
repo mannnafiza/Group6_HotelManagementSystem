@@ -29,6 +29,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -40,6 +41,7 @@ public class BanquetReservation {
 	Banquet banquetData = new Banquet();
 	boolean inputValid = false;
 	String errorMsg;
+	DBHelper helper = new DBHelper();
 
 	/**
 	 * Launch the application
@@ -179,7 +181,7 @@ public class BanquetReservation {
 				if(inputValid) {
 					System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
 					
-					DBHelper helper = new DBHelper();
+					
 					
 					try {
 						
@@ -190,10 +192,14 @@ public class BanquetReservation {
 						Date sTime = smp.parse(time);
 						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
 						
+						if(!checkBanquetAvailability(sqlDate)) {
+							helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
+									"-", sqlDate, sqlTime, 0, banquetData.isAddService(), 0, "-" );
+							JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
+						} else {
+							JOptionPane.showMessageDialog(null, "Banquet already reserved on this date");
+						}
 						
-						helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
-								"-", sqlDate, sqlTime, 0, banquetData.isAddService(), 0, "-" );
-						JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 				}
@@ -225,6 +231,15 @@ public class BanquetReservation {
 		
 	}
 	
+	/**
+	 * 
+	 * @param date
+	 * @return true if banquet is reserved for specific date
+	 */
+	private boolean checkBanquetAvailability(java.sql.Date date) {
+		ArrayList<String> type = helper.getReservationType(date);
+		return type.contains("banquet");
+	}
 	
 	/**
 	 * 
