@@ -15,6 +15,8 @@ import com.csis.Entities.Meeting;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.text.DateFormatter;
 import javax.swing.JRadioButton;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -25,6 +27,8 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -69,7 +73,7 @@ public class MeetingReservation {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 446, 462);
+		frame.setBounds(100, 100, 517, 462);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		frame.getContentPane().setLayout(null);
@@ -111,7 +115,7 @@ public class MeetingReservation {
 		frame.getContentPane().add(lblhours);
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setBounds(167, 171, 29, 35);
+		spinner.setBounds(168, 175, 29, 35);
 		frame.getContentPane().add(spinner);
 		
 		JLabel lblMeetingMeal = new JLabel("Meal ");
@@ -133,6 +137,36 @@ public class MeetingReservation {
 		rdbtnNo.setBackground(new Color(95, 158, 160));
 		rdbtnNo.setBounds(88, 281, 109, 23);
 		frame.getContentPane().add(rdbtnNo);
+		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setForeground(Color.WHITE);
+		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTime.setBackground(new Color(95, 158, 160));
+		lblTime.setBounds(323, 129, 46, 14);
+		frame.getContentPane().add(lblTime);
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(calendar.getTime());
+
+        JSpinner spinnerTime = new JSpinner(model);
+
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinnerTime, "HH:mm"); //add "HH:mm a" for am/pm
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); 
+        formatter.setOverwriteMode(true);
+
+        spinnerTime.setEditor(editor);
+        spinnerTime.setForeground(Color.WHITE);
+        spinnerTime.setBounds(379, 124, 89, 25);
+		frame.getContentPane().add(spinnerTime);
+		
+		
+		
 		
 		/**
 		 * set listeners
@@ -157,8 +191,15 @@ public class MeetingReservation {
 					try {
 						
 						java.sql.Date sqlDate = new java.sql.Date(meetingData.getReservedate().getTime());
+						
+						String time  = editor.getFormat().format(spinnerTime.getValue());
+						SimpleDateFormat smp = new SimpleDateFormat("HH:mm");
+						Date sTime = smp.parse(time);
+						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
+						
+						
 						helper.insertReservationInformation(user.getId(), user.getUsername(), "meeting","-", 0, meetingData.isMeal(),
-								"-", sqlDate, meetingData.getDuration(), false, 0, "-" );
+								"-", sqlDate, sqlTime, meetingData.getDuration(), false, 0, "-" );
 						JOptionPane.showMessageDialog(null, "Meeting Reservation confirmed");
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
@@ -184,6 +225,8 @@ public class MeetingReservation {
 		btnBack.setForeground(new Color(51, 153, 102));
 		btnBack.setBounds(95, 360, 89, 23);
 		frame.getContentPane().add(btnBack);
+		
+		
 		
 		
 	}

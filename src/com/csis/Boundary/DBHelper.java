@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -210,11 +211,11 @@ public class DBHelper {
 	  
 	//method to add new reservation info into the reservation_Info table at the time of reservation
 	  public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
-			  int stayDuration, String mealStatus, String mealType, Date resDate, int meetingDuration,
+			  int stayDuration, String mealStatus, String mealType, Date resDate, Time resTime, int meetingDuration,
 			  boolean addService, int noOfGuest, String resFor){
 		  
-		  String insertSql = "INSERT INTO reservation_Info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, meetingDuration, addService, noGuest, resFor) " +
-	  				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		  String insertSql = "INSERT INTO reservation_info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, resTime,  meetingDuration, addService, noGuest, resFor) " +
+	  				"values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		  
 		  try {
 			  connectDB();
@@ -231,10 +232,11 @@ public class DBHelper {
 			  pstmt.setString(6, mealStatus);
 			  pstmt.setString(7, mealType);
 			  pstmt.setDate(8, resDate);
-			  pstmt.setInt(9, meetingDuration);
-			  pstmt.setBoolean(10, addService);
-			  pstmt.setInt(11, noOfGuest);
-			  pstmt.setString(12, resFor);
+			  pstmt.setTime(9, resTime);
+			  pstmt.setInt(10, meetingDuration);
+			  pstmt.setBoolean(11, addService);
+			  pstmt.setInt(12, noOfGuest);
+			  pstmt.setString(13, resFor);
 			  
 			  //execute			  
 			  pstmt.executeUpdate();

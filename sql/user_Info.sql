@@ -16,6 +16,7 @@ create table reservation_Info (
 	mealStatus VARCHAR(10),
 	mealType VARCHAR(15),
 	resDate DATE,
+	resTime TIME,
 	meetingDuration INT,
 	addService BOOLEAN,
 	noGuest INT,
