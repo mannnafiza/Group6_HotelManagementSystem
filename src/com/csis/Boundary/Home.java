@@ -61,6 +61,7 @@ public class Home {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
@@ -135,6 +136,48 @@ public class Home {
 		lblClickHereTo.setForeground(Color.white);
 		//lblClickHereTo.setForeground(new Color(205,205,205));
 		frame.getContentPane().add(lblClickHereTo);	
+		
+		JLabel lblAdmin = new JLabel("Admin");
+		lblAdmin.setForeground(Color.WHITE);
+		lblAdmin.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblAdmin.setBounds(435, 23, 64, 14);
+		frame.getContentPane().add(lblAdmin);
+		
+		
+		lblAdmin.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				AdminLogin.main(null);
+				frame.dispose();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		//ActionListener to process all the input values given by the user
 		btnLogin.addActionListener(new ActionListener()

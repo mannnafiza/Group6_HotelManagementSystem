@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class AdminLogin {
 
@@ -47,6 +48,7 @@ public class AdminLogin {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
+		frame.setBounds(100, 100, 445, 328);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblImg = new JLabel("New label");
@@ -76,5 +78,9 @@ public class AdminLogin {
 		txtPassword.setColumns(10);
 		txtPassword.setBounds(180, 174, 130, 20);
 		frame.getContentPane().add(txtPassword);
+		
+		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.setBounds(169, 224, 89, 23);
+		frame.getContentPane().add(btnLogin);
 	}
 }
