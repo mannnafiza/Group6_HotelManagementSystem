@@ -7,7 +7,9 @@ public class Validate {
 	private String gender = "";
 	private String city = "";
 	
-	
+	//room service class
+	private String roomNumber = "";
+	private String time= "";
 	
 	
 	/**
@@ -35,7 +37,14 @@ public class Validate {
 		this.userName = userName;
 		this.password = password;
 	}
-
+	//constructor for room service class
+	public Validate(String userName) {
+		super();
+		this.userName = userName;
+		
+	}
+	
+	
 	 // default constructor
 	 
 	public Validate() {
@@ -72,6 +81,21 @@ public class Validate {
 		
 		return true;
 	}
+	
+	public boolean isCustmerDataValid()
+	{
+		if(userName.equals("") || roomNumber.equals("") || time.equals(""))
+		{
+			System.out.println("No field should be empty....");
+			return false;
+		}
+		
+		if(!checkPassword(password))
+			return false;
+		
+		return true;
+	}
+	
 	
 	//method to validate if the password meets all the minimum requirements
 	private boolean checkPassword(String password) {

@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.csis.Entities.AddProperty;
+
 import java.sql.Date;
 
 public class DBHelper {
@@ -142,7 +145,8 @@ public class DBHelper {
 	  }
 	  
 	  return s1; }
-	 
+	
+	
 	//method to add new user's info into the user_Info table at the time of registration
 	  public void insertNewUser(String usrnm, String pswd, String gendr, String city)
 	  { // TODO Auto-generated method stub
@@ -242,6 +246,244 @@ public class DBHelper {
 			  disconnectDB();
 		  } catch(SQLException sx) {
 			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+	  }
+	  
+	  
+		//method to add inventory 
+		public ArrayList<AddProperty> listAddPropertyInventory() 
+		{
+			ArrayList<AddProperty> s1 = new ArrayList<AddProperty>();
+
+			String sql = "SELECT * FROM propertyInventory_Info";
+			try {
+				// connect to the database
+				connectDB();
+				this.stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next())
+				{      //itemId, Item , Type , Quantity , Price , Category , Unitprice
+					 
+	                AddProperty s = new AddProperty();
+					
+					//Get the right type (string) from the right column ("itemId");
+					s.setItemId((rs.getInt("itemId")));
+					s.setItem((rs.getString("Item")));
+					s.setType((rs.getString("Type")));
+					s.setQuantity((rs.getInt("Quantity")));
+					s.setPrice((rs.getFloat("Price")));
+					s.setCategory((rs.getString("Category")));
+					s.setUnitprice((rs.getFloat("Unitprice")));
+		
+					s1.add(s);
+					 // System.out.println(s1);
+
+				}
+
+				disconnectDB();
+			} catch (SQLException sx) {
+				System.out.println("Error fetching data from the database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+
+			return s1;
+		}
+
+	//method to get inventory 
+
+	public AddProperty getProperty(int itemId) {
+			
+		AddProperty ap = new AddProperty();
+			
+			String sql = "SELECT * FROM propertyInventory_Info  WHERE itemId  = ?";
+			
+			try {
+				
+				//Connect to the database
+				connectDB();
+				
+				//Create the statement
+				pstmt = conn.prepareStatement(sql);
+				
+				//Declare the parameter (starting at 1)
+				pstmt.setInt(1,itemId);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next())	{
+					
+					//Get the right type (string) from the right column ("");				
+		
+					
+					ap.setItemId((rs.getInt("itemId")));
+					ap.setItem((rs.getString("Item")));
+					ap.setType((rs.getString("Type")));
+					ap.setQuantity((rs.getInt("Quantity")));
+					ap.setPrice((rs.getFloat("Price")));
+					ap.setCategory((rs.getString("Category")));
+					ap.setUnitprice((rs.getFloat("Unitprice")));
+					
+					
+				} 
+				
+				disconnectDB();
+					
+				} catch (SQLException sx) {
+					System.out.println("Error Connecting to Database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+					
+				}
+				
+				return ap;
+				
+			}
+	
+	//method to add property inventory
+	public int AddPropertyInv(AddProperty ap)	{
+		 int propertyInv = 0;		
+		
+		String sql = "Insert into propertyInventory_Info(Item  , Type  ,Quantity  ,Price , Category , Unitprice  )" 
+				+ " VALUES ('" + ap.getItem() + "','" + ap.getType() + "','" + ap.getQuantity() 
+				+ "','" + ap.getPrice() + "','" + ap.getCategory() + "','" + ap.getUnitprice() + "');";
+		
+		try { // itemId , Item , Type , Quantity , Price , Category , Unitprice
+			//Connect to the database
+			connectDB();
+			
+			//Create the statement
+			this.stmt = this.conn.createStatement();
+			
+			//Execute the statement
+			propertyInv = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+			disconnectDB();			
+			
+		} catch (SQLException sx) {
+			System.out.println("Error Connecting to Database");
+			System.out.println(sx.getMessage());
+			System.out.println(sx.getErrorCode());
+			System.out.println(sx.getSQLState());
+			
+		}
+		System.out.println("Inserted new Property Inventory: " + propertyInv);
+		return propertyInv;
+		
+	}
+	  
+	//method to delete inventory
+	public void deleteInventory(int id) {
+		
+		String sql = "DELETE FROM propertyInventory_Info  WHERE itemId = ?";
+		
+		try {
+			
+			//Connect to the database
+			connectDB();
+			
+			//Create the statement
+			pstmt = conn.prepareStatement(sql);
+			
+			//Declare the parameter (starting at 1)
+			pstmt.setInt(1,id);
+			
+			//Delete Data
+			pstmt.executeUpdate();
+			
+			disconnectDB();
+				
+			} catch (SQLException sx) {
+				System.out.println("Error Connecting to Database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+				
+			}
+
+			
+		}
+	
+	//method to Edit inventory
+public void updateGame(AddProperty su)	{		
+	String updateSql = "UPDATE propertyInventory_Info SET " + 
+			"Item  = ?, " +
+			"Type = ?, " + 
+			"Quantity = ?, " +
+			"Price = ?, " +
+			"Category = ?, " +
+			"Unitprice = ? " +
+			
+			"WHERE itemId = ?";
+	
+	//itemId , Item , Type , Quantity , Price , Category , Unitprice
+	
+	try {
+			connectDB();
+			
+			pstmt = conn.prepareStatement(updateSql);
+	
+			
+			//pstmt.setInt(1, su.getVGID());  				
+			pstmt.setString(1, su.getItem());
+			pstmt.setString(2, su.getType());
+			pstmt.setInt(3, su.getQuantity());
+			pstmt.setFloat(4, su.getPrice());
+			pstmt.setString(5, su.getCategory());
+			pstmt.setFloat(6, su.getUnitprice());
+			pstmt.setInt(7, su.getItemId());  				
+			
+			pstmt.executeUpdate();
+			
+			disconnectDB();
+			
+	} catch (SQLException sx) {
+		System.out.println("Error Connecting to Database");
+		System.out.println(sx.getMessage());
+		System.out.println(sx.getErrorCode());
+		System.out.println(sx.getSQLState());
+		
+	}
+	
+	
+}
+	
+	
+	
+	  
+	  
+		//method to add user room service info into the roomService_Info  table at the time of reservation
+	  public void insertRoomServiceInformation( String customerName , int roomNumber , boolean serviceType ,
+			  float time){
+		  
+		  String insertSql = "INSERT INTO reservation_Info (customerName, roomNumber, serviceType, time) " +
+	  				"values (?,?,?,?)";
+		  
+		  try {
+			  connectDB();
+			  
+			  //create statement
+			  pstmt = conn.prepareStatement(insertSql);
+			  
+			  //set the parameters of query
+			  pstmt.setString(1, customerName);
+			  pstmt.setInt(2, roomNumber);
+			  pstmt.setBoolean(3, serviceType);
+			  pstmt.setFloat(4, time);
+			 
+			  
+			  //execute			  
+			  pstmt.executeUpdate();
+			  
+			  disconnectDB();
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the Room Service table");
 			  System.out.println(sx.getMessage()); 
 			  System.out.println(sx.getErrorCode());
 			  System.out.println(sx.getSQLState());

@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
+import com.csis.Boundary.RoomService;
 import com.csis.Entities.Room;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -154,6 +155,15 @@ public class RoomReservation {
 		chkAddService.setBounds(23, 324, 192, 23);
 		chkAddService.setBackground(new Color(95, 158, 160));
 		frame.getContentPane().add(chkAddService);
+		chkAddService.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				RoomService.main(null);
+			}
+			
+		} );
 		
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(401, 137, 91, 20);

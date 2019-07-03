@@ -6,7 +6,7 @@ create table user_Info (
 	city VARCHAR(9)
 );
 
-create table reservation_Info (
+create table reservation_Info(
 	resId INT AUTO_INCREMENT PRIMARY KEY,
 	userId INT NOT NULL,
 	userName VARCHAR(50),
@@ -23,6 +23,30 @@ create table reservation_Info (
 	FOREIGN KEY fk_uid(userId)
 	REFERENCES user_Info(id)	
 );
+
+create table roomService_Info (
+        rmserid INT AUTO_INCREMENT PRIMARY KEY,
+        customerName VARCHAR(50),
+	roomNumber INT,
+	time FLOAT,
+        serviceType BOOLEAN,
+	FOREIGN KEY fk_uid(rmserid)
+	REFERENCES user_Info(id),
+        FOREIGN KEY fk_cn(customerName)
+	REFERENCES user_Info(userName)	
+);
+
+create table propertyInventory_Info(
+	itemId INT AUTO_INCREMENT PRIMARY KEY,
+	Item VARCHAR(50),
+	Type VARCHAR(9),
+	Quantity INT,
+	Price FLOAT,
+        Category VARCHAR(50),
+	Unitprice FLOAT
+);
+
+
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'Addie', 'Nafiza1', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Kulbir123', 'Male', 'Victoria');

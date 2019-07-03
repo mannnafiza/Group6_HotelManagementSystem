@@ -11,6 +11,7 @@ import java.awt.Font;
 
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
+import com.csis.Boundary.RoomService;
 import com.csis.Entities.Banquet;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -125,6 +126,15 @@ public class BanquetReservation {
 		chkAddService.setBackground(new Color(95, 158, 160));
 		chkAddService.setBounds(44, 317, 192, 23);
 		frame.getContentPane().add(chkAddService);
+		chkAddService.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				RoomService.main(null);
+			}
+			
+		});
 		
 		/**
 		 * set listeners
