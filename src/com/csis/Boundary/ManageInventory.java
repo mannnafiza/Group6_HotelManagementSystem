@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 public class ManageInventory {
 
 	private JFrame frame;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -84,6 +85,10 @@ public class ManageInventory {
 		});
 		btnChangeInventory.setBounds(22, 99, 130, 23);
 		frame.getContentPane().add(btnChangeInventory);
+		
+		table = new JTable();
+		table.setBounds(260, 49, 332, 248);
+		frame.getContentPane().add(table);
 		
 		
 	}
