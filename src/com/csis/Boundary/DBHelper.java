@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import com.csis.Entities.AddProperty;
@@ -214,11 +215,11 @@ public class DBHelper {
 	  
 	//method to add new reservation info into the reservation_Info table at the time of reservation
 	  public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
-			  int stayDuration, String mealStatus, String mealType, Date resDate, int meetingDuration,
+			  int stayDuration, String mealStatus, String mealType, Date resDate, Time resTime, int meetingDuration,
 			  boolean addService, int noOfGuest, String resFor){
 		  
-		  String insertSql = "INSERT INTO reservation_Info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, meetingDuration, addService, noGuest, resFor) " +
-	  				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		  String insertSql = "INSERT INTO reservation_info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, resTime,  meetingDuration, addService, noGuest, resFor) " +
+	  				"values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		  
 		  try {
 			  connectDB();
@@ -235,10 +236,11 @@ public class DBHelper {
 			  pstmt.setString(6, mealStatus);
 			  pstmt.setString(7, mealType);
 			  pstmt.setDate(8, resDate);
-			  pstmt.setInt(9, meetingDuration);
-			  pstmt.setBoolean(10, addService);
-			  pstmt.setInt(11, noOfGuest);
-			  pstmt.setString(12, resFor);
+			  pstmt.setTime(9, resTime);
+			  pstmt.setInt(10, meetingDuration);
+			  pstmt.setBoolean(11, addService);
+			  pstmt.setInt(12, noOfGuest);
+			  pstmt.setString(13, resFor);
 			  
 			  //execute			  
 			  pstmt.executeUpdate();
@@ -462,32 +464,154 @@ public void updateGame(AddProperty su)	{
 	  public void insertRoomServiceInformation( String customerName , int roomNumber , boolean serviceType ,
 			  float time){
 		  
-		  String insertSql = "INSERT INTO reservation_Info (customerName, roomNumber, serviceType, time) " +
-	  				"values (?,?,?,?)";
-		  
+		  String insertSql = "INSERT INTO reservation_Info (customerName, roomNumber, serviceType, time) values (?,?,?,?)";}
+
+	  /**
+	   * 
+	   * @param date
+	   * @return list of rooms for specific date
+	   */
+	  public ArrayList<String> getRoomList(Date date){
+		  String sql = "SELECT roomType from reservation_info where resDate = ?";
+		  ArrayList<String> roomType = new ArrayList<>();
 		  try {
 			  connectDB();
 			  
-			  //create statement
-			  pstmt = conn.prepareStatement(insertSql);
 			  
-			  //set the parameters of query
-			  pstmt.setString(1, customerName);
-			  pstmt.setInt(2, roomNumber);
-			  pstmt.setBoolean(3, serviceType);
-			  pstmt.setFloat(4, time);
-			 
-			  
-			  //execute			  
-			  pstmt.executeUpdate();
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  roomType.add(rs.getString("roomType"));
+			  }
 			  
 			  disconnectDB();
+			  
 		  } catch(SQLException sx) {
-			  System.out.println("Error inserting data into the Room Service table");
+			  System.out.println("Error inserting data into the reservation table");
 			  System.out.println(sx.getMessage()); 
 			  System.out.println(sx.getErrorCode());
 			  System.out.println(sx.getSQLState());
 		  }
+		  return roomType;
 	  }
 	  
+	 /**
+	  * 
+	  * @param date
+	  * @return type of reservation for specific date
+	  */
+	  public ArrayList<String> getReservationType(Date date) {
+		 String sql = "SELECT resType FROM reservation_info where resDate = ?";
+		 ArrayList<String> type = new ArrayList<>();
+		 
+		 try {
+			  connectDB();
+			  
+			  	  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				 type.add(rs.getString("resType"));
+			  }
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+		 return type;
+	  }
+	  
+	  /**
+	   * 
+	   * @param date
+	   * @param roomType
+	   * @return stay duration for specific room starting given date
+	   */
+	  public int  getStayDuration(Date date, String roomType) {
+		  String sql = "SELECT stayDuration FROM reservation_info WHERE date = ? AND roomType = ?";
+		  
+		  int duration = 0;
+		  try {
+			  connectDB();
+			  
+			  	  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				 duration = rs.getInt("stayDuration");
+			  }
+			
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+
+		  return duration;
+	  }
+	  
+	  /**
+	   * 
+	   * @param date
+	   * @param duration
+	   * @return end date for reservation
+	   */
+	  public Date getDate(Date date, int duration) {
+		  String sql = "SELECT DATE_ADD(?, ?)";
+		  
+		  Date endDate = null;
+
+		  
+		  try {
+			  connectDB();
+
+			  	  
+			//create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  pstmt.setInt(2,  duration);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				 endDate = rs.getDate("resDate");
+			  }
+			
+			  
+			  disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+
+	  
+
+
+		  return endDate;
+	  }
+	  
+
 }

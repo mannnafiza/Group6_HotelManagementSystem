@@ -9,9 +9,12 @@ import java.awt.Font;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.DateFormatter;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 import javax.swing.AbstractButton;
@@ -22,8 +25,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -43,6 +49,7 @@ public class RoomReservation {
 	String errorMsg;
 	boolean inputValid = false;
 	Room roomData = new Room();
+	DBHelper helper = new DBHelper();
 	
 
 	/**
@@ -122,11 +129,11 @@ public class RoomReservation {
 		JLabel lblDuration = new JLabel("Duration");
 		lblDuration.setForeground(Color.WHITE);
 		lblDuration.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDuration.setBounds(351, 193, 89, 23);
+		lblDuration.setBounds(448, 273, 89, 23);
 		frame.getContentPane().add(lblDuration);
 		
 		JSpinner spinDuration = new JSpinner();
-		spinDuration.setBounds(433, 189, 29, 35);
+		spinDuration.setBounds(514, 273, 29, 35);
 		frame.getContentPane().add(spinDuration);
 		
 		JLabel lblMeal = new JLabel("Meal ");
@@ -172,8 +179,28 @@ public class RoomReservation {
 		
 		JLabel lbldays = new JLabel("(days)");
 		lbldays.setForeground(Color.WHITE);
-		lbldays.setBounds(361, 215, 46, 14);
+		lbldays.setBounds(458, 293, 46, 14);
 		frame.getContentPane().add(lbldays);
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(calendar.getTime());
+
+        JSpinner spinner = new JSpinner(model);
+
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "HH:mm"); //add "HH:mm a" for am/pm
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); 
+        formatter.setOverwriteMode(true);
+
+        spinner.setEditor(editor);
+        spinner.setForeground(Color.WHITE);
+		spinner.setBounds(401, 189, 89, 25);
+		frame.getContentPane().add(spinner);
 		
 		
 		/**
@@ -197,14 +224,29 @@ public class RoomReservation {
 					System.out.println(roomData.getRoomType() + " " + roomData.getDuration() + " " + roomData.isAddService() 
 					+ " " + roomData.isMeal() + " " + displayDate());
 					
-					DBHelper helper = new DBHelper();
+					
 					
 					try {
 						
+						
 						java.sql.Date sqlDate = new java.sql.Date(roomData.getReserveDate().getTime());
 						
-						helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, 0, roomData.isAddService(), 0, "-");
-						JOptionPane.showMessageDialog(null, "Reservation Confirmed");
+						String time  = editor.getFormat().format(spinner.getValue());
+						SimpleDateFormat smp = new SimpleDateFormat("HH:mm");
+						Date sTime = smp.parse(time);
+						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
+						
+						System.out.println(sqlDate);
+						if(!checkAvailability(sqlDate, roomData.getRoomType())) {
+							helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
+							
+							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
+						} else {
+							JOptionPane.showMessageDialog(null, "Room already reserved for this date");
+						}
+						
+						
+						
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 					}
@@ -233,7 +275,36 @@ public class RoomReservation {
 		btnBack.setForeground(color);
 		frame.getContentPane().add(btnBack);
 		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setForeground(Color.WHITE);
+		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTime.setBackground(new Color(95, 158, 160));
+		lblTime.setBounds(351, 189, 46, 14);
+		frame.getContentPane().add(lblTime);
+		
 	
+	}
+	
+	
+	protected boolean checkAvailability(java.sql.Date sqlDate, String roomType) {
+		boolean result = false;
+		ArrayList<String> rooms = new ArrayList<>();
+		rooms = helper.getRoomList(sqlDate);
+		
+		return rooms.contains(roomType);
+		
+//		if(rooms.contains(roomType)) {
+//			int duration = helper.getStayDuration(sqlDate, roomType);
+//			java.sql.Date resEndDate = helper.getDate(sqlDate, duration);
+//			
+//			for(int i = 0; i < duration ; i++) {
+//				if(resEndDate == helper.getDate(sqlDate, i)) {
+//					result =  true;
+//				} else
+//					result =  false;
+//			}
+//		}
+//		return result;
 	}
 	
 

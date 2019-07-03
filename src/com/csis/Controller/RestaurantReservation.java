@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.csis.Boundary.DBHelper;
@@ -17,6 +18,7 @@ import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.text.DateFormatter;
 import javax.swing.JRadioButton;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -166,6 +168,37 @@ public class RestaurantReservation {
 		rdbtnNonVeg.setBounds(264, 282, 109, 23);
 		frame.getContentPane().add(rdbtnNonVeg);
 		
+		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setForeground(Color.WHITE);
+		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTime.setBackground(new Color(95, 158, 160));
+		lblTime.setBounds(327, 174, 46, 25);
+		frame.getContentPane().add(lblTime);
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(calendar.getTime());
+
+        JSpinner spinner = new JSpinner(model);
+
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "HH:mm"); //add "HH:mm a" for am/pm
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); 
+        formatter.setOverwriteMode(true);
+
+        spinner.setEditor(editor);
+        spinner.setForeground(Color.WHITE);
+		spinner.setBounds(402, 176, 89, 25);
+		frame.getContentPane().add(spinner);
+		
+		
+		
+		
 		/**
 		 * set listeners
 		 */
@@ -189,8 +222,14 @@ public class RestaurantReservation {
 					try {
 						
 						java.sql.Date sqlDate = new java.sql.Date(restaurantData.getDate().getTime());
+						
+						String time  = editor.getFormat().format(spinner.getValue());
+						SimpleDateFormat smp = new SimpleDateFormat("HH:mm");
+						Date sTime = smp.parse(time);
+						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
+						
 						helper.insertReservationInformation(user.getId(), user.getUsername(), "restaurant","-", 0, "-",
-								restaurantData.getMealType(), sqlDate, 0, false, restaurantData.getNoOfGuest(), restaurantData.getReservationFor() );
+								restaurantData.getMealType(), sqlDate, sqlTime, 0, false, restaurantData.getNoOfGuest(), restaurantData.getReservationFor() );
 						JOptionPane.showMessageDialog(null, "Restaurant Reservation confirmed");
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
@@ -215,6 +254,8 @@ public class RestaurantReservation {
 		btnBack.setForeground(new Color(51, 153, 102));
 		btnBack.setBounds(144, 328, 89, 23);
 		frame.getContentPane().add(btnBack);
+		
+		
 		
 		
 	}

@@ -16,6 +16,9 @@ import com.csis.Entities.Banquet;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.text.DateFormatter;
 import javax.swing.JCheckBox;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -26,6 +29,9 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -36,6 +42,7 @@ public class BanquetReservation {
 	Banquet banquetData = new Banquet();
 	boolean inputValid = false;
 	String errorMsg;
+	DBHelper helper = new DBHelper();
 
 	/**
 	 * Launch the application
@@ -70,7 +77,7 @@ public class BanquetReservation {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 446, 462);
+		frame.setBounds(100, 100, 521, 462);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		frame.getContentPane().setLayout(null);
@@ -136,6 +143,37 @@ public class BanquetReservation {
 			
 		});
 		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setForeground(Color.WHITE);
+		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTime.setBackground(new Color(95, 158, 160));
+		lblTime.setBounds(323, 121, 46, 14);
+		frame.getContentPane().add(lblTime);
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(calendar.getTime());
+
+        JSpinner spinner = new JSpinner(model);
+
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "HH:mm"); //add "HH:mm a" for am/pm
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); 
+        formatter.setOverwriteMode(true);
+
+        spinner.setEditor(editor);
+        spinner.setForeground(Color.WHITE);
+		spinner.setBounds(379, 116, 89, 25);
+		frame.getContentPane().add(spinner);
+		
+		
+		
+		
+		
 		/**
 		 * set listeners
 		 */
@@ -153,14 +191,25 @@ public class BanquetReservation {
 				if(inputValid) {
 					System.out.println(displayDate() + " " +banquetData.isAddService() + " " +banquetData.isMeal());
 					
-					DBHelper helper = new DBHelper();
+					
 					
 					try {
 						
 						java.sql.Date sqlDate = new java.sql.Date(banquetData.getDate().getTime());
-						helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
-								"-", sqlDate, 0, banquetData.isAddService(), 0, "-" );
-						JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
+						
+						String time  = editor.getFormat().format(spinner.getValue());
+						SimpleDateFormat smp = new SimpleDateFormat("HH:mm");
+						Date sTime = smp.parse(time);
+						java.sql.Time sqlTime = new java.sql.Time(sTime.getTime());
+						
+						if(!checkBanquetAvailability(sqlDate)) {
+							helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
+									"-", sqlDate, sqlTime, 0, banquetData.isAddService(), 0, "-" );
+							JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
+						} else {
+							JOptionPane.showMessageDialog(null, "Banquet already reserved on this date");
+						}
+						
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 				}
@@ -188,8 +237,19 @@ public class BanquetReservation {
 		frame.getContentPane().add(btnBack);
 		
 		
+		
+		
 	}
 	
+	/**
+	 * 
+	 * @param date
+	 * @return true if banquet is reserved for specific date
+	 */
+	private boolean checkBanquetAvailability(java.sql.Date date) {
+		ArrayList<String> type = helper.getReservationType(date);
+		return type.contains("banquet");
+	}
 	
 	/**
 	 * 
