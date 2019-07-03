@@ -35,6 +35,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Date;
 
+import java.awt.SystemColor;
+
+
 public class RoomService {
 
 	private JFrame frame;
@@ -147,7 +150,7 @@ public class RoomService {
 							
 			}
 		});
-		textFieldCustomerName.setBounds(166, 163, 109, 20);
+		textFieldCustomerName.setBounds(164, 163, 111, 20);
 		frame.getContentPane().add(textFieldCustomerName);
 		textFieldCustomerName.setColumns(10);
 
