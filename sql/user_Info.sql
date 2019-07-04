@@ -48,8 +48,8 @@ create table propertyInventory_Info(
 );
 
 create table staff_Info(
-	staffId INT AUTO_INCREMENT PRIMARY KEY,
-	userName VARCHAR(50),
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(50),
 	password VARCHAR(9),
 	gender VARCHAR(50),
 	city VARCHAR(9)
@@ -77,3 +77,12 @@ insert into user_Info (id, userName, password, gender, city) values (17, 'Winfie
 insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 'Nafiza1', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'Kulbir123', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'Aman123', 'Male', 'Victoria');
+
+
+insert into staff_info(username, password, gender, city) values ("Mike", "M123", "Male", "Surrey");
+insert into staff_info(username, password, gender, city) values ("Joe", "J123", "Male", "Surrey");
+insert into staff_info(username, password, gender, city) values ("Monica", "M223", "Female", "Surrey");
+insert into staff_info(username, password, gender, city) values ("Chandler", "C123", "Male", "Surrey");
+insert into staff_info(username, password, gender, city) values ("Ross", "R123", "Male", "Surrey");
+insert into staff_info(username, password, gender, city) values ("Rachel", "R223", "Female", "Surrey");
+insert into staff_info(username, password, gender, city) values ("Phoebe", "P123", "Female", "Surrey");

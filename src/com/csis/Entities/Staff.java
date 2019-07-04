@@ -1,7 +1,10 @@
 package com.csis.Entities;
 
+import java.util.Vector;
+
 public class Staff {
 	
+	private int id;
 	private String username;
 	private String password;
 	private String gender;
@@ -9,6 +12,14 @@ public class Staff {
 	
 	public Staff() {
 		
+	}
+		
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -43,5 +54,15 @@ public class Staff {
 		this.city = city;
 	};
 	
+	public Vector getVector() {
+		Vector v = new Vector();
+		v.add(id);
+		v.add(username);
+		v.add(password);
+		v.add(gender);
+		v.add(city);
+		
+		return v;
+	}
 	
 }
