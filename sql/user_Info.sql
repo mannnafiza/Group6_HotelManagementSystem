@@ -47,6 +47,14 @@ create table propertyInventory_Info(
 	Unitprice FLOAT
 );
 
+create table staff_Info(
+	staffId INT AUTO_INCREMENT PRIMARY KEY,
+	userName VARCHAR(50),
+	password VARCHAR(9),
+	gender VARCHAR(50),
+	city VARCHAR(9)
+);
+
 
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'Addie', 'Nafiza1', 'Male', 'Surrey');
