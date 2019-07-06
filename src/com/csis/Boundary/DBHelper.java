@@ -213,6 +213,8 @@ public class DBHelper {
 		}
 	  
 	  
+	  
+	  
 	//method to add new reservation info into the reservation_Info table at the time of reservation
 	  public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
 			  int stayDuration, String mealStatus, String mealType, Date resDate, Time resTime, int meetingDuration,
@@ -457,6 +459,7 @@ public void updateGame(AddProperty su)	{
 }
 	
 	
+
 	
 	  
 	  
