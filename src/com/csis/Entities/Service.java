@@ -5,20 +5,36 @@ public class Service {
 	private String customerName  = "";
 	private int roomNumber  = 0 ;
 	private float time = 0;
-	private boolean serviceType ; 
+	private String serviceTypeMeal ; 
+	private String serviceTypeHouseKeeping ; 
+	private String serviceType;
 	
 	/**
-	 * @return the serviceType
+	 * @return the serviceTypeMeal
 	 */
-	public boolean getServiceType() {
-		return serviceType;
+	public String getServiceTypeMeal() {
+		return serviceTypeMeal;
 	}
 	/**
-	 * @param serviceStatus the serviceType to set
+	 * @param serviceTypeMeal the serviceTypeMeal to set
 	 */
-	public void setServiceType(boolean serviceStatus) {
-		this.serviceType = serviceStatus;
+	public void setServiceTypeMeal(String serviceTypeMeal) {
+		this.serviceTypeMeal = serviceTypeMeal;
 	}
+	/**
+	 * @return the serviceTypeHouseKeeping
+	 */
+	public String getServiceTypeHouseKeeping() {
+		return serviceTypeHouseKeeping;
+	}
+	/**
+	 * @param serviceTypeHouseKeeping the serviceTypeHouseKeeping to set
+	 */
+	public void setServiceTypeHouseKeeping(String serviceTypeHouseKeeping) {
+		this.serviceTypeHouseKeeping = serviceTypeHouseKeeping;
+	}
+		
+
 	/**
 	 * @return the customerName
 	 */
@@ -55,5 +71,21 @@ public class Service {
 	public void setTime(float time) {
 		this.time = time;
 	}
+	/**
+	 * @return the serviceType
+	 */
+	/**
+	 * @return the serviceType
+	 */
+	public String getServiceType() {
+		return serviceType;
+	}
+	/**
+	 * @param serviceType the serviceType to set
+	 */
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+	
 
 }

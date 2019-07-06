@@ -44,6 +44,13 @@ public class Validate {
 		
 	}
 	
+	public Validate(String userName, String roomNumber, String time) {
+		super();
+		this.userName = userName;
+		this.roomNumber = roomNumber;
+		this.time = time;
+	}
+	
 	
 	 // default constructor
 	 
@@ -84,14 +91,12 @@ public class Validate {
 	
 	public boolean isCustmerDataValid()
 	{
-		if(userName.equals("") || roomNumber.equals("") || time.equals(""))
+		if(userName.equals("") || roomNumber.equals("")||time.equals(""))
 		{
-			System.out.println("No field should be empty....");
+			System.out.println("No field should be empty....room");
 			return false;
 		}
-		
-		if(!checkPassword(password))
-			return false;
+
 		
 		return true;
 	}
