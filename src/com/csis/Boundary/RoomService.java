@@ -118,7 +118,7 @@ public class RoomService {
 				
 			}
 		});
-		textFieldTime.setText("00:00 ");
+		textFieldTime.setText("00.00");
 		textFieldTime.setBounds(470, 253, 49, 20);
 		frame.getContentPane().add(textFieldTime);
 		textFieldTime.setColumns(10);
