@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import com.csis.Entities.AddProperty;
+import com.csis.Entities.Service;
 
 import java.sql.Date;
 
@@ -458,17 +459,69 @@ public void updateGame(AddProperty su)	{
 	
 }
 	
+public int roomService(Service serviceData)	{ //, serviceType  .   "','" + serviceData.isServiceType() +  
+	 int roomService = 0;		
+	//Get all the shoes! Shoes for days!
+	String sql = "Insert into roomService_Info (customerName  , roomNumber  ,serviceType ,time  )" 
+			+ " VALUES ('" + serviceData.getCustomerName() + "','" + serviceData.getRoomNumber() + "','" + serviceData.getServiceType() +"','" + serviceData.getTime() +"');";
 	
+	try {
+		//Connect to the database
+		connectDB();
+		
+		//Create the statement
+		this.stmt = this.conn.createStatement();
+		
+		//Execute the statement
+		roomService = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+		disconnectDB();			
+		
+	} catch (SQLException sx) {
+		System.out.println("Error Connecting to Database");
+		System.out.println(sx.getMessage());
+		System.out.println(sx.getErrorCode());
+		System.out.println(sx.getSQLState());
+		
+	}
+	System.out.println("Inserted new Room Service: " + roomService);
+	return roomService;
+	
+}
 
 	
 	  
 	  
-		//method to add user room service info into the roomService_Info  table at the time of reservation
-	  public void insertRoomServiceInformation( String customerName , int roomNumber , boolean serviceType ,
+	//method to add user room service info into the roomService_Info  table at the time of reservation
+	  public void insertRoomServiceInformation( String customerName , int roomNumber , String serviceType ,
 			  float time){
 		  
-		  String insertSql = "INSERT INTO reservation_Info (customerName, roomNumber, serviceType, time) values (?,?,?,?)";}
-
+		  String insertSql = "INSERT INTO roomService_Info (customerName  , roomNumber  ,serviceType ,time  ) values (?,?,?,?)";
+		  
+		    try {
+			  connectDB();
+			  
+			  //create statement
+			  pstmt = conn.prepareStatement(insertSql);
+			  
+			  //set the parameters of query
+			  pstmt.setString(1, customerName);
+			  pstmt.setInt(2, roomNumber);
+			  pstmt.setString(3, serviceType);
+			  pstmt.setFloat(4, time);
+			  
+			  //execute			  
+			  pstmt.executeUpdate();
+			  
+			  disconnectDB();
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+	  }
+	
 	  /**
 	   * 
 	   * @param date
