@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import com.csis.Entities.AddProperty;
 import com.csis.Entities.Service;
+import com.csis.Entities.Staff;
 
 import java.sql.Date;
 
@@ -668,6 +669,158 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 
 		  return endDate;
 	  }
+	  
+	  /**
+	   * create a new staff member
+	   * @param username
+	   * @param password
+	   * @param gender
+	   * @param city
+	   */
+	  public void createStaff(String username, String password, String gender, String city){
+			
+			String sql = "insert into staff_info (username, password, gender, city) values (?,?,?,?)";
+			
+			try {
+				connectDB();
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, username);
+				pstmt.setString(2, password);
+				pstmt.setString(3, gender);
+				pstmt.setString(4, city);
+				
+				pstmt.executeUpdate();
+				disconnectDB();
+				
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+		}
+	  
+	  
+	  /**
+	   * 
+	   * @return list of all staff members
+	   */
+	  public ArrayList<Staff> listStaff(){
+			ArrayList<Staff> staffArr = new ArrayList<>();
+			
+			String sql = "Select * from staff_info";
+			try {
+				connectDB();
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					Staff s = new Staff();
+					s.setId(rs.getInt("id"));
+					s.setUsername(rs.getString("username"));
+					s.setPassword(rs.getString("password"));
+					s.setGender(rs.getString("gender"));
+					s.setCity(rs.getString("city"));
+					staffArr.add(s);
+				}
+				disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+			
+			return staffArr;
+		}
+	  
+	  
+	  /**
+	   * 
+	   * @param id
+	   * @return a staff member
+	   */
+	  public Staff getStaffMember(int id) {
+			Staff s = new Staff();
+			
+			String sql = "Select * from staff_info where id = ?";
+			
+			try {
+				connectDB();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1,  id);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					s.setId(rs.getInt("id"));
+					s.setUsername(rs.getString("username"));
+					s.setPassword(rs.getString("password"));
+					s.setGender(rs.getString("gender"));
+					s.setCity(rs.getString("city"));
+				}
+				disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+			
+			return s;
+		}
+	  
+	  
+	  /**
+	   * delete a staff member
+	   * @param id
+	   */
+	  public void deleteStaffMember(int id) {
+			String sql = "delete from staff_Info where id = ?";
+			try {
+				connectDB();
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+				
+				disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+		}
+	  
+	  
+	  /**
+	   * update a staff member information
+	   * @param s
+	   */
+	  public void updateStaff(Staff s) {
+			String sql = "update staff_Info set username = ?, password = ?, gender = ?, city = ? where id = ?";
+			
+			
+			
+			try {
+				connectDB();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, s.getUsername());
+				pstmt.setString(2, s.getPassword());
+				pstmt.setString(3, s.getGender());
+				pstmt.setString(4, s.getCity());
+				pstmt.setInt(5, s.getId());
+				
+				pstmt.executeUpdate();
+				disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+		}
 	  
 
 }
