@@ -7,13 +7,17 @@ import java.awt.Panel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.csis.Controller.AddOrderInventory;
 import com.csis.Controller.AddPropertyInventory;
 import com.csis.Controller.ChangeInventory;
+import com.csis.Entities.AddProperty;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -22,6 +26,10 @@ public class ManageInventory {
 
 	private JFrame frame;
 	private JTable table;
+	private DefaultTableModel tm = new DefaultTableModel();
+	private DBHelper sd = new DBHelper();
+	private ListSelectionListener lsl ;
+
 
 	/**
 	 * Launch the application.
@@ -87,9 +95,47 @@ public class ManageInventory {
 		frame.getContentPane().add(btnChangeInventory);
 		
 		table = new JTable();
-		table.setBounds(260, 49, 332, 248);
+		table.setBounds(176, 34, 442, 248);
 		frame.getContentPane().add(table);
 		
-		
+		updateTable();
 	}
+	
+	
+	
+private void updateTable()	{
+		
+		//Remove the List Selection Listern to the table
+		table.getSelectionModel().removeListSelectionListener(lsl);
+		
+		tm = new DefaultTableModel();
+		
+		//textFieldItem, textFieldType, textFieldQuantity , textFieldPrice , textFieldCategory , textFieldUnitPrice
+
+		//Add the columns
+		tm.addColumn("ID");
+		tm.addColumn("Item");
+		tm.addColumn("Type");
+		tm.addColumn("Quantity");
+		tm.addColumn("Price");
+		tm.addColumn("Category");
+		tm.addColumn("UnitPrice");
+		
+				
+		//Add the rows
+		ArrayList<AddProperty> sl = new ArrayList<AddProperty>();
+		
+		//Populate the arraylist with the getShoes
+		sl = sd.listAddPropertyInventory();
+		
+		for (AddProperty s : sl)	{
+			tm.addRow(s.getVector());
+		}
+		
+		table.setModel(tm);
+		
+		//Add the ListSelectionListener back to the table
+		table.getSelectionModel().addListSelectionListener(lsl);
+	}
+	
 }
