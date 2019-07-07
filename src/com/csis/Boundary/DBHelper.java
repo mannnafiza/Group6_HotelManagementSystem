@@ -417,7 +417,7 @@ public class DBHelper {
 		}
 	
 	//method to Edit inventory
-public void updateGame(AddProperty su)	{		
+public void updateInventory(AddProperty su)	{		
 	String updateSql = "UPDATE propertyInventory_Info SET " + 
 			"Item  = ?, " +
 			"Type = ?, " + 
