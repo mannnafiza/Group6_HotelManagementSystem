@@ -28,6 +28,8 @@ import javax.swing.UIManager;
 import javax.swing.text.DateFormatter;
 
 import com.csis.Controller.Authenticate;
+import com.csis.Controller.BanquetReservation;
+import com.csis.Controller.RoomReservation;
 import com.csis.Controller.Validate;
 import com.csis.Entities.Service;
 import com.csis.Entities.UserInfo;
@@ -54,6 +56,8 @@ public class RoomService {
     String errorMsg;
 	boolean inputValid = false;
 	Service serviceData = new Service();
+	UserInfo user = new UserInfo();
+
     
     
 	/**
@@ -99,7 +103,7 @@ public class RoomService {
 		frame.getContentPane().add(labelRSS);
 		
 		JLabel labelRT = new JLabel("Request Type :");
-		labelRT.setBounds(54, 248, 109, 31);
+		labelRT.setBounds(34, 248, 109, 31);
 		frame.getContentPane().add(labelRT);
 		
 		JLabel lblRequestTime = new JLabel("Request Time : ");
@@ -128,11 +132,11 @@ public class RoomService {
 		frame.getContentPane().add(lblMinutes);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name :");
-		lblCustomerName.setBounds(54, 194, 109, 20);
+		lblCustomerName.setBounds(34, 194, 109, 20);
 		frame.getContentPane().add(lblCustomerName);
 		
-		JLabel lblRoomNumber = new JLabel("Room Number :");
-		lblRoomNumber.setBounds(371, 193, 89, 22);
+		JLabel lblRoomNumber = new JLabel("Room Number(1 to 100) :");
+		lblRoomNumber.setBounds(316, 193, 144, 22);
 		frame.getContentPane().add(lblRoomNumber);
 		
 		textFieldCustomerName = new JTextField();
@@ -147,7 +151,7 @@ public class RoomService {
 							
 			}
 		});
-		textFieldCustomerName.setBounds(143, 194, 111, 20);
+		textFieldCustomerName.setBounds(148, 194, 111, 20);
 		frame.getContentPane().add(textFieldCustomerName);
 		textFieldCustomerName.setColumns(10);
 
@@ -182,7 +186,7 @@ public class RoomService {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(95, 158, 160));
-		panel.setBounds(132, 290, 79, 86);
+		panel.setBounds(121, 290, 79, 86);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setVisible(false);
@@ -198,12 +202,12 @@ public class RoomService {
 		panel.add(rdbtnNonveg);
 		
 		JButton btnProceed = new JButton("Proceed");
-		btnProceed.setBounds(371, 372, 89, 23);
+		btnProceed.setBounds(498, 401, 96, 23);
 		frame.getContentPane().add(btnProceed);
 		
 		JCheckBox checkboxMeal = new JCheckBox("Meal");
 		checkboxMeal.setBackground(new Color(95, 158, 160));
-		checkboxMeal.setBounds(143, 252, 60, 23);
+		checkboxMeal.setBounds(128, 252, 60, 23);
 		frame.getContentPane().add(checkboxMeal);
 		checkboxMeal.addActionListener(new ActionListener() {
 
@@ -224,7 +228,7 @@ public class RoomService {
 		
 		JCheckBox checkboxHouseKeeping = new JCheckBox("House Keeping");
 		checkboxHouseKeeping.setBackground(new Color(95, 158, 160));
-		checkboxHouseKeeping.setBounds(206, 252, 97, 23);
+		checkboxHouseKeeping.setBounds(190, 252, 123, 23);
 		frame.getContentPane().add(checkboxHouseKeeping);
 		checkboxHouseKeeping.addActionListener(new ActionListener() {
 
@@ -261,6 +265,17 @@ public class RoomService {
 		frame.getContentPane().add(spinnerTime);
 		
 		setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+								
+				RoomReservation.main(null, user);
+				
+			}
+		});
+		btnCancel.setBounds(336, 401, 89, 23);
+		frame.getContentPane().add(btnCancel);
 	
 		btnProceed.addActionListener(new ActionListener() {
 
@@ -274,12 +289,14 @@ public class RoomService {
 				  //Create an instance of Validate class and pass all the inputs given by the user
 				  Validate validate = new Validate(customerName );
 					DBHelper helper = new DBHelper();
+					user.setUsername(customerName);
+					user.setId(helper.getUserId(customerName));
 
 			
 					  //create an instance of Authenticate class to verify userName and password inputs
 					  Authenticate auth = new Authenticate();
 					  auth.setUsername(customerName );
-						
+						try {
 					   //  if(validate.isCustmerDataValid()) {
 					    	 
 					    	 if(auth.matchUserName()) {
@@ -297,7 +314,10 @@ public class RoomService {
 									serviceData.setServiceType("Veg");
 									serviceData.setServiceType("Non-Veg");
 								    serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
-									JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
+									JOptionPane.showMessageDialog(frame , "Your Request has been Proceed " );
+									
+									RoomReservation.main(null,user);
+									//frame.dispose();
 									}else {
 										JOptionPane.showMessageDialog(frame, "Please a valid room number");
 									}
@@ -326,6 +346,8 @@ public class RoomService {
 	                     			serviceData.setTime(Float.parseFloat(textFieldTime.getText()));	
 								//	serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
 					                  JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
+					                  RoomReservation.main(null, user);
+										frame.dispose();
 									}else {
 										JOptionPane.showMessageDialog(frame, "Please a valid room number");
 									}
@@ -344,6 +366,8 @@ public class RoomService {
 									serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
 									//serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
 					                  JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
+					                  RoomReservation.main(null,user);
+										frame.dispose();
 									}else {
 										JOptionPane.showMessageDialog(frame, "Please a valid room number");
 									}
@@ -369,6 +393,10 @@ public class RoomService {
 					    	  System.out.println(" Please check the input fields ");
 					    	  JOptionPane.showMessageDialog(frame, "Please check the input fields ");
 					     }*/
+					    	 
+						} catch(Exception ex) {
+							System.out.println("Error in inserting " + ex.getMessage());
+						}
 					    	//Build the new Student
 								Service ns = new Service();
 								ns.setCustomerName(textFieldCustomerName.getText());
@@ -437,6 +465,5 @@ public class RoomService {
 		    checkboxHouseKeeping.addItemListener(il);
 
 	}
-	
 }	
 
