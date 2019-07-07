@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
+import com.csis.Boundary.CustomerReceipt;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Boundary.RoomService;
@@ -202,6 +203,10 @@ public class RoomReservation {
 		spinner.setBounds(401, 189, 89, 25);
 		frame.getContentPane().add(spinner);
 		
+		JButton btnCalculateMyBill = new JButton("Calculate my Bill");		
+		btnCalculateMyBill.setBounds(415, 371, 128, 23);
+		btnCalculateMyBill.setForeground(color);
+		frame.getContentPane().add(btnCalculateMyBill);
 		
 		/**
 		 * set Listeners
@@ -241,6 +246,18 @@ public class RoomReservation {
 							helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
 							
 							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
+							
+							btnCalculateMyBill.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									BillCalculator billCalculate = new BillCalculator();
+									billCalculate.calculate(user);
+									
+									CustomerReceipt.main(null);
+									frame.dispose();
+								}
+							});
+							
+							
 						} else {
 							JOptionPane.showMessageDialog(null, "Room already reserved for this date");
 						}
@@ -281,8 +298,7 @@ public class RoomReservation {
 		lblTime.setBackground(new Color(95, 158, 160));
 		lblTime.setBounds(351, 189, 46, 14);
 		frame.getContentPane().add(lblTime);
-		
-	
+			
 	}
 	
 	

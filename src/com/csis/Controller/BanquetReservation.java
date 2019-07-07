@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.CustomerReceipt;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Boundary.RoomService;
@@ -170,7 +171,10 @@ public class BanquetReservation {
 		spinner.setBounds(379, 116, 89, 25);
 		frame.getContentPane().add(spinner);
 		
-		
+		JButton btnCalculateMyBill = new JButton("Calculate my Bill");		
+		btnCalculateMyBill.setBounds(344, 371, 128, 23);
+		btnCalculateMyBill.setForeground(new Color(51, 153, 102));
+		frame.getContentPane().add(btnCalculateMyBill);
 		
 		
 		
@@ -206,6 +210,16 @@ public class BanquetReservation {
 							helper.insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
 									"-", sqlDate, sqlTime, 0, banquetData.isAddService(), 0, "-" );
 							JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
+							
+							btnCalculateMyBill.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									BillCalculator billCalculate = new BillCalculator();
+									billCalculate.calculate(user);
+									
+									CustomerReceipt.main(null);
+									frame.dispose();
+								}
+							});
 						} else {
 							JOptionPane.showMessageDialog(null, "Banquet already reserved on this date");
 						}

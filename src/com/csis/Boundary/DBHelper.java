@@ -13,6 +13,7 @@ import com.csis.Entities.AddProperty;
 import com.csis.Entities.OrderNewInventory;
 import com.csis.Entities.Service;
 import com.csis.Entities.Staff;
+import com.csis.Entities.UserInfo;
 
 import java.sql.Date;
 
@@ -63,7 +64,7 @@ public class DBHelper {
 		}
 	}
 
-	//method to get all the usernames from user_Info table
+	//method to get all the user names from user_Info table
 	public ArrayList<String> listUserNames() 
 	{
 		ArrayList<String> s1 = new ArrayList<String>();
@@ -148,9 +149,10 @@ public class DBHelper {
 		  System.out.println(sx.getSQLState()); 
 	  }
 	  
-	  return s1; }
-	
-	
+	  return s1;
+	  
+	}
+		
 	//method to add new user's info into the user_Info table at the time of registration
 	  public void insertNewUser(String usrnm, String pswd, String gendr, String city)
 	  { // TODO Auto-generated method stub
@@ -169,7 +171,7 @@ public class DBHelper {
 			  pstmt.setString(2, pswd);
 			  pstmt.setString(3, gendr);
 			  pstmt.setString(4, city);
-	  
+				  
 			  pstmt.executeUpdate();
 	  
 			  disconnectDB(); 
@@ -181,8 +183,7 @@ public class DBHelper {
 			  System.out.println(sx.getSQLState());
 		  }
 	  }
-	 
-	  
+	 	  
 	  //method to get id of user
 	  public int getUserId(String username) 
 		{
@@ -215,10 +216,6 @@ public class DBHelper {
 		  return userId;
 		}
 	  
-	  
-	  
-	  
-	//method to add new reservation info into the reservation_Info table at the time of reservation
 	  public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
 			  int stayDuration, String mealStatus, String mealType, Date resDate, Time resTime, int meetingDuration,
 			  boolean addService, int noOfGuest, String resFor){
@@ -258,8 +255,7 @@ public class DBHelper {
 			  System.out.println(sx.getSQLState());
 		  }
 	  }
-	  
-	  
+	    
 		//method to add inventory 
 		public ArrayList<AddProperty> listAddPropertyInventory() 
 		{
@@ -288,7 +284,6 @@ public class DBHelper {
 		
 					s1.add(s);
 					 // System.out.println(s1);
-
 				}
 
 				disconnectDB();
@@ -325,18 +320,14 @@ public class DBHelper {
 				
 				while (rs.next())	{
 					
-					//Get the right type (string) from the right column ("");				
-		
-					
+					//Get the right type (string) from the right column ("");									
 					ap.setItemId((rs.getInt("itemId")));
 					ap.setItem((rs.getString("Item")));
 					ap.setType((rs.getString("Type")));
 					ap.setQuantity((rs.getInt("Quantity")));
 					ap.setPrice((rs.getFloat("Price")));
 					ap.setCategory((rs.getString("Category")));
-					ap.setUnitprice((rs.getFloat("Unitprice")));
-					
-					
+					ap.setUnitprice((rs.getFloat("Unitprice")));				
 				} 
 				
 				disconnectDB();
@@ -348,9 +339,7 @@ public class DBHelper {
 					System.out.println(sx.getSQLState());
 					
 				}
-				
-				return ap;
-				
+				return ap;			
 			}
 	
 	//method to add property inventory
@@ -412,13 +401,15 @@ public class DBHelper {
 				System.out.println(sx.getErrorCode());
 				System.out.println(sx.getSQLState());
 				
-			}
-
-			
+			}		
 		}
 	
 	//method to Edit inventory
-public void updateInventory(AddProperty su)	{		
+
+
+
+	public void updateInventory(AddProperty su)	{		
+
 	String updateSql = "UPDATE propertyInventory_Info SET " + 
 			"Item  = ?, " +
 			"Type = ?, " + 
@@ -456,10 +447,9 @@ public void updateInventory(AddProperty su)	{
 		System.out.println(sx.getErrorCode());
 		System.out.println(sx.getSQLState());
 		
-	}
-	
-	
+	}	
 }
+
 
 //method to add user room service info into the roomService_Info  table at the time of reservation
 public int roomService(Service serviceData)	{ //, serviceType  .   "','" + serviceData.isServiceType() +  
@@ -497,6 +487,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 	  
 	//method to add user room service info into the roomService_Info  table at the time of reservation
 	  public void insertRoomServiceInformation( String customerName , int roomNumber , String serviceType ,
+
 			  float time){
 		  
 		  String insertSql = "INSERT INTO roomService_Info (customerName  , roomNumber  ,serviceType ,time  ) values (?,?,?,?)";
@@ -665,10 +656,6 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			  System.out.println(sx.getErrorCode());
 			  System.out.println(sx.getSQLState());
 		  }
-
-	  
-
-
 		  return endDate;
 	  }
 	  
@@ -701,9 +688,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 				System.out.println(sx.getErrorCode());
 				System.out.println(sx.getSQLState());
 			}
-		}
-	  
-	  
+		}	  
 	  /**
 	   * 
 	   * @return list of all staff members
@@ -735,9 +720,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			}
 			
 			return staffArr;
-		}
-	  
-	  
+		}	  
 	  /**
 	   * 
 	   * @param id
@@ -770,9 +753,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			}
 			
 			return s;
-		}
-	  
-	  
+		}	  
 	  /**
 	   * delete a staff member
 	   * @param id
@@ -793,18 +774,14 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 				System.out.println(sx.getErrorCode());
 				System.out.println(sx.getSQLState());
 			}
-		}
-	  
-	  
+		}	  
 	  /**
 	   * update a staff member information
 	   * @param s
 	   */
 	  public void updateStaff(Staff s) {
 			String sql = "update staff_Info set username = ?, password = ?, gender = ?, city = ? where id = ?";
-			
-			
-			
+					
 			try {
 				connectDB();
 				pstmt = conn.prepareStatement(sql);
@@ -823,6 +800,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 				System.out.println(sx.getSQLState());
 			}
 		}
+
 	  
 	  //add new order inventory
 	//method to list order 
@@ -948,4 +926,179 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 	  
 	  
 
+
+	public ArrayList<String> getRoomReservationData(UserInfo user) {
+		// TODO Auto-generated method stub
+			  
+		  String sql = "SELECT * FROM reservation_info where userName = ? and resType = 'room'";
+		  ArrayList<String> list = new ArrayList<>();
+		  
+		  try {
+			  connectDB();
+		  
+			  //create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, user.getUsername());
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  list.add(rs.getString("userName"));
+				  list.add(rs.getString("resType"));
+				  list.add(rs.getString("roomType"));
+				  list.add(Integer.toString(rs.getInt("stayDuration")));
+				  list.add(rs.getString("mealStatus"));
+				  list.add(rs.getString("mealType"));
+				  list.add(rs.getDate("resDate").toString());
+				  list.add(rs.getString("resTime"));
+				  list.add(Integer.toString(rs.getInt("meetingDuration")));
+				  list.add(Integer.toString(rs.getInt("addService")));
+				  list.add(Integer.toString(rs.getInt("noGuest")));
+				  list.add(rs.getString("resFor"));
+			  }
+		  
+		  disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return list;
+		  
+	}
+
+	public ArrayList<String> getBanquetReservationData(UserInfo user) {
+		// TODO Auto-generated method stub
+			  
+		  String sql = "SELECT * FROM reservation_info where userName = ? and resType = 'banquet'";
+		  ArrayList<String> list = new ArrayList<>();
+		  
+		  try {
+			  connectDB();
+		  
+			  //create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, user.getUsername());
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  list.add(rs.getString("userName"));
+				  list.add(rs.getString("resType"));
+				  list.add(rs.getString("roomType"));
+				  list.add(Integer.toString(rs.getInt("stayDuration")));
+				  list.add(rs.getString("mealStatus"));
+				  list.add(rs.getString("mealType"));
+				  list.add(rs.getDate("resDate").toString());
+				  list.add(rs.getString("resTime"));
+				  list.add(Integer.toString(rs.getInt("meetingDuration")));
+				  list.add(Integer.toString(rs.getInt("addService")));
+				  list.add(Integer.toString(rs.getInt("noGuest")));
+				  list.add(rs.getString("resFor"));
+			  }
+		  
+		  disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return list;
+		  
+	}
+	public ArrayList<String> getRestaurantReservationData(UserInfo user) {
+		// TODO Auto-generated method stub
+			  
+		  String sql = "SELECT * FROM reservation_info where userName = ? and resType = 'restaurant'";
+		  ArrayList<String> list = new ArrayList<>();
+		  
+		  try {
+			  connectDB();
+		  
+			  //create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, user.getUsername());
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  list.add(rs.getString("userName"));
+				  list.add(rs.getString("resType"));
+				  list.add(rs.getString("roomType"));
+				  list.add(Integer.toString(rs.getInt("stayDuration")));
+				  list.add(rs.getString("mealStatus"));
+				  list.add(rs.getString("mealType"));
+				  list.add(rs.getDate("resDate").toString());
+				  list.add(rs.getString("resTime"));
+				  list.add(Integer.toString(rs.getInt("meetingDuration")));
+				  list.add(Integer.toString(rs.getInt("addService")));
+				  list.add(Integer.toString(rs.getInt("noGuest")));
+				  list.add(rs.getString("resFor"));
+			  }
+		  
+		  disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return list;
+		  
+	}
+	public ArrayList<String> getMeetingHallsReservationData(UserInfo user) {
+		// TODO Auto-generated method stub
+			  
+		  String sql = "SELECT * FROM reservation_info where userName = ? and resType = 'meeting'";
+		  ArrayList<String> list = new ArrayList<>();
+		  
+		  try {
+			  connectDB();
+		  
+			  //create statement 
+			  pstmt = conn.prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, user.getUsername());
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  list.add(rs.getString("userName"));
+				  list.add(rs.getString("resType"));
+				  list.add(rs.getString("roomType"));
+				  list.add(Integer.toString(rs.getInt("stayDuration")));
+				  list.add(rs.getString("mealStatus"));
+				  list.add(rs.getString("mealType"));
+				  list.add(rs.getDate("resDate").toString());
+				  list.add(rs.getString("resTime"));
+				  list.add(Integer.toString(rs.getInt("meetingDuration")));
+				  list.add(Integer.toString(rs.getInt("addService")));
+				  list.add(Integer.toString(rs.getInt("noGuest")));
+				  list.add(rs.getString("resFor"));
+			  }
+		  
+		  disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return list;
+		  
+	}
+	public void getRoomServiceData() {
+		// TODO Auto-generated method stub
+		
+		
+	}
 }
