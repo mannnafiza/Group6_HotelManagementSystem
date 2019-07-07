@@ -29,13 +29,14 @@ create table roomService_Info (
         rmserid INT AUTO_INCREMENT PRIMARY KEY,
         customerName VARCHAR(50),
 	roomNumber INT,
+        serviceType VARCHAR(50),
 	time FLOAT,
-        serviceType BOOLEAN,
-	FOREIGN KEY fk_uid(rmserid)
-	REFERENCES user_Info(id),
         FOREIGN KEY fk_cn(customerName)
-	REFERENCES user_Info(userName)	
+	REFERENCES reservation_Info(userName)	
 );
+
+serviceTypeMeal VARCHAR(50),
+serviceTypeHouseKeeping VARCHAR(50),
 
 create table propertyInventory_Info(
 	itemId INT AUTO_INCREMENT PRIMARY KEY,

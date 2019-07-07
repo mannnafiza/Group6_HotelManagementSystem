@@ -17,6 +17,7 @@ import java.awt.Checkbox;
 import java.awt.Color;
 
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -24,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.text.DateFormatter;
 
 import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
@@ -33,9 +35,12 @@ import com.csis.Entities.UserInfo;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.awt.SystemColor;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
 
 public class RoomService {
@@ -48,7 +53,7 @@ public class RoomService {
     private String	customerName  = "";
     String errorMsg;
 	boolean inputValid = false;
-	Service ser = new Service();
+	Service serviceData = new Service();
     
     
 	/**
@@ -83,30 +88,22 @@ public class RoomService {
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		//frame.setBackground(UIManager.getColor("" ));
 		frame.setBackground(UIManager.getColor("Blue"));
-		frame.setBounds(100, 100, 479, 420);
+		frame.setBounds(100, 100, 801, 501);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		
 		JLabel labelRSS = new JLabel("   Room Service  System");
 		labelRSS.setFont(new Font("Tahoma", Font.BOLD, 11));
-		labelRSS.setBounds(111, 11, 206, 41);
+		labelRSS.setBounds(206, 11, 324, 41);
 		frame.getContentPane().add(labelRSS);
 		
 		JLabel labelRT = new JLabel("Request Type :");
-		labelRT.setBounds(65, 217, 109, 31);
+		labelRT.setBounds(54, 248, 109, 31);
 		frame.getContentPane().add(labelRT);
 		
-		Checkbox checkboxMeal = new Checkbox("Meal");
-		checkboxMeal.setBounds(180, 217, 95, 31);
-		frame.getContentPane().add(checkboxMeal);
-		
-		Checkbox checkboxHouseKeeping = new Checkbox("HouseKeeping");
-		checkboxHouseKeeping.setBounds(279, 217, 109, 31);
-		frame.getContentPane().add(checkboxHouseKeeping);
-		
 		JLabel lblRequestTime = new JLabel("Request Time : ");
-		lblRequestTime.setBounds(65, 248, 89, 20);
+		lblRequestTime.setBounds(371, 253, 89, 20);
 		frame.getContentPane().add(lblRequestTime);
 		
 		textFieldTime = new JTextField();
@@ -121,21 +118,21 @@ public class RoomService {
 				
 			}
 		});
-		textFieldTime.setText("00:00 ");
-		textFieldTime.setBounds(174, 248, 49, 20);
+		textFieldTime.setText("00.00");
+		textFieldTime.setBounds(470, 253, 49, 20);
 		frame.getContentPane().add(textFieldTime);
 		textFieldTime.setColumns(10);
 		
 		JLabel lblMinutes = new JLabel("Minutes");
-		lblMinutes.setBounds(233, 251, 46, 14);
+		lblMinutes.setBounds(529, 253, 46, 14);
 		frame.getContentPane().add(lblMinutes);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name :");
-		lblCustomerName.setBounds(54, 163, 109, 20);
+		lblCustomerName.setBounds(54, 194, 109, 20);
 		frame.getContentPane().add(lblCustomerName);
 		
 		JLabel lblRoomNumber = new JLabel("Room Number :");
-		lblRoomNumber.setBounds(65, 189, 89, 22);
+		lblRoomNumber.setBounds(371, 193, 89, 22);
 		frame.getContentPane().add(lblRoomNumber);
 		
 		textFieldCustomerName = new JTextField();
@@ -150,7 +147,7 @@ public class RoomService {
 							
 			}
 		});
-		textFieldCustomerName.setBounds(164, 163, 111, 20);
+		textFieldCustomerName.setBounds(143, 194, 111, 20);
 		frame.getContentPane().add(textFieldCustomerName);
 		textFieldCustomerName.setColumns(10);
 
@@ -167,7 +164,7 @@ public class RoomService {
 				
 			}
 		});
-		textFieldRoomNumber.setBounds(164, 194, 111, 20);
+		textFieldRoomNumber.setBounds(470, 194, 111, 20);
 		frame.getContentPane().add(textFieldRoomNumber);
 		textFieldRoomNumber.setColumns(10);
 		
@@ -175,7 +172,7 @@ public class RoomService {
 		Image img = new ImageIcon(this.getClass().getResource("/rsLogo.jpg")).getImage().getScaledInstance(180, 85, Image.SCALE_SMOOTH);
 		lblIconLogo.setIcon(new ImageIcon(img));		
 		//lblIconLogo.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblIconLogo.setBounds(98, 53, 167, 81);
+		lblIconLogo.setBounds(204, 39, 210, 130);
 		frame.getContentPane().add(lblIconLogo);
 		
 //		frame.add(btnProceed);
@@ -183,9 +180,88 @@ public class RoomService {
 //      frame.setVisible(true);
 	
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(95, 158, 160));
+		panel.setBounds(132, 290, 79, 86);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		panel.setVisible(false);
+		
+		JRadioButton rdbtnVeg = new JRadioButton("Veg");
+		rdbtnVeg.setBackground(new Color(95, 158, 160));
+		rdbtnVeg.setBounds(6, 7, 109, 23);
+		panel.add(rdbtnVeg);
+		
+		JRadioButton rdbtnNonveg = new JRadioButton("Non-Veg");
+		rdbtnNonveg.setBackground(new Color(95, 158, 160));
+		rdbtnNonveg.setBounds(6, 38, 109, 23);
+		panel.add(rdbtnNonveg);
+		
 		JButton btnProceed = new JButton("Proceed");
-		btnProceed.setBounds(180, 292, 89, 23);
+		btnProceed.setBounds(371, 372, 89, 23);
 		frame.getContentPane().add(btnProceed);
+		
+		JCheckBox checkboxMeal = new JCheckBox("Meal");
+		checkboxMeal.setBackground(new Color(95, 158, 160));
+		checkboxMeal.setBounds(143, 252, 60, 23);
+		frame.getContentPane().add(checkboxMeal);
+		checkboxMeal.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+		        
+				if(checkboxMeal.isSelected()) {
+				   panel.setVisible(true);
+				}else {
+					panel.setVisible(false);
+				} 
+				
+	
+			}
+			
+		});
+		
+		JCheckBox checkboxHouseKeeping = new JCheckBox("House Keeping");
+		checkboxHouseKeeping.setBackground(new Color(95, 158, 160));
+		checkboxHouseKeeping.setBounds(206, 252, 97, 23);
+		frame.getContentPane().add(checkboxHouseKeeping);
+		checkboxHouseKeeping.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	
+		
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(calendar.getTime());
+
+        JSpinner spinnerTime = new JSpinner(model);
+		/*spinnerTime.setBounds(414, 283, 50, 20);
+		frame.getContentPane().add(spinnerTime);*/
+
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinnerTime, "HH:mm"); //add "HH:mm a" for am/pm
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); 
+        formatter.setOverwriteMode(true);
+
+        spinnerTime.setEditor(editor);
+        spinnerTime.setForeground(Color.WHITE);
+        spinnerTime.setBounds(470, 284, 60, 25);
+		frame.getContentPane().add(spinnerTime);
+		
+		setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
+	
 		btnProceed.addActionListener(new ActionListener() {
 
 			@Override
@@ -197,57 +273,113 @@ public class RoomService {
 					
 				  //Create an instance of Validate class and pass all the inputs given by the user
 				  Validate validate = new Validate(customerName );
-				  boolean checked = checkboxMeal.getState();
-				  boolean checked2 = checkboxHouseKeeping.getState();
+					DBHelper helper = new DBHelper();
+
 			
 					  //create an instance of Authenticate class to verify userName and password inputs
 					  Authenticate auth = new Authenticate();
-						auth.setUsername(customerName );
+					  auth.setUsername(customerName );
 						
-						if(auth.matchUserName() || validate.isCustmerDataValid())
-						{
-							System.out.println("Valid Username");
-							
-							//set user information
-							UserInfo user = new UserInfo();
-							DBHelper helper = new DBHelper();
-							user.setUsername(customerName );
-							user.setId(helper.getUserId(customerName ));
-						  
-						//	validateInfo(ser.getRoomNumber(),  ser.getTime());
-						//	if(inputValid) {
-							//	try {
-									
-									//java.sql.Date sqlDate = new java.sql.Date(roomData.getReserveDate().getTime());
-									
-								//	helper.insertRoomServiceInformation(ser.getCustomerName(),  ser.getRoomNumber(), ser.getServiceType(), ser.getTime());
-									
+					   //  if(validate.isCustmerDataValid()) {
+					    	 
+					    	 if(auth.matchUserName()) {
+					    	    
+								System.out.println("Valid Username");
+								serviceData.setCustomerName(textFieldCustomerName.getText());
+
+								if(checkboxMeal.isSelected() == true) {
 								
-							//check validation
-									if(checkboxMeal.getState() == true ) {
-//						   	             btnProceed.setEnabled(true);
-						                 String names = JOptionPane.showInputDialog(
-								         "What kind meal "+ textFieldCustomerName.getText()  +" want?");
-						                  JOptionPane.showMessageDialog(frame, "Thanks for your request");
+									//setMealListener(rdbtnVeg , rdbtnNonveg);
+									int rn = Integer.parseInt(textFieldRoomNumber.getText());
+									if( rn>=1  &&  rn<100) {
+									serviceData.setRoomNumber(rn);
+									setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
+									serviceData.setServiceType("Veg");
+									serviceData.setServiceType("Non-Veg");
+								    serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
+									JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
+									}else {
+										JOptionPane.showMessageDialog(frame, "Please a valid room number");
+									}
+						//			serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
+								//	serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
+					                  
+
+									
+   /*   helper.insertRoomServiceInformation( serviceData.getCustomerName(), serviceData.getRoomNumber(), serviceData.getServiceType()
+    		  ,serviceData.getTime() );
+*/
+								
+									
+
+
+								}
+								else if(checkboxHouseKeeping.isSelected() == true) {
+									
+									
+									int rn = Integer.parseInt(textFieldRoomNumber.getText());
+									if( rn>=1  &&  rn<100) {
+									serviceData.setRoomNumber(rn);	
+									setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
+	/*check this one 	*/			serviceData.setServiceType("House Keeping");
+									serviceData.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
+	                     			serviceData.setTime(Float.parseFloat(textFieldTime.getText()));	
+								//	serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
+					                  JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
+									}else {
+										JOptionPane.showMessageDialog(frame, "Please a valid room number");
+									}
+
+								}
+								else if(checkboxMeal.isSelected() == true && checkboxHouseKeeping.isSelected() == true) {
+
+									int rn = Integer.parseInt(textFieldRoomNumber.getText());
+									if( rn>=1  &&  rn<100) {
+									serviceData.setRoomNumber(rn);
+									setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
+									serviceData.setServiceType("Veg");
+									serviceData.setServiceType("Non-Veg");
+									serviceData.setServiceType("House Keeping");
+									serviceData.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
+									serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
+									//serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
+					                  JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
+									}else {
+										JOptionPane.showMessageDialog(frame, "Please a valid room number");
+									}
+
+
+								}
+								else if(checkboxMeal.isSelected() == false && checkboxHouseKeeping.isSelected() == false) {
+									
+					                  JOptionPane.showMessageDialog(frame, "Please Select Service Type");
+
+								}
+
 					    		 
-					                 }
-					                  else if (checkboxHouseKeeping.getState() == true) {
-					    		             String names = JOptionPane.showInputDialog(
-										    	"What type of service "+ textFieldCustomerName.getText() +" for house Keeping");
-							 		             JOptionPane.showMessageDialog(frame, "Thanks for your request");
-					    	         }
-					                  else {
-					    	   
-						                     JOptionPane.showMessageDialog(frame, "Please select your request type. Thanks");
-					    	         }
+					    		 
+					    	 }else {
+					    		  System.out.println(" Please check user Username ");
+				                  JOptionPane.showMessageDialog(frame, "Please check user Username ");
+
+					    	 }
+					    	 				    	 
+					    	 
+					     /*}else {
+					    	  System.out.println(" Please check the input fields ");
+					    	  JOptionPane.showMessageDialog(frame, "Please check the input fields ");
+					     }*/
+					    	//Build the new Student
+								Service ns = new Service();
+								ns.setCustomerName(textFieldCustomerName.getText());
+								ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
+								ns.setServiceType("Veg");
+								ns.setServiceType("Non-Veg");
+								ns.setServiceType("HouseKeeping");
+								ns.setTime(Float.parseFloat((textFieldTime.getText())));
 								
-							
-							}else
-						      {
-							  System.out.println("Check Username ");
-							  JOptionPane jop = new JOptionPane();
-						    	jop.showMessageDialog(null,"heck Username , Room Number and Check Time.");
-						    }						
+								helper.roomService(ns);
+							//	Veg , Non-Veg  , House Keeping
 		
 			}
 			
@@ -256,22 +388,54 @@ public class RoomService {
 		
 	}
 	
-	
-	protected boolean validateInfo(int roomNumber, float time) {
+	/**
+	 * set if meal inclusive/exclusive
+	 * @param rdbtnYes
+	 * @param rdbtnNo     
+	 */
+	private void setMealListener(JRadioButton rdbtnVeg, JRadioButton rdbtnNonveg, JCheckBox checkboxHouseKeeping , JCheckBox checkboxMeal ) {
 		// TODO Auto-generated method stub
-		inputValid = true;
-		errorMsg = "Please enter the following field: ";
-		
-		if(roomNumber <= 0) {
-			errorMsg = "\n Room Number";
-			inputValid = false;
-		}
-		if(time <= 0) {
-			errorMsg += "\n Time";
-			inputValid = false;
-		}
-			
-		return inputValid;
+		ButtonGroup bgroup = new ButtonGroup();
+        bgroup.add(rdbtnVeg);
+        bgroup.add(rdbtnNonveg);
+        
+		class ServiceActionListener implements ActionListener {
+		      public void actionPerformed(ActionEvent ex) {
+		     
+		    	  String  choice = checkboxMeal.getActionCommand();
+                  choice = bgroup.getSelection().getActionCommand();
+		          choice = checkboxHouseKeeping.getActionCommand();
+		      
+
+		      }
+		    }
+
+		  class ServiceItemListener implements ItemListener {
+		   			@Override
+			public void itemStateChanged(ItemEvent ex) {
+				// TODO Auto-generated method stub
+				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
+		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
+		        if(item.equals("Veg")) {
+			    	  serviceData.setServiceType("Veg");
+			      }else if(item.equals("Non-Veg"))  {
+			    	  serviceData.setServiceType("Non-Veg");
+			      }else {
+			    	  serviceData.setServiceType("House Keeping");
+			      }
+			}   
+		    }
+
+		    ActionListener al = new ServiceActionListener();
+		    rdbtnVeg.addActionListener(al);
+		    rdbtnNonveg.addActionListener(al);
+		    checkboxHouseKeeping.addActionListener(al);
+
+		    ItemListener il = new ServiceItemListener();
+		    rdbtnVeg.addItemListener(il);
+		    rdbtnNonveg.addItemListener(il);
+		    checkboxHouseKeeping.addItemListener(il);
+
 	}
 	
 }	
