@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.CustomerReceipt;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
@@ -167,6 +168,10 @@ public class MeetingReservation {
         spinnerTime.setBounds(379, 124, 89, 25);
 		frame.getContentPane().add(spinnerTime);
 		
+		JButton btnCalculateMyBill = new JButton("Calculate my Bill");		
+		btnCalculateMyBill.setBounds(340, 360, 128, 23);
+		btnCalculateMyBill.setForeground(new Color(51, 153, 102));
+		frame.getContentPane().add(btnCalculateMyBill);
 		
 		
 		
@@ -202,6 +207,16 @@ public class MeetingReservation {
 							helper.insertReservationInformation(user.getId(), user.getUsername(), "meeting","-", 0, meetingData.isMeal(),
 									"-", sqlDate, sqlTime, meetingData.getDuration(), false, 0, "-" );
 							JOptionPane.showMessageDialog(null, "Meeting Reservation confirmed");
+							
+							btnCalculateMyBill.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									BillCalculator billCalculate = new BillCalculator();
+									billCalculate.calculate(user);
+									
+									CustomerReceipt.main(null);
+									frame.dispose();
+								}
+							});
 						} else {
 							JOptionPane.showMessageDialog(null, "Meeting Hall already reserved for this date");
 						}

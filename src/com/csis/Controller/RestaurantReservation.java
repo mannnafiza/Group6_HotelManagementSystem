@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.csis.Boundary.CustomerReceipt;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Restaurant;
@@ -196,6 +197,10 @@ public class RestaurantReservation {
 		spinner.setBounds(402, 176, 89, 25);
 		frame.getContentPane().add(spinner);
 		
+		JButton btnCalculateMyBill = new JButton("Calculate my Bill");		
+		btnCalculateMyBill.setBounds(363, 328, 128, 23);
+		btnCalculateMyBill.setForeground(new Color(51, 153, 102));
+		frame.getContentPane().add(btnCalculateMyBill);
 		
 		
 		
@@ -231,6 +236,16 @@ public class RestaurantReservation {
 						helper.insertReservationInformation(user.getId(), user.getUsername(), "restaurant","-", 0, "-",
 								restaurantData.getMealType(), sqlDate, sqlTime, 0, false, restaurantData.getNoOfGuest(), restaurantData.getReservationFor() );
 						JOptionPane.showMessageDialog(null, "Restaurant Reservation confirmed");
+						
+						btnCalculateMyBill.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+								BillCalculator billCalculate = new BillCalculator();
+								billCalculate.calculate(user);
+								
+								CustomerReceipt.main(null);
+								frame.dispose();
+							}
+						});
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 					}
@@ -252,7 +267,7 @@ public class RestaurantReservation {
 			}
 		});
 		btnBack.setForeground(new Color(51, 153, 102));
-		btnBack.setBounds(144, 328, 89, 23);
+		btnBack.setBounds(117, 328, 89, 23);
 		frame.getContentPane().add(btnBack);
 		
 		
