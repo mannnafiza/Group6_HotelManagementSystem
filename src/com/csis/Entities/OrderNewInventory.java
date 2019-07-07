@@ -1,5 +1,7 @@
 package com.csis.Entities;
 
+import java.util.Vector;
+
 public class OrderNewInventory {
 	
 	private String Item;
@@ -57,5 +59,22 @@ public class OrderNewInventory {
 		Amount = amount;
 	}
 	
+	
+	public Vector getVector() {
+		Vector v = new Vector();
+		
+		//	itemId, Item, Type, Quantity , Category , Unitprice , Price
+
+		
+		//v.add(itemId);
+		v.add(Item);
+		v.add(Quantity);
+		v.add(UnitPrice);
+		v.add(Amount);
+	
+		
+		return v;
+	}
+
 
 }
