@@ -17,6 +17,7 @@ import com.csis.Entities.AddProperty;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class AddPropertyInventory {
@@ -26,6 +27,9 @@ public class AddPropertyInventory {
 	private DefaultTableModel tm = new DefaultTableModel();
 	private DBHelper sd = new DBHelper();
 	private ListSelectionListener lsl ;
+	boolean inputValid = true;
+	String errorMsg;
+	AddProperty AddPropertyData = new AddProperty(); 
 	
 	private JTextField textFieldItem;
 	private JTextField textFieldType;
@@ -72,7 +76,7 @@ public class AddPropertyInventory {
 		frame.getContentPane().add(lblAddNewProperty);
 		
 		JPanel panelAddProperty = new JPanel();
-		panelAddProperty.setBounds(129, 71, 418, 311);
+		panelAddProperty.setBounds(129, 71, 330, 311);
 		frame.getContentPane().add(panelAddProperty);
 		panelAddProperty.setLayout(null);
 		
@@ -137,18 +141,29 @@ public class AddPropertyInventory {
 			public void actionPerformed(ActionEvent arg0) {
 				//textFieldItem, textFieldType,textFieldQuantity, textFieldPrice, textFieldCategory, textFieldUnitPrice
 				//Build the new Student
-				AddProperty ns = new AddProperty();
-				ns.setItem(textFieldItem.getText());
-				ns.setType(textFieldType.getText());
-				ns.setQuantity(Integer.parseInt(textFieldQuantity.getText()));
-				ns.setPrice(Float.parseFloat(textFieldPrice.getText()));
-				ns.setCategory(textFieldCategory.getText());
-				ns.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
-				sd.AddPropertyInv(ns);
 				
+				AddProperty ns = new AddProperty();
+				
+        validateProperty_info( AddPropertyData.getItem(),  AddPropertyData.getType(), AddPropertyData.getQuantity(),
+	         	AddPropertyData.getPrice() ,AddPropertyData.getCategory() ,AddPropertyData.getUnitprice());
+				//if(inputValid)
+				{
+					try {
+				          ns.setItem(textFieldItem.getText());
+			           	  ns.setType(textFieldType.getText());
+				          ns.setQuantity(Integer.parseInt(textFieldQuantity.getText()));
+				          ns.setPrice(Float.parseFloat(textFieldPrice.getText()));
+				          ns.setCategory(textFieldCategory.getText());
+				          ns.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
+				          sd.AddPropertyInv(ns);
+				       ManageInventory.main(null);
+					} catch(Exception ex) {
+						System.out.println("Error in inserting " + ex.getMessage());
+				}
+				}//else { System.out.print("Please check input ");}
 			}
 		});
-		buttonAddProperty.setBounds(285, 242, 89, 23);
+		buttonAddProperty.setBounds(180, 235, 89, 23);
 		panelAddProperty.add(buttonAddProperty);
 		
 		JButton btnBack = new JButton("Back");
@@ -159,5 +174,49 @@ public class AddPropertyInventory {
 		});
 		btnBack.setBounds(46, 393, 89, 23);
 		frame.getContentPane().add(btnBack);
+		
+		
+
+		
 	}
+	
+	
+	/**
+	 * validate the user inputs
+	 * @param date
+	 * @param mealType
+	 * @return
+	 */
+	protected boolean validateProperty_info(String Item, String Type, Integer Quantity,float Price , String Category , float Unitprice    ) {
+		// TODO Auto-generated method stub
+		errorMsg = "Please enter the following field: ";
+		inputValid = true;
+		if(Item == null) {
+			errorMsg += "\nItem";
+			inputValid = false;
+		}
+		if(Type == null) {
+			errorMsg += "\nType";
+			inputValid = false;
+		}
+		if(Quantity == null) {
+			errorMsg += "\nQuantity";
+			inputValid = false;
+		}
+		if(Price == 0) {
+			errorMsg += "\nMeal Type";
+			inputValid = false;
+		}
+		if(Category == null) {
+			errorMsg += "\nCategory";
+			inputValid = false;
+		}
+		if(Unitprice == 0) {
+			errorMsg += "\nUnitprice";
+			inputValid = false;
+	 	}
+		return inputValid;
+	}
+	
+	
 }
