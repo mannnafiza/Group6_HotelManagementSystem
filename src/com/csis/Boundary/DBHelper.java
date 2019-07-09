@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import com.csis.Entities.AddProperty;
+import com.csis.Entities.OrderNewInventory;
 import com.csis.Entities.Service;
 import com.csis.Entities.Staff;
 import com.csis.Entities.UserInfo;
@@ -404,7 +405,11 @@ public class DBHelper {
 		}
 	
 	//method to Edit inventory
-	public void updateGame(AddProperty su)	{		
+
+
+
+	public void updateInventory(AddProperty su)	{		
+
 	String updateSql = "UPDATE propertyInventory_Info SET " + 
 			"Item  = ?, " +
 			"Type = ?, " + 
@@ -445,7 +450,8 @@ public class DBHelper {
 	}	
 }
 
-	
+
+//method to add user room service info into the roomService_Info  table at the time of reservation
 public int roomService(Service serviceData)	{ //, serviceType  .   "','" + serviceData.isServiceType() +  
 	 int roomService = 0;		
 	//Get all the shoes! Shoes for days!
@@ -795,8 +801,134 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			}
 		}
 
-	  //method to obtain data from reservation_info table
-	public ArrayList<String> getReservationData(UserInfo user, String type) {
+
+	
+	  
+	  //add new order inventory
+	//method to list order 
+			public ArrayList<OrderNewInventory> listAddOrderInventory() 
+			{
+				ArrayList<OrderNewInventory> s1 = new ArrayList<OrderNewInventory>();
+
+				String sql = "SELECT * FROM neworderinventory_info";
+				try {
+					// connect to the database
+					connectDB();
+					this.stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+
+					while (rs.next())
+					{      //itemId, Item , Type , Quantity , Price , Category , Unitprice
+						 
+						OrderNewInventory s = new OrderNewInventory();
+						
+						//Get the right type (string) from the right column ("itemId");
+						s.setItem((rs.getString("Item")));
+						s.setQuantity((rs.getInt("Quantity")));
+						s.setUnitPrice((rs.getFloat("Unitprice")));
+						s.setAmount((rs.getFloat("Amount")));
+
+			
+						s1.add(s);
+						 // System.out.println(s1);
+
+					}
+
+					disconnectDB();
+				} catch (SQLException sx) {
+					System.out.println("Error fetching data from the database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+				}
+
+				return s1;
+			}
+
+
+			//method to get order 
+		public OrderNewInventory getlistAddOrderInventory(String Item) {
+				
+			OrderNewInventory ap = new OrderNewInventory();
+				
+				String sql = "SELECT * FROM neworderinventory_info  WHERE Item = ?";
+				
+				try {
+					
+					//Connect to the database
+					connectDB();
+					
+					//Create the statement
+					pstmt = conn.prepareStatement(sql);
+					
+					//Declare the parameter (starting at 1)
+					pstmt.setString(1,Item);
+					
+					rs = pstmt.executeQuery();
+					
+					while (rs.next())	{
+						
+						//Get the right type (string) from the right column ("");				
+			
+						
+						//ap.setItemId((rs.getInt("itemId")));
+						ap.setItem((rs.getString("Item")));
+						ap.setQuantity((rs.getInt("Quantity")));
+						ap.setAmount((rs.getFloat("Amount")));
+						ap.setUnitPrice((rs.getFloat("Unitprice")));
+						
+						
+					} 
+					
+					disconnectDB();
+						
+					} catch (SQLException sx) {
+						System.out.println("Error Connecting to Database");
+						System.out.println(sx.getMessage());
+						System.out.println(sx.getErrorCode());
+						System.out.println(sx.getSQLState());
+						
+					}
+					
+					return ap;
+					
+				}
+		
+		//method to add order inventory
+		public int AddOrderInventory(OrderNewInventory ap)	{
+			 int propertyInv = 0;		
+			
+			String sql = "Insert into neworderinventory_info(Item   ,Quantity  , UnitPrice , Amount )" 
+					+ " VALUES ('" + ap.getItem() + "','" + ap.getQuantity() + "','" + ap.getUnitPrice() + "','" + ap.getAmount()+  "');";
+			
+			try { // itemId , Item , Type , Quantity , Price , Category , Unitprice
+				//Connect to the database
+				connectDB();
+				
+				//Create the statement
+				this.stmt = this.conn.createStatement();
+				
+				//Execute the statement
+				propertyInv = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+				disconnectDB();			
+				
+			} catch (SQLException sx) {
+				System.out.println("Error Connecting to Database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+				
+			}
+			System.out.println("Inserted new Property Inventory: " + propertyInv);
+			return propertyInv;
+			
+		}
+	  
+	  
+		  //method to obtain data from reservation_info table
+		public ArrayList<String> getReservationData(UserInfo user, String type) {
+
 		// TODO Auto-generated method stub
 			  
 		  String sql = "SELECT * FROM reservation_info where userName = ? and resType = ?";

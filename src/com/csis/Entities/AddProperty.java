@@ -118,6 +118,10 @@ public class AddProperty {
 		return v;
 	}
 
+	public void validateTheProperty() {
+		
+		
+	}
 	
 
 }

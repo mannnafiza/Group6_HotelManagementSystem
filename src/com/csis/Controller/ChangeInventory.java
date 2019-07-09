@@ -116,7 +116,7 @@ public class ChangeInventory {
 				us.setCategory(textFieldCategory.getText());
 				us.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
 								
-				sd.updateGame(us);
+				sd.updateInventory(us);
 				
 				updateTable();
 				

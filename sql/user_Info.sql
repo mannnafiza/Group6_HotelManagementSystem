@@ -35,8 +35,7 @@ create table roomService_Info (
 	REFERENCES reservation_Info(userName)	
 );
 
-serviceTypeMeal VARCHAR(50),
-serviceTypeHouseKeeping VARCHAR(50),
+
 
 create table propertyInventory_Info(
 	itemId INT AUTO_INCREMENT PRIMARY KEY,
@@ -48,14 +47,12 @@ create table propertyInventory_Info(
 	Unitprice FLOAT
 );
 
-create table staff_Info(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	username VARCHAR(50),
-	password VARCHAR(9),
-	gender VARCHAR(50),
-	city VARCHAR(9)
+create table newOrderInventory_Info(
+	Item VARCHAR(50) PRIMARY KEY,
+	Quantity INT,
+        Unitprice FLOAT,
+        Amount FLOAT
 );
-
 
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'Addie', 'Nafiza1', 'Male', 'Surrey');
@@ -78,12 +75,3 @@ insert into user_Info (id, userName, password, gender, city) values (17, 'Winfie
 insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 'Nafiza1', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'Kulbir123', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'Aman123', 'Male', 'Victoria');
-
-
-insert into staff_info(username, password, gender, city) values ("Mike", "M123", "Male", "Surrey");
-insert into staff_info(username, password, gender, city) values ("Joe", "J123", "Male", "Surrey");
-insert into staff_info(username, password, gender, city) values ("Monica", "M223", "Female", "Surrey");
-insert into staff_info(username, password, gender, city) values ("Chandler", "C123", "Male", "Surrey");
-insert into staff_info(username, password, gender, city) values ("Ross", "R123", "Male", "Surrey");
-insert into staff_info(username, password, gender, city) values ("Rachel", "R223", "Female", "Surrey");
-insert into staff_info(username, password, gender, city) values ("Phoebe", "P123", "Female", "Surrey");

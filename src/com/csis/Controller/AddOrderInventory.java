@@ -6,14 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
+import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.ManageInventory;
+import com.csis.Entities.AddProperty;
+import com.csis.Entities.OrderNewInventory;
 
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class AddOrderInventory {
@@ -24,6 +30,9 @@ public class AddOrderInventory {
 	private JTextField textFieldQuantity;
 	private JTextField textFieldAmount;
 	private JTable table;
+	private DefaultTableModel tm = new DefaultTableModel();
+	private DBHelper sd = new DBHelper();
+	private ListSelectionListener lsl ;
 
 	/**
 	 * Launch the application.
@@ -95,6 +104,28 @@ public class AddOrderInventory {
 		textFieldAmount.setColumns(10);
 		
 		JButton btnAddOrder = new JButton("Add Order");
+		btnAddOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				OrderNewInventory ns = new OrderNewInventory();
+				
+		     
+							try {
+						          ns.setItem(textFieldItem.getText());
+						          ns.setQuantity(Integer.parseInt(textFieldQuantity.getText()));
+						          ns.setUnitPrice(Float.parseFloat(textFieldUnitPrice.getText()));
+						          ns.setAmount(Float.parseFloat(textFieldAmount.getText()));
+
+						          sd.AddOrderInventory(ns);
+						     //  ManageInventory.main(null);
+							} catch(Exception ex) {
+								System.out.println("Error in inserting " + ex.getMessage());
+						}
+							updateTable();
+               }//else { System.out.print("Please check input ");}
+				
+			
+		});
 		btnAddOrder.setBounds(87, 173, 89, 23);
 		frame.getContentPane().add(btnAddOrder);
 		
@@ -118,6 +149,44 @@ public class AddOrderInventory {
 		});
 		btnBack.setBounds(21, 325, 89, 23);
 		frame.getContentPane().add(btnBack);
+		
+		updateTable();
+		
 	}
+	
+	
+private void updateTable()	{
+		
+		//Remove the List Selection Listern to the table
+		table.getSelectionModel().removeListSelectionListener(lsl);
+		
+		tm = new DefaultTableModel();
+		
+		//textFieldItem, textFieldType, textFieldQuantity , textFieldPrice , textFieldCategory , textFieldUnitPrice
+
+		//Add the columns
+		//tm.addColumn("ID");
+		tm.addColumn("Item");
+		tm.addColumn("Quantity");
+		tm.addColumn("UnitPrice");
+		tm.addColumn("Amount");
+		
+				
+		//Add the rows
+		ArrayList<OrderNewInventory> sl = new ArrayList<OrderNewInventory>();
+		
+		//Populate the arraylist with the getShoes
+		sl = sd.listAddOrderInventory();
+		
+		for (OrderNewInventory s : sl)	{
+			tm.addRow(s.getVector());
+		}
+		
+		table.setModel(tm);
+		
+		//Add the ListSelectionListener back to the table
+		table.getSelectionModel().addListSelectionListener(lsl);
+	}
+
 
 }
