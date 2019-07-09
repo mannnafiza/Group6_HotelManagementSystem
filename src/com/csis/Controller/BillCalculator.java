@@ -17,9 +17,12 @@ public class BillCalculator {
 	ArrayList<String> meetinghalllist = new ArrayList<>();
 	String resType = "";
 	
+	//method to make use of DBHelper instance to fetch data from reservation_info table 
+	//and set the class fields of BillingData entity class
 	public void calculate(UserInfo user) {
 		// TODO Auto-generated method stub
 		
+		//processing room reservation entries
 		roomlist = helper.getReservationData(user,"room");
 		for(String str: roomlist)
 		{
@@ -49,7 +52,7 @@ public class BillCalculator {
 		}else
 			bill.setRoomReserved(false);
 			
-		 
+		//processing banquet reservation entries
 		banquetlist = helper.getReservationData(user,"banquet");
 		for(String str: banquetlist)
 		{
@@ -73,7 +76,7 @@ public class BillCalculator {
 		}else
 			bill.setBanquetReserved(true);
 		
-
+		//processing restaurant reservation entries
 		restaurantlist = helper.getReservationData(user,"restaurant");
 		for(String str: restaurantlist)
 		{
@@ -88,6 +91,8 @@ public class BillCalculator {
 		}else
 			bill.setRestaurantReserved(false);	
 
+		
+		//processing meeting hall reservation entries
 		meetinghalllist = helper.getReservationData(user,"meeting");
 		for(String str: meetinghalllist)
 		{
@@ -102,6 +107,7 @@ public class BillCalculator {
 		}else
 			bill.setHallReserved(false);	
 		
+		//method call to BillCalculator class method to work on cost calculation
 		bill.processReservationCost();
 		CustomerReceipt.main(null,bill);
 	}
