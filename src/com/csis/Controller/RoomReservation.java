@@ -37,6 +37,7 @@ import com.csis.Boundary.CustomerReceipt;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Boundary.RoomService;
+import com.csis.Entities.BillingData;
 import com.csis.Entities.Room;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -248,11 +249,11 @@ public class RoomReservation {
 							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
 							
 							btnCalculateMyBill.addActionListener(new ActionListener() {
+
 								public void actionPerformed(ActionEvent arg0) {
 									BillCalculator billCalculate = new BillCalculator();
 									billCalculate.calculate(user);
 									
-									CustomerReceipt.main(null);
 									frame.dispose();
 								}
 							});

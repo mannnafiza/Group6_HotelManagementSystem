@@ -215,8 +215,7 @@ public class BanquetReservation {
 								public void actionPerformed(ActionEvent arg0) {
 									BillCalculator billCalculate = new BillCalculator();
 									billCalculate.calculate(user);
-									
-									CustomerReceipt.main(null);
+
 									frame.dispose();
 								}
 							});
