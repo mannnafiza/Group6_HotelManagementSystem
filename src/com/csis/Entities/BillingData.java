@@ -1,13 +1,78 @@
 package com.csis.Entities;
 
+import java.text.DecimalFormat;
+
 public class BillingData {
 
 	private String name = "";
-	
+	private StringBuilder sb = new StringBuilder();
 	private boolean isRoomReserved = false;
 	private boolean isBanquetReserved = false;
 	private boolean isRestaurantReserved = false;
 	private boolean isHallReserved = false;
+
+	private String resType;
+	private String roomType = "";
+	private int numOfDays = 0;
+	
+	private boolean mealIncludedForRoom;
+	private String mealTypeForRoom = "";
+	private boolean mealIncludedForBanquet;
+	private String mealTypeForBanquet = "";
+	private boolean mealIncludedForRestaurant;
+	private String mealTypeForRestaurant = "";
+	private boolean mealIncludedForHall;
+	private String mealTypeForHall = "";
+	
+	private String dateRoomReservedFor = "";
+	private String dateRestaurantReservedFor = "";
+	private String dateBanquetReservedFor = "";
+	private String dateHallReservedFor = "";
+	
+	private String timeRoomReservedFor = "";
+	private String timeRestaurantReservedFor = "";
+	private String timeBanquetReservedFor = "";
+	private String timeHallReservedFor = "";
+	
+	private boolean roomAdditionalServiceNeeded;
+	private boolean banquetAdditionalServiceNeeded;
+	private String roomAdServcType = "meal";
+	private String banquetAdServcType = "meal";
+	private String roomAdServcMealType;
+	private String banquetAdServcMealType;
+	
+	private int durationOfMeeting = 0;
+	private int numOfGuests = 0;
+	private String reservationFor = "";
+	
+	
+	private float banquetFee = 0.0f;
+	private float roomFee = 0.0f;
+	private float restaurantFee = 0.0f;
+	private float meetingHallFee = 0.0f;
+	
+	private float roomUnitCost;
+	private float roomAdditionalCharges = 0.0f;
+	private float banquetAdditionalCharges = 0.0f;
+	private float totalFee = 0.0f;
+	private float banquetUnitFee = 150.49f;
+	private static float VEG_MEAL_UNIT_COST = 5.99f;
+	private static float NON_VEG_MEAL_UNIT_COST = 7.99f;
+	private static float HOUSE_KEEPING_UNIT_COST = 15.0f;
+	DecimalFormat df = new DecimalFormat("#.00");
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	/**
 	 * @return the isRoomReserved
@@ -57,70 +122,28 @@ public class BillingData {
 	public void setHallReserved(boolean isHallReserved) {
 		this.isHallReserved = isHallReserved;
 	}
-
-	private String resType;
-	private String roomType = "";
-	private int numOfDays = 0;
-	private String mealIncludedForRoom = "";
-	private String mealTypeForRoom = "";
-	private String mealIncludedForBanquet = "";
-	private String mealTypeForBanquet = "";
-	private String mealIncludedForRestaurant = "";
-	private String mealTypeForRestaurant = "";
-	private String mealIncludedForHall = "";
-	private String mealTypeForHall = "";
 	
-	private String dateOfreservation = "";
-	private String timeReservedFor = "";
-	private int hoursHallReservedFor = 0;
-	private int additionalServiceNeeded = 0;
-	private int numOfGuests = 0;
-	private String reservationFor = "";
-	private float banquetFee = 0.0f;
-	private float roomFee = 0.0f;
-	private float restaurantFee = 0.0f;
-	private float meetingHallFee = 0.0f;
-	
-	private float roomUnitCost;
-	private static float vegMealUnitCost = 5.99f;
-	private static float nonVegMealUnitCost = 7.99f;
-	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 	/**
 	 * @return the resType
 	 */
 	public String getResType() {
 		return resType;
 	}
-	/**
-	 * @param resType the resType to set
-	 */
-	public void setResType(String resType) {
-		this.resType = resType;
-	}
+
 	/**
 	 * @return the roomType
 	 */
 	public String getRoomType() {
 		return roomType;
 	}
+
 	/**
 	 * @param roomType the roomType to set
 	 */
 	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
+	
 	/**
 	 * @return the numOfDays
 	 */
@@ -134,54 +157,7 @@ public class BillingData {
 		this.numOfDays = numOfDays;
 	}
 	
-	/**
-	 * @return the dateOfreservation
-	 */
-	public String getDateOfreservation() {
-		return dateOfreservation;
-	}
-	/**
-	 * @param dateOfreservation the dateOfreservation to set
-	 */
-	public void setDateOfreservation(String dateOfreservation) {
-		this.dateOfreservation = dateOfreservation;
-	}
-	/**
-	 * @return the timeReservedFor
-	 */
-	public String getTimeReservedFor() {
-		return timeReservedFor;
-	}
-	/**
-	 * @param timeReservedFor the timeReservedFor to set
-	 */
-	public void setTimeReservedFor(String timeReservedFor) {
-		this.timeReservedFor = timeReservedFor;
-	}
-	/**
-	 * @return the hoursHallReservedFor
-	 */
-	public int getHoursHallReservedFor() {
-		return hoursHallReservedFor;
-	}
-	/**
-	 * @param hoursHallReservedFor the hoursHallReservedFor to set
-	 */
-	public void setHoursHallReservedFor(int hoursHallReservedFor) {
-		this.hoursHallReservedFor = hoursHallReservedFor;
-	}
-	/**
-	 * @return the additionalServiceNeeded
-	 */
-	public int getAdditionalServiceNeeded() {
-		return additionalServiceNeeded;
-	}
-	/**
-	 * @param additionalServiceNeeded the additionalServiceNeeded to set
-	 */
-	public void setAdditionalServiceNeeded(int additionalServiceNeeded) {
-		this.additionalServiceNeeded = additionalServiceNeeded;
-	}
+	
 	/**
 	 * @return the numOfGuests
 	 */
@@ -208,11 +184,370 @@ public class BillingData {
 	}
 	
 	
+	
+	/**
+	 * @return the mealIncludedForRoom
+	 */
+	public boolean isMealIncludedForRoom() {
+		return mealIncludedForRoom;
+	}
+	/**
+	 * @param mealIncludedForRoom the mealIncludedForRoom to set
+	 */
+	public void setMealIncludedForRoom(boolean mealIncludedForRoom) {
+		this.mealIncludedForRoom = mealIncludedForRoom;
+	}
+	/**
+	 * @return the mealTypeForRoom
+	 */
+	public String getMealTypeForRoom() {
+		return mealTypeForRoom;
+	}
+	/**
+	 * @param mealTypeForRoom the mealTypeForRoom to set
+	 */
+	public void setMealTypeForRoom(String mealTypeForRoom) {
+		this.mealTypeForRoom = mealTypeForRoom;
+	}
+	/**
+	 * @return the mealIncludedForBanquet
+	 */
+	public boolean isMealIncludedForBanquet() {
+		return mealIncludedForBanquet;
+	}
+	/**
+	 * @param mealIncludedForBanquet the mealIncludedForBanquet to set
+	 */
+	public void setMealIncludedForBanquet(boolean mealIncludedForBanquet) {
+		this.mealIncludedForBanquet = mealIncludedForBanquet;
+	}
+	/**
+	 * @return the mealTypeForBanquet
+	 */
+	public String getMealTypeForBanquet() {
+		return mealTypeForBanquet;
+	}
+	/**
+	 * @param mealTypeForBanquet the mealTypeForBanquet to set
+	 */
+	public void setMealTypeForBanquet(String mealTypeForBanquet) {
+		this.mealTypeForBanquet = mealTypeForBanquet;
+	}
+	/**
+	 * @return the mealIncludedForRestaurant
+	 */
+	public boolean isMealIncludedForRestaurant() {
+		return mealIncludedForRestaurant;
+	}
+	/**
+	 * @param mealIncludedForRestaurant the mealIncludedForRestaurant to set
+	 */
+	public void setMealIncludedForRestaurant(boolean mealIncludedForRestaurant) {
+		this.mealIncludedForRestaurant = mealIncludedForRestaurant;
+	}
+	/**
+	 * @return the mealTypeForRestaurant
+	 */
+	public String getMealTypeForRestaurant() {
+		return mealTypeForRestaurant;
+	}
+	/**
+	 * @param mealTypeForRestaurant the mealTypeForRestaurant to set
+	 */
+	public void setMealTypeForRestaurant(String mealTypeForRestaurant) {
+		this.mealTypeForRestaurant = mealTypeForRestaurant;
+	}
+	/**
+	 * @return the mealIncludedForHall
+	 */
+	public boolean isMealIncludedForHall() {
+		return mealIncludedForHall;
+	}
+	/**
+	 * @param mealIncludedForHall the mealIncludedForHall to set
+	 */
+	public void setMealIncludedForHall(boolean mealIncludedForHall) {
+		this.mealIncludedForHall = mealIncludedForHall;
+	}
+	/**
+	 * @return the mealTypeForHall
+	 */
+	public String getMealTypeForHall() {
+		return mealTypeForHall;
+	}
+	/**
+	 * @param mealTypeForHall the mealTypeForHall to set
+	 */
+	public void setMealTypeForHall(String mealTypeForHall) {
+		this.mealTypeForHall = mealTypeForHall;
+	}
+	/**
+	 * @return the dateRoomReservedFor
+	 */
+	public String getDateRoomReservedFor() {
+		return dateRoomReservedFor;
+	}
+	/**
+	 * @param dateRoomReservedFor the dateRoomReservedFor to set
+	 */
+	public void setDateRoomReservedFor(String dateRoomReservedFor) {
+		this.dateRoomReservedFor = dateRoomReservedFor;
+	}
+	/**
+	 * @return the dateRestaurantReservedFor
+	 */
+	public String getDateRestaurantReservedFor() {
+		return dateRestaurantReservedFor;
+	}
+	/**
+	 * @param dateRestaurantReservedFor the dateRestaurantReservedFor to set
+	 */
+	public void setDateRestaurantReservedFor(String dateRestaurantReservedFor) {
+		this.dateRestaurantReservedFor = dateRestaurantReservedFor;
+	}
+	/**
+	 * @return the dateBanquetReservedFor
+	 */
+	public String getDateBanquetReservedFor() {
+		return dateBanquetReservedFor;
+	}
+	/**
+	 * @param dateBanquetReservedFor the dateBanquetReservedFor to set
+	 */
+	public void setDateBanquetReservedFor(String dateBanquetReservedFor) {
+		this.dateBanquetReservedFor = dateBanquetReservedFor;
+	}
+	/**
+	 * @return the dateHallReservedFor
+	 */
+	public String getDateHallReservedFor() {
+		return dateHallReservedFor;
+	}
+	/**
+	 * @param dateHallReservedFor the dateHallReservedFor to set
+	 */
+	public void setDateHallReservedFor(String dateHallReservedFor) {
+		this.dateHallReservedFor = dateHallReservedFor;
+	}
+	
+	
+	/**
+	 * @return the timeRoomReservedFor
+	 */
+	public String getTimeRoomReservedFor() {
+		return timeRoomReservedFor;
+	}
+	/**
+	 * @param timeRoomReservedFor the timeRoomReservedFor to set
+	 */
+	public void setTimeRoomReservedFor(String timeRoomReservedFor) {
+		this.timeRoomReservedFor = timeRoomReservedFor;
+	}
+	/**
+	 * @return the timeRestaurantReservedFor
+	 */
+	public String getTimeRestaurantReservedFor() {
+		return timeRestaurantReservedFor;
+	}
+	/**
+	 * @param timeRestaurantReservedFor the timeRestaurantReservedFor to set
+	 */
+	public void setTimeRestaurantReservedFor(String timeRestaurantReservedFor) {
+		this.timeRestaurantReservedFor = timeRestaurantReservedFor;
+	}
+	/**
+	 * @return the timeBanquetReservedFor
+	 */
+	public String getTimeBanquetReservedFor() {
+		return timeBanquetReservedFor;
+	}
+	/**
+	 * @param timeBanquetReservedFor the timeBanquetReservedFor to set
+	 */
+	public void setTimeBanquetReservedFor(String timeBanquetReservedFor) {
+		this.timeBanquetReservedFor = timeBanquetReservedFor;
+	}
+	/**
+	 * @return the timeHallReservedFor
+	 */
+	public String getTimeHallReservedFor() {
+		return timeHallReservedFor;
+	}
+	/**
+	 * @param timeHallReservedFor the timeHallReservedFor to set
+	 */
+	public void setTimeHallReservedFor(String timeHallReservedFor) {
+		this.timeHallReservedFor = timeHallReservedFor;
+	}
+	/**
+	 * @return the roomAdditionalServiceNeeded
+	 */
+	public boolean isRoomAdditionalServiceNeeded() {
+		return roomAdditionalServiceNeeded;
+	}
+	/**
+	 * @param roomAdditionalServiceNeeded the roomAdditionalServiceNeeded to set
+	 */
+	public void setRoomAdditionalServiceNeeded(boolean roomAdditionalServiceNeeded) {
+		this.roomAdditionalServiceNeeded = roomAdditionalServiceNeeded;
+	}
+	/**
+	 * @return the banquetAdditionalServiceNeeded
+	 */
+	public boolean isBanquetAdditionalServiceNeeded() {
+		return banquetAdditionalServiceNeeded;
+	}
+	/**
+	 * @param banquetAdditionalServiceNeeded the banquetAdditionalServiceNeeded to set
+	 */
+	public void setBanquetAdditionalServiceNeeded(boolean banquetAdditionalServiceNeeded) {
+		this.banquetAdditionalServiceNeeded = banquetAdditionalServiceNeeded;
+	}
+	/**
+	 * @return the roomAdServcType
+	 */
+	public String getRoomAdServcType() {
+		return roomAdServcType;
+	}
+	/**
+	 * @param roomAdServcType the roomAdServcType to set
+	 */
+	public void setRoomAdServcType(String roomAdServcType) {
+		this.roomAdServcType = roomAdServcType;
+	}
+	/**
+	 * @return the banquetAdServcType
+	 */
+	public String getBanquetAdServcType() {
+		return banquetAdServcType;
+	}
+	/**
+	 * @param banquetAdServcType the banquetAdServcType to set
+	 */
+	public void setBanquetAdServcType(String banquetAdServcType) {
+		this.banquetAdServcType = banquetAdServcType;
+	}
+	/**
+	 * @return the roomAdServcMealType
+	 */
+	public String getRoomAdServcMealType() {
+		return roomAdServcMealType;
+	}
+	/**
+	 * @param roomAdServcMealType the roomAdServcMealType to set
+	 */
+	public void setRoomAdServcMealType(String roomAdServcMealType) {
+		this.roomAdServcMealType = roomAdServcMealType;
+	}
+	/**
+	 * @return the banquetAdServcMealType
+	 */
+	public String getBanquetAdServcMealType() {
+		return banquetAdServcMealType;
+	}
+	/**
+	 * @param banquetAdServcMealType the banquetAdServcMealType to set
+	 */
+	public void setBanquetAdServcMealType(String banquetAdServcMealType) {
+		this.banquetAdServcMealType = banquetAdServcMealType;
+	}
+	/**
+	 * @return the durationOfMeeting
+	 */
+	public int getDurationOfMeeting() {
+		return durationOfMeeting;
+	}
+	/**
+	 * @param durationOfMeeting the durationOfMeeting to set
+	 */
+	public void setDurationOfMeeting(int durationOfMeeting) {
+		this.durationOfMeeting = durationOfMeeting;
+	}
+	
+	
 	public void processReservationCost()
 	{
 		setResType();
 		setRoomUnitCost(getRoomType());
-		addAmount(getResType());
+		//addAmount(getResType());
+		
+		//prepareBill();
+	}
+	
+	public String prepareBill() {
+		// TODO Auto-generated method stub
+		
+		totalFee = totalAmount();
+		addRoomEntryToReceipt();
+		addRestaurantEntryToReceipt();
+		addbanquetEntryToReceipt();
+		addHallEntryToReceipt();
+		sb.append("\n\n\t\t\t\t\tTotal Amount:\t$"+ totalFee + "\n");
+		sb.append("\t\t\t\t\tGST / PST(5%):\t$" + df.format(totalFee * 0.15) +"\n" );
+		sb.append("\t\t\t\t\t Balance due:\t$" + df.format((totalFee + (totalFee * 0.15))));
+		return sb.toString();
+	}
+	
+	//method to create receipt format for meeting hall reservation fields
+	private void addHallEntryToReceipt() {
+		// TODO Auto-generated method stub
+		
+		if(isHallReserved())
+			sb.append("\n* Meeting Hall *");
+			
+	}
+	
+	//method to create receipt format for banquet reservation fields
+	private void addbanquetEntryToReceipt() {
+		// TODO Auto-generated method stub
+		if(isBanquetReserved())
+		{
+			sb.append("\n* Banquet *\n");
+			sb.append("Reserved for:\t\tDate: " + getDateBanquetReservedFor() + "\tTime: " + getTimeBanquetReservedFor() + "\n");
+			sb.append("Single Banquet hall type: \t\t\t\t\tUnit Cost:\t\t$" + banquetUnitFee +"\n");
+			if(isMealIncludedForBanquet())
+			{
+				sb.append("Meal Included:\t\tYES");
+				//sb.append("\tType: " + getMealTypeForRoom());
+				sb.append("\t\t\t\tMeal Cost:\t\t$" +VEG_MEAL_UNIT_COST +"\n");
+			}
+			if(isBanquetAdditionalServiceNeeded())
+			{
+				sb.append("Additional Services:\t"+ banquetAdServcType + "\t\t\t\tAdditional Services Cost:\t$" + banquetAdditionalCharges + "\n");
+			}
+			sb.append("\t\t\t\t\t\tTotal Banquet Cost:\t$" + df.format(banquetFee) + "\n");
+		}
+	}
+	
+	//method to create receipt format for restaurant reservation fields
+	private void addRestaurantEntryToReceipt() {
+		// TODO Auto-generated method stub
+		if(isRestaurantReserved())
+			sb.append("\n* Restaurant *");
+	}
+	
+	//method to create receipt format for room reservation fields
+	private void addRoomEntryToReceipt() {
+		// TODO Auto-generated method stub
+		if(isRoomReserved())
+		{
+			sb.append("\n* Room *\n");
+			sb.append("Reserved for:\t\tDate: " + getDateRoomReservedFor() + "\tTime: " + getTimeRoomReservedFor() + "\n");
+			sb.append("Room Type:\t\t" + getRoomType() + "\t\t\tUnit Cost:\t\t$" + roomUnitCost + "\n");
+			if(isMealIncludedForRoom())
+			{
+				sb.append("Meal Included:\t\tYES");
+				//sb.append("\tType: " + getMealTypeForRoom());
+				sb.append("\t\t\t\tMeal Cost:\t\t$" + VEG_MEAL_UNIT_COST +"\n");
+			}
+			sb.append("Stay Duration:\t\t" + getNumOfDays() + "day(s)\n");
+			if(isRoomAdditionalServiceNeeded())
+			{
+				sb.append("Additional Services:\t"+ roomAdServcType + "\t\t\t\tAdditional Services Cost:\t$" + roomAdditionalCharges + "\n");
+			}
+			sb.append("\t\t\t\t\t\tTotal Room Cost:\t$" + df.format(roomFee) + "\n");
+			
+		}
 		
 	}
 	private void setResType() {
@@ -256,35 +591,97 @@ public class BillingData {
 			break;
 		case "Regular Single":
 			roomUnitCost = 50;
-			break;		
+			break;	
+		default:
+			break;
 		}
 	}
 	
-	private void addAmount(String resType2) {
+	private float totalAmount() {
 		// TODO Auto-generated method stub
-		switch(resType)
-		{
-			case "room":
-				if(mealTypeForRoom.equals("Veg"))
-					restaurantFee += vegMealUnitCost;
-				else if(mealTypeForRoom.equals("Non-Veg"))
-					restaurantFee += nonVegMealUnitCost;
-				break;
+
+			if(isRoomReserved) {
+				roomFee += roomUnitCost * numOfDays;
+				if(isMealIncludedForRoom())
+					roomFee += VEG_MEAL_UNIT_COST;
+				if(roomAdditionalServiceNeeded)
+				{
+					if(roomAdServcType.contains("meal"))
+					{
+						roomAdditionalCharges += VEG_MEAL_UNIT_COST;
+					}
+					if(roomAdServcType.contains("house-keeping"))
+					{
+						roomAdditionalCharges += HOUSE_KEEPING_UNIT_COST;
+					}
+					roomFee += roomAdditionalCharges;
+					//return roomFee;
+				}
+			}
 			
-		case "banquet":
-			banquetFee += 8;
-			break;
+			if(isBanquetReserved) {
+			banquetFee += banquetUnitFee;
+			if(isMealIncludedForRoom())
+				banquetFee += VEG_MEAL_UNIT_COST;
+			if(banquetAdditionalServiceNeeded)
+			{
+				if(banquetAdServcType.contains("meal"))
+				{
+					banquetAdditionalCharges += VEG_MEAL_UNIT_COST;
+				}
+				if(banquetAdServcType.contains("house-keeping"))
+				{
+					banquetAdditionalCharges += HOUSE_KEEPING_UNIT_COST;
+				}
+				banquetFee += banquetAdditionalCharges;
+				//return roomFee;
+			}
+			}
 			
-		case "meeting":
-			meetingHallFee += 4;
-			break;
+			if(isHallReserved) {
+			roomFee += roomUnitCost * getNumOfDays();
+			if(isMealIncludedForRoom())
+				roomFee += VEG_MEAL_UNIT_COST;
+			if(roomAdditionalServiceNeeded)
+			{
+				if(roomAdServcType.contains("meal"))
+				{
+					roomAdditionalCharges += VEG_MEAL_UNIT_COST;
+				}
+				if(roomAdServcType.contains("house-keeping"))
+				{
+					roomAdditionalCharges += HOUSE_KEEPING_UNIT_COST;
+				}
+				roomFee += roomAdditionalCharges;
+				//return roomFee;
+			}
+			}
 			
-		case "restaurant":
-			if(mealIncludedForBanquet.equals("Veg"))
-				restaurantFee += vegMealUnitCost;
-			else if(mealIncludedForBanquet.equals("Non-Veg"))
-				restaurantFee += nonVegMealUnitCost;
-			break;
-		}
+			if(isRestaurantReserved) {
+			//if(mealIncludedForBanquet.equals("Veg"))
+				restaurantFee += VEG_MEAL_UNIT_COST;
+			//else if(mealIncludedForBanquet.equals("Non-Veg"))
+				restaurantFee += NON_VEG_MEAL_UNIT_COST;
+				
+				roomFee += roomUnitCost * getNumOfDays();
+				if(isMealIncludedForRoom())
+					roomFee += VEG_MEAL_UNIT_COST;
+				if(roomAdditionalServiceNeeded)
+				{
+					if(roomAdServcType.contains("meal"))
+					{
+						roomAdditionalCharges += VEG_MEAL_UNIT_COST;
+					}
+					if(roomAdServcType.contains("house-keeping"))
+					{
+						roomAdditionalCharges += HOUSE_KEEPING_UNIT_COST;
+					}
+					roomFee += roomAdditionalCharges;
+					//return roomFee;
+				}
+			}
+			
+			totalFee = roomFee + banquetFee + restaurantFee + meetingHallFee;
+			return totalFee;
 	}
 }
