@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 
 public class CustomerReceipt {
 
@@ -21,6 +22,7 @@ public class CustomerReceipt {
 	JLabel lblYourReservations;
 	JTextArea textAreaEntries;
 	BillingData bill = new BillingData();
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -68,10 +70,13 @@ public class CustomerReceipt {
 		lblYourReservations.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		frame.getContentPane().add(lblYourReservations);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(32, 81, 770, 323);
+		frame.getContentPane().add(scrollPane);
+		
 		textAreaEntries = new JTextArea();
+		scrollPane.setViewportView(textAreaEntries);
 		textAreaEntries.setForeground(new Color(0, 128, 128));
-		textAreaEntries.setBounds(32, 81, 770, 323);
-		frame.getContentPane().add(textAreaEntries);
 		
 		JButton btnPayBill = new JButton("Pay Bill");
 		btnPayBill.setForeground(new Color(0, 128, 0));
