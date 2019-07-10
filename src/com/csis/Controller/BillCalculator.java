@@ -22,6 +22,9 @@ public class BillCalculator {
 	public void calculate(UserInfo user) {
 		// TODO Auto-generated method stub
 		
+		//set name of user for receipt
+		bill.setName(user.getUsername());
+		
 		//processing room reservation entries
 		roomlist = helper.getReservationData(user,"room");
 		for(String str: roomlist)
@@ -31,10 +34,9 @@ public class BillCalculator {
 		}
 		if(roomlist.size() > 0)
 		{
-			System.out.println("Name: " + roomlist.get(0));
-			bill.setName(roomlist.get(0));
 			bill.setRoomReserved(true);
 			bill.setRoomType(roomlist.get(2));
+			bill.setRoomUnitCost(bill.getRoomType());
 			bill.setNumOfDays(Integer.parseInt(roomlist.get(3)));
 			String status = roomlist.get(4);
 			if(status.equals("yes"))
@@ -86,8 +88,16 @@ public class BillCalculator {
 		if(restaurantlist.size() > 0)
 		{
 			bill.setRestaurantReserved(true);		
+			//String status = restaurantlist.get(4);
 			//if(status.equals("yes"))
-				//bill.setMealTypeForRoom(roomlist.get(5));			
+			//{
+				//bill.setMealIncludedForRestaurant(true);
+				bill.setMealTypeForRestaurant(restaurantlist.get(5));
+			//}
+			bill.setDateRestaurantReservedFor(restaurantlist.get(6));
+			bill.setTimeRestaurantReservedFor(restaurantlist.get(7));
+			bill.setNumOfGuests(Integer.parseInt(restaurantlist.get(10)));
+			bill.setReservationFor(restaurantlist.get(11));
 		}else
 			bill.setRestaurantReserved(false);	
 
@@ -102,13 +112,19 @@ public class BillCalculator {
 		if(meetinghalllist.size() > 0)
 		{
 			bill.setHallReserved(true);			
-			//if(status.equals("yes"))
-				//bill.setMealTypeForRoom(roomlist.get(5));			
+			String status = meetinghalllist.get(4);
+			if(status.equals("yes"))
+			{
+				bill.setMealIncludedForHall(true);
+				//bill.setMealTypeForHall("Veg");
+			}
+			bill.setDateHallReservedFor((meetinghalllist.get(6)));
+			bill.setTimeHallReservedFor(meetinghalllist.get(7));
+			bill.setDurationOfMeeting(Integer.parseInt(meetinghalllist.get(8)));	
 		}else
 			bill.setHallReserved(false);	
 		
-		//method call to BillCalculator class method to work on cost calculation
-		bill.processReservationCost();
+		//method call to display receipt to the user in next frame
 		CustomerReceipt.main(null,bill);
 	}
 	
