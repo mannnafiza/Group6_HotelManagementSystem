@@ -2,6 +2,9 @@ package com.csis.Boundary;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -21,6 +24,7 @@ public class CustomerReceipt {
 	private JLabel lblBillFor;
 	JLabel lblYourReservations;
 	JTextArea textAreaEntries;
+	JLabel lblDateValue;
 	BillingData bill = new BillingData();
 	private JScrollPane scrollPane;
 
@@ -82,6 +86,20 @@ public class CustomerReceipt {
 		btnPayBill.setForeground(new Color(0, 128, 0));
 		btnPayBill.setBounds(290, 415, 89, 23);
 		frame.getContentPane().add(btnPayBill);
+		
+		JLabel lblDate = new JLabel("Date:");
+		lblDate.setForeground(new Color(255, 255, 255));
+		lblDate.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblDate.setBackground(new Color(95, 158, 160));
+		lblDate.setBounds(578, 26, 46, 14);
+		frame.getContentPane().add(lblDate);
+		
+		lblDateValue = new JLabel("");
+		lblDateValue.setForeground(new Color(255, 255, 255));
+		lblDateValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblDateValue.setBackground(new Color(95, 158, 160));
+		lblDateValue.setBounds(641, 20, 161, 20);
+		frame.getContentPane().add(lblDateValue);
 				
 		show(bill);
 		
@@ -90,6 +108,7 @@ public class CustomerReceipt {
 	private void show(BillingData bill) {
 		// TODO Auto-generated method stub
 		lblBillFor.setText("Bill for " + bill.getName());
+		lblDateValue.setText(bill.getDate());
 		textAreaEntries.setText(bill.prepareBill());
 		
 	}
