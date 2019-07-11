@@ -799,11 +799,8 @@ public class BillingData {
 				// sb.append("\tType: " + getMealTypeForRoom());
 				sb.append("\t\t\t\tMeal Cost:\t\t$" + BANQUET_MEAL__COST + "\n");
 			}
-			if (isBanquetAdditionalServiceNeeded()) {
-				/*
-				 * if(isBanquetadServiceMealNeeded()) banquetAdServcType += " Meal ";
-				 * if(isBanquetadServiceHKlNeeded()) banquetAdServcType += " HouseKeeping ";
-				 */
+			if (isBanquetAdditionalServiceNeeded())
+			{
 				sb.append("Additional Services:\t" + banquetAdServcType + "\t\t\tAdditional Services Cost:\t$"
 						+ banquetAdditionalCharges + "\n");
 			}
@@ -842,11 +839,8 @@ public class BillingData {
 				sb.append("\t\t\t\tMeal Cost:\t\t$" + VEG_MEAL_UNIT_COST + "\n");
 			}
 			sb.append("Stay Duration:\t\t" + getNumOfDays() + "day(s)\n");
-			if (isRoomAdditionalServiceNeeded()) {
-				/*
-				 * if(isRoomadServiceMealNeeded()) roomAdServcType += "Meal ";
-				 * if(isRoomadServiceHKNeeded()) roomAdServcType += "HouseKeeping ";
-				 */
+			if (isRoomAdditionalServiceNeeded())
+			{
 				System.out.println("Room Ad service: "+ roomAdServcType);
 				sb.append("Additional Services:\t" + roomAdServcType + "\t\t\tAdditional Services Cost:\t$"
 						+ roomAdditionalCharges + "\n");
