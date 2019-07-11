@@ -5,12 +5,15 @@ import java.text.DecimalFormat;
 public class BillingData {
 
 	private String name = "";
+	private int userId;
+	private String date;
+	private String time;
 	private StringBuilder sb = new StringBuilder();
 	private boolean isRoomReserved = false;
 	private boolean isBanquetReserved = false;
 	private boolean isRestaurantReserved = false;
 	private boolean isHallReserved = false;
-
+	
 	private String resType;
 	private String roomType = "";
 	private int numOfDays = 0;
@@ -38,6 +41,10 @@ public class BillingData {
 	private boolean banquetAdditionalServiceNeeded;
 	private String roomAdServcType = "meal";
 	private String banquetAdServcType = "meal";
+	private boolean roomadServiceMealNeeded;
+	private boolean banquetadServiceMealNeeded;
+	private boolean roomadServiceHKNeeded;
+	private boolean banquetadServiceHKlNeeded;
 	private String roomAdServcMealType;
 	private String banquetAdServcMealType;
 
@@ -54,6 +61,9 @@ public class BillingData {
 	private float roomAdditionalCharges = 0.0f;
 	private float banquetAdditionalCharges = 0.0f;
 	private float totalFee = 0.0f;
+	private float discount = 0.0f;
+	private float finalAmount;
+	
 	private float banquetUnitFee = 150.49f;
 	private float seatBookingFee = 14.99f;
 	private static float VEG_MEAL_UNIT_COST = 5.99f;
@@ -63,6 +73,21 @@ public class BillingData {
 	private static float HALL_MEAL_COST = 250;
 	private static float BANQUET_MEAL__COST = 500;
 	DecimalFormat df = new DecimalFormat("#.00");
+
+	
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	/**
 	 * @return the name
@@ -76,6 +101,36 @@ public class BillingData {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	/**
+	 * @return the date
+	 */
+	public String getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	
+	/**
+	 * @return the time
+	 */
+	public String getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	/**
@@ -520,6 +575,162 @@ public class BillingData {
 		this.durationOfMeeting = durationOfMeeting;
 	}
 
+	
+	/**
+	 * @return the totalFee
+	 */
+	public float getTotalFee() {
+		return totalFee;
+	}
+
+	/**
+	 * @return the discount
+	 */
+	public float getDiscount() {
+		return discount;
+	}
+
+	/**
+	 * @param discount the discount to set
+	 */
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+
+	/**
+	 * @return the finalAmount
+	 */
+	public float getFinalAmount() {
+		return finalAmount;
+	}
+
+	/**
+	 * @return the roomadServiceMealNeeded
+	 */
+	public boolean isRoomadServiceMealNeeded() {
+		return roomadServiceMealNeeded;
+	}
+
+	/**
+	 * @param roomadServiceMealNeeded the roomadServiceMealNeeded to set
+	 */
+	public void setRoomadServiceMealNeeded(boolean roomadServiceMealNeeded) {
+		this.roomadServiceMealNeeded = roomadServiceMealNeeded;
+	}
+
+	/**
+	 * @return the banquetadServiceMealNeeded
+	 */
+	public boolean isBanquetadServiceMealNeeded() {
+		return banquetadServiceMealNeeded;
+	}
+
+	/**
+	 * @param banquetadServiceMealNeeded the banquetadServiceMealNeeded to set
+	 */
+	public void setBanquetadServiceMealNeeded(boolean banquetadServiceMealNeeded) {
+		this.banquetadServiceMealNeeded = banquetadServiceMealNeeded;
+	}
+
+	/**
+	 * @return the roomadServiceHKNeeded
+	 */
+	public boolean isRoomadServiceHKNeeded() {
+		return roomadServiceHKNeeded;
+	}
+
+	/**
+	 * @param roomadServiceHKNeeded the roomadServiceHKNeeded to set
+	 */
+	public void setRoomadServiceHKNeeded(boolean roomadServiceHKNeeded) {
+		this.roomadServiceHKNeeded = roomadServiceHKNeeded;
+	}
+
+	/**
+	 * @return the banquetadServiceHKlNeeded
+	 */
+	public boolean isBanquetadServiceHKlNeeded() {
+		return banquetadServiceHKlNeeded;
+	}
+
+	/**
+	 * @param banquetadServiceHKlNeeded the banquetadServiceHKlNeeded to set
+	 */
+	public void setBanquetadServiceHKlNeeded(boolean banquetadServiceHKlNeeded) {
+		this.banquetadServiceHKlNeeded = banquetadServiceHKlNeeded;
+	}
+
+	
+	/**
+	 * @return the banquetFee
+	 */
+	public float getBanquetFee() {
+		return banquetFee;
+	}
+
+	/**
+	 * @param banquetFee the banquetFee to set
+	 */
+	public void setBanquetFee(float banquetFee) {
+		this.banquetFee = banquetFee;
+	}
+
+	/**
+	 * @return the roomFee
+	 */
+	public float getRoomFee() {
+		return roomFee;
+	}
+
+	/**
+	 * @param roomFee the roomFee to set
+	 */
+	public void setRoomFee(float roomFee) {
+		this.roomFee = roomFee;
+	}
+
+	/**
+	 * @return the restaurantFee
+	 */
+	public float getRestaurantFee() {
+		return restaurantFee;
+	}
+
+	/**
+	 * @param restaurantFee the restaurantFee to set
+	 */
+	public void setRestaurantFee(float restaurantFee) {
+		this.restaurantFee = restaurantFee;
+	}
+
+	/**
+	 * @return the meetingHallFee
+	 */
+	public float getMeetingHallFee() {
+		return meetingHallFee;
+	}
+
+	/**
+	 * @param meetingHallFee the meetingHallFee to set
+	 */
+	public void setMeetingHallFee(float meetingHallFee) {
+		this.meetingHallFee = meetingHallFee;
+	}
+
+	/**
+	 * @param totalFee the totalFee to set
+	 */
+	public void setTotalFee(float totalFee) {
+		this.totalFee = totalFee;
+	}
+
+	/**
+	 * @param finalAmount the finalAmount to set
+	 */
+	public void setFinalAmount(float finalAmount) {
+		this.finalAmount = finalAmount;
+	}
+
 	//method to prepare format of final bill
 	public String prepareBill() {
 		// TODO Auto-generated method stub
@@ -533,12 +744,12 @@ public class BillingData {
 		
 		
 		//code to give discount to staff members
-		
-		
-		
-		
+		//discount = 10.00f;
+		sb.append("\t\t\t\t\tDiscount:\t$" + df.format(discount) + "\n");
+		totalFee -= discount;
 		sb.append("\t\t\t\t\tGST / PST(5%):\t$" + df.format(totalFee * 0.15) + "\n");
-		sb.append("\t\t\t\t\t Balance due:\t$" + df.format((totalFee + (totalFee * 0.15))));
+		finalAmount = (float) (totalFee + (totalFee * 0.15));
+		sb.append("\t\t\t\t\t Balance due:\t$" + df.format(finalAmount));
 		return sb.toString();
 	}
 
@@ -559,7 +770,6 @@ public class BillingData {
 			sb.append("Duration of Meeting:\t" + getDurationOfMeeting() + "hour(s)\n");
 			sb.append("\t\t\t\t\t\tTotal Hall Cost:\t$" + df.format(meetingHallFee) + "\n");
 		}
-
 	}
 
 	// method to create receipt format for banquet reservation fields
@@ -576,6 +786,10 @@ public class BillingData {
 				sb.append("\t\t\t\tMeal Cost:\t\t$" + BANQUET_MEAL__COST + "\n");
 			}
 			if (isBanquetAdditionalServiceNeeded()) {
+				if(isBanquetadServiceMealNeeded())
+					roomAdServcType += " Meal ";
+				if(isBanquetadServiceHKlNeeded())
+					roomAdServcType += " HouseKeeping ";
 				sb.append("Additional Services:\t" + banquetAdServcType + "\t\t\t\tAdditional Services Cost:\t$"
 						+ banquetAdditionalCharges + "\n");
 			}
@@ -611,13 +825,15 @@ public class BillingData {
 			}
 			sb.append("Stay Duration:\t\t" + getNumOfDays() + "day(s)\n");
 			if (isRoomAdditionalServiceNeeded()) {
+				if(isRoomadServiceMealNeeded())
+					roomAdServcType += " Meal ";
+				if(isRoomadServiceHKNeeded())
+					roomAdServcType += " HouseKeeping ";
 				sb.append("Additional Services:\t" + roomAdServcType + "\t\t\t\tAdditional Services Cost:\t$"
 						+ roomAdditionalCharges + "\n");
 			}
 			sb.append("\t\t\t\t\t\tTotal Room Cost:\t$" + df.format(roomFee) + "\n");
-
 		}
-
 	}
 
 	//method to set price according to room type chosen by the customer
@@ -661,18 +877,19 @@ public class BillingData {
 		if (isRoomReserved) {
 			roomFee += roomUnitCost * numOfDays;
 			System.out.println("days: " + numOfDays + "total : " + roomFee);
+			
 			if (isMealIncludedForRoom())
 				roomFee += VEG_MEAL_UNIT_COST;
+			
 			if (roomAdditionalServiceNeeded) {
-				if (roomAdServcType.contains("meal")) {
+				if (roomAdServcType.contains("Meal")) {
 					roomAdditionalCharges += VEG_MEAL_UNIT_COST;
 				}
-				if (roomAdServcType.contains("house-keeping")) {
+				if (roomAdServcType.contains("HouseKeeping")) {
 					roomAdditionalCharges += HOUSE_KEEPING_UNIT_COST;
 				}
 				roomFee += roomAdditionalCharges;
-			}
-			
+			}		
 			System.out.println("Total room fee: " + roomFee + "days: "+ getNumOfDays());
 		}
 
@@ -697,8 +914,7 @@ public class BillingData {
 			 meetingHallFee += PER_HOUR_HALL_FEE * getDurationOfMeeting();
 			  
 			  if (isMealIncludedForRoom())
-				  meetingHallFee += HALL_MEAL_COST;
-			  
+				  meetingHallFee += HALL_MEAL_COST;			  
 			  }
 		 
 		if (isRestaurantReserved) {
