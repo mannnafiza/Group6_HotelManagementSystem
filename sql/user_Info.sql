@@ -76,7 +76,15 @@ create table expenses_Info (
 	finalAmount FLOAT
 );
 
-insert into user_Info (id, userName, password, gender, city) values (1, 'Addie', 'Nafiza1', 'Male', 'Surrey');
+
+create table staff_info (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	userName VARCHAR,
+	password VARCHAR,
+	gender VARCHAR,
+	city VARCHAR);
+
+insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Admin123', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Kulbir123', 'Male', 'Victoria');
 insert into user_Info (id, userName, password, gender, city) values (3, 'Bev', 'Aman123', 'Male', 'Richmond');
 insert into user_Info (id, userName, password, gender, city) values (4, 'Pauletta', 'Aman123', 'Female', 'Burnaby');
@@ -96,3 +104,5 @@ insert into user_Info (id, userName, password, gender, city) values (17, 'Winfie
 insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 'Nafiza1', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'Kulbir123', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'Aman123', 'Male', 'Victoria');
+
+

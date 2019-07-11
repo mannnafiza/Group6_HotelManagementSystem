@@ -3,24 +3,31 @@ package com.csis.Boundary;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.jws.soap.SOAPBinding.Use;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import com.csis.Entities.UserInfo;
+
 import java.awt.Font;
 
 public class AdminHome {
 
 	private JFrame frame;
+	UserInfo user;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminHome window = new AdminHome();
+					AdminHome window = new AdminHome(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +39,8 @@ public class AdminHome {
 	/**
 	 * Create the application.
 	 */
-	public AdminHome() {
+	public AdminHome(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -53,11 +61,11 @@ public class AdminHome {
 		lblImg.setBounds(250, 39, 110, 57);
 		frame.getContentPane().add(lblImg);
 		
-		JLabel label = new JLabel("");
+		JLabel lblReserve = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/reserve.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
-		label.setIcon(new ImageIcon(img));
-		label.setBounds(56, 135, 96, 119);
-		frame.getContentPane().add(label);
+		lblReserve.setIcon(new ImageIcon(img));
+		lblReserve.setBounds(56, 135, 96, 119);
+		frame.getContentPane().add(lblReserve);
 		
 		JLabel lblReservation = new JLabel("Reservation");
 		lblReservation.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -65,11 +73,80 @@ public class AdminHome {
 		lblReservation.setBounds(56, 265, 87, 31);
 		frame.getContentPane().add(lblReservation);
 		
+		lblReserve.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				Reservation.main(null, user);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
 		JLabel lblStaff = new JLabel("");
 		Image imgStaff = new ImageIcon(this.getClass().getResource("/staff.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblStaff.setIcon(new ImageIcon(imgStaff));
 		lblStaff.setBounds(246, 135, 96, 119);
 		frame.getContentPane().add(lblStaff);
+		
+		lblStaff.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				StaffCustomization.main(null);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		JLabel lblStaffText = new JLabel("Staff");
 		lblStaffText.setForeground(Color.WHITE);
@@ -82,6 +159,40 @@ public class AdminHome {
 		lblInventory.setIcon(new ImageIcon(imgInventory));
 		lblInventory.setBounds(431, 135, 96, 119);
 		frame.getContentPane().add(lblInventory);
+		
+		lblInventory.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				ManageInventory.main(null);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		JLabel lblInvenText = new JLabel("Inventory");
 		lblInvenText.setForeground(Color.WHITE);

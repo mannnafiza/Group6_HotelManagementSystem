@@ -53,6 +53,10 @@ public class Reservation {
 		
 	}
 	
+	public Reservation() {
+		initialize();
+	}
+	
 	
 
 	/**

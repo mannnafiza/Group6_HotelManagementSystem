@@ -219,8 +219,7 @@ public class Home {
 					}else
 					{
 						System.out.println("Login Unsuccessful");
-						JOptionPane jop = new JOptionPane();
-						jop.showMessageDialog(null,"Wrong username or password.");
+						JOptionPane.showMessageDialog(null,"Wrong username or password.");
 					}
 						
 			  } 

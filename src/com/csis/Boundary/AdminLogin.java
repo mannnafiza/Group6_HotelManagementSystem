@@ -7,16 +7,28 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
+import com.csis.Controller.Authenticate;
+import com.csis.Controller.Validate;
+import com.csis.Entities.UserInfo;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AdminLogin {
 
 	private JFrame frame;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
+	String username = "";
+	String password = "";
 
 	/**
 	 * Launch the application.
@@ -74,12 +86,47 @@ public class AdminLogin {
 		frame.getContentPane().add(txtUsername);
 		txtUsername.setColumns(10);
 		
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		txtPassword.setColumns(10);
 		txtPassword.setBounds(180, 174, 130, 20);
 		frame.getContentPane().add(txtPassword);
 		
 		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// get user inputs
+				username = txtUsername.getText();
+				password = txtPassword.getText();
+				
+				//Create an instance of Validate class and pass all the inputs given by the user
+				Validate validate = new Validate(username,password);
+				
+				if(validate.isLoginDataValid()) {
+					System.out.println("Admin inputs are valid."); 
+					
+					//create an instance of Authenticate class to verify userName and password inputs
+					Authenticate auth = new Authenticate();
+					auth.setUsername(username);
+					auth.setPassword(password);
+						
+						if(auth.matchUserName() && auth.matchpassword())
+						{
+							System.out.println("Login Successful");
+							JOptionPane.showMessageDialog(null," Admin Login Successful");
+							
+							//set user information
+							UserInfo user = new UserInfo();
+							DBHelper helper = new DBHelper();
+							user.setUsername(username);
+							user.setId(helper.getUserId(username));
+							
+							AdminHome.main(null, user);
+							frame.dispose();
+						}
+				}
+				  
+			}
+		});
 		btnLogin.setBounds(169, 224, 89, 23);
 		frame.getContentPane().add(btnLogin);
 	}
