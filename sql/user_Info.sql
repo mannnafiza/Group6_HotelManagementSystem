@@ -57,6 +57,24 @@ create table newOrderInventory_Info(
         Amount FLOAT
 );
 
+create table expenses_Info (
+	billId INT AUTO_INCREMENT PRIMARY KEY,
+	Date DATE,
+	Time TIME,
+	userId INT,
+	userName VARCHAR(50),
+	isRoomReserved VARCHAR(25),
+	isRestaurantReserved VARCHAR(25),
+	isBanquetReserved VARCHAR(25),
+	isHallReserved VARCHAR(25),
+	roomTotal FLOAT,
+	restaurantTotal FLOAT,
+	banquetTotal FLOAT,
+	hallTotal FLOAT,
+	totalAmount FLOAT,
+	discount FLOAT,
+	finalAmount FLOAT
+);
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'Addie', 'Nafiza1', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Kulbir123', 'Male', 'Victoria');

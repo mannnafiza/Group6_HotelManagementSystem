@@ -242,7 +242,6 @@ public class RestaurantReservation {
 								BillCalculator billCalculate = new BillCalculator();
 								billCalculate.calculate(user);
 								
-								CustomerReceipt.main(null);
 								frame.dispose();
 							}
 						});
