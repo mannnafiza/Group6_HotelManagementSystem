@@ -978,7 +978,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 	public ArrayList<String> getRoomServiceData(UserInfo user, String type) {
 		// TODO Auto-generated method stub
 		
-		String sql = "SELECT * FROM roomservice_info where userName = ? and resType = ?";
+		String sql = "SELECT * FROM roomservice_info where customerName = ? and resType = ?";
 		  ArrayList<String> list = new ArrayList<>();
 		  
 		  try {
@@ -1012,11 +1012,11 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 		  return list;
 	}
 
-	public int addBillEntry(BillingData bill) {
+	public int addBillEntry(UserInfo user, BillingData bill) {
 		// TODO Auto-generated method stub
 		
-		 String insertSql = "INSERT INTO expenses_info (Date, Time, isRoomReserved, isRestaurantReserved, isBanquetReserved, isHallReserved, roomTotal, restaurantTotal, banquetTotal,  hallTotal, totalAmount, discount, finalAmount) " +
-	  				"values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		 String insertSql = "INSERT INTO expenses_info (Date, Time, userId, userName, isRoomReserved, isRestaurantReserved, isBanquetReserved, isHallReserved, roomTotal, restaurantTotal, banquetTotal,  hallTotal, totalAmount, discount, finalAmount) " +
+	  				"values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		  
 		  try {
 			  connectDB();
@@ -1027,33 +1027,35 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			  //set the parameters of query
 			  pstmt.setString(1, bill.getDate());
 			  pstmt.setString(2, bill.getTime());
+			  pstmt.setInt(3, user.getId());
+			  pstmt.setString(4, user.getUsername());
 			  if(bill.isRoomReserved())
-				  pstmt.setString(3, "yes");
-			  else
-				  pstmt.setString(3, "no");
-			  
-			  if(bill.isRestaurantReserved())
-				  pstmt.setString(4, "yes");
-			  else
-				  pstmt.setString(4, "no");
-			  
-			  if(bill.isBanquetReserved())
 				  pstmt.setString(5, "yes");
 			  else
 				  pstmt.setString(5, "no");
 			  
-			  if(bill.isHallReserved())
+			  if(bill.isRestaurantReserved())
 				  pstmt.setString(6, "yes");
 			  else
 				  pstmt.setString(6, "no");
 			  
-			  pstmt.setFloat(7, bill.getRoomFee());
-			  pstmt.setFloat(8, bill.getRestaurantFee());
-			  pstmt.setFloat(9, bill.getBanquetFee());
-			  pstmt.setFloat(10, bill.getMeetingHallFee());
-			  pstmt.setFloat(11, bill.getTotalFee());
-			  pstmt.setFloat(12, bill.getDiscount());
-			  pstmt.setFloat(13, bill.getFinalAmount());
+			  if(bill.isBanquetReserved())
+				  pstmt.setString(7, "yes");
+			  else
+				  pstmt.setString(7, "no");
+			  
+			  if(bill.isHallReserved())
+				  pstmt.setString(8, "yes");
+			  else
+				  pstmt.setString(8, "no");
+			  
+			  pstmt.setFloat(9, bill.getRoomFee());
+			  pstmt.setFloat(10, bill.getRestaurantFee());
+			  pstmt.setFloat(11, bill.getBanquetFee());
+			  pstmt.setFloat(12, bill.getMeetingHallFee());
+			  pstmt.setFloat(13, bill.getTotalFee());
+			  pstmt.setFloat(14, bill.getDiscount());
+			  pstmt.setFloat(15, bill.getFinalAmount());
 			  
 			  //execute			  
 			  pstmt.executeUpdate();

@@ -403,13 +403,18 @@ public class RoomService {
 							System.out.println("Error in inserting " + ex.getMessage());
 							JOptionPane jop = new JOptionPane();
 							jop.showMessageDialog(null," Empty Fields .");
+							
 						}
 						
 					    	//Build the new Student
 								Service ns = new Service();
 								ns.setCustomerName(textFieldCustomerName.getText());
+								System.out.println("Res TYPE: "+ serviceData.getResType());
 								ns.setResType(serviceData.getResType());
-								ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
+								if(ns.getResType().equals("Room"))
+									ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
+								else
+									ns.setRoomNumber(Integer.parseInt("0"));
 								ns.setMealNeeded(serviceData.getMealNeeded());
 								ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
 								ns.setMealType(serviceData.getMealType() );  

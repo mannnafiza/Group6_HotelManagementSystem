@@ -15,8 +15,8 @@ create table reservation_Info(
 	stayDuration INT,
 	mealStatus VARCHAR(10),
 	mealType VARCHAR(15),
-	resDate DATE,
-	resTime TIME,
+	resDate String,
+	resTime String,
 	meetingDuration INT,
 	addService BOOLEAN,
 	noGuest INT,
@@ -30,8 +30,8 @@ create table roomService_Info (
         customerName VARCHAR(50),
         resType VARCHAR(50),
 	roomNumber INT,
-        serviceTypeMeal VARCHAR(50),
-        serviceTypeHouseKeeping VARCHAR(50),
+        mealNeeded VARCHAR(50),
+        houseKeepingNeeded VARCHAR(50),
         mealType VARCHAR(50),
 	time FLOAT,
         FOREIGN KEY fk_cn(customerName)
@@ -59,8 +59,8 @@ create table newOrderInventory_Info(
 
 create table expenses_Info (
 	billId INT AUTO_INCREMENT PRIMARY KEY,
-	Date DATE,
-	Time TIME,
+	Date VARCHAR(50),
+	Time VARCHAR(50),
 	userId INT,
 	userName VARCHAR(50),
 	isRoomReserved VARCHAR(25),

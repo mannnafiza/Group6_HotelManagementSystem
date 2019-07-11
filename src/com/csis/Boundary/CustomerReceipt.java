@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import com.csis.Entities.BillingData;
+import com.csis.Entities.UserInfo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,16 +27,18 @@ public class CustomerReceipt {
 	JTextArea textAreaEntries;
 	JLabel lblDateValue;
 	BillingData bill = new BillingData();
+	DBHelper helper = new DBHelper();
 	private JScrollPane scrollPane;
+	private UserInfo user = new UserInfo();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, BillingData bill) {
+	public static void main(String[] args, BillingData bill,UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerReceipt window = new CustomerReceipt(bill);
+					CustomerReceipt window = new CustomerReceipt(bill,user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,8 +50,9 @@ public class CustomerReceipt {
 	/**
 	 * Create the application.
 	 */
-	public CustomerReceipt(BillingData bill) {
+	public CustomerReceipt(BillingData bill, UserInfo user) {
 		this.bill = bill;
+		this.user = user;
 		initialize();
 	}
 
@@ -91,17 +95,22 @@ public class CustomerReceipt {
 		lblDate.setForeground(new Color(255, 255, 255));
 		lblDate.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblDate.setBackground(new Color(95, 158, 160));
-		lblDate.setBounds(578, 26, 46, 14);
+		lblDate.setBounds(604, 18, 46, 14);
 		frame.getContentPane().add(lblDate);
 		
 		lblDateValue = new JLabel("");
 		lblDateValue.setForeground(new Color(255, 255, 255));
 		lblDateValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblDateValue.setBackground(new Color(95, 158, 160));
-		lblDateValue.setBounds(641, 20, 161, 20);
+		lblDateValue.setBounds(660, 15, 161, 20);
 		frame.getContentPane().add(lblDateValue);
 				
+		
 		show(bill);
+		
+		//method to store billing details in expenses table
+		int id = helper.addBillEntry(user,bill);
+		
 		
 	}
 
