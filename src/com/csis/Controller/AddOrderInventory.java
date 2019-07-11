@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,8 @@ import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -86,30 +89,133 @@ public class AddOrderInventory {
 		textFieldItem.setBounds(87, 56, 86, 20);
 		frame.getContentPane().add(textFieldItem);
 		textFieldItem.setColumns(10);
+		textFieldItem.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+			
+				char item = arg0.getKeyChar();
+				if(!Character.isLetter(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					arg0.consume();
+				}
+				
+			}
+			
+			
+		});
+		
 		
 		textFieldUnitPrice = new JTextField();
 		textFieldUnitPrice.setBounds(87, 84, 86, 20);
 		frame.getContentPane().add(textFieldUnitPrice);
 		textFieldUnitPrice.setColumns(10);
-		
+		textFieldUnitPrice.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+			
+				char UnitPrice = e.getKeyChar();
+				if(!Character.isDigit(UnitPrice) ||  UnitPrice == KeyEvent.VK_BACK_SPACE   || UnitPrice ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});
 		textFieldQuantity = new JTextField();
 		textFieldQuantity.setBounds(87, 111, 86, 20);
 		frame.getContentPane().add(textFieldQuantity);
 		textFieldQuantity.setColumns(10);
+		textFieldQuantity.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char Quantity = e.getKeyChar();
+				if(!Character.isDigit(Quantity) ||  Quantity == KeyEvent.VK_BACK_SPACE   || Quantity ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});
 		
 		textFieldAmount = new JTextField();
 		textFieldAmount.setText("");
 		textFieldAmount.setBounds(87, 136, 86, 20);
 		frame.getContentPane().add(textFieldAmount);
 		textFieldAmount.setColumns(10);
+		textFieldAmount.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char Amount = e.getKeyChar();
+				if(!Character.isDigit(Amount) ||  Amount == KeyEvent.VK_BACK_SPACE   || Amount ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});
 		
 		JButton btnAddOrder = new JButton("Add Order");
 		btnAddOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				OrderNewInventory ns = new OrderNewInventory();
-				
-		     
+			
 							try {
 						          ns.setItem(textFieldItem.getText());
 						          ns.setQuantity(Integer.parseInt(textFieldQuantity.getText()));
@@ -120,8 +226,11 @@ public class AddOrderInventory {
 						     //  ManageInventory.main(null);
 							} catch(Exception ex) {
 								System.out.println("Error in inserting " + ex.getMessage());
+								JOptionPane jop = new JOptionPane();
+								jop.showMessageDialog(null," Empty Fields .");
 						}
 							updateTable();
+		     
                }//else { System.out.print("Please check input ");}
 				
 			
