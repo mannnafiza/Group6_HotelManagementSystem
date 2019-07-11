@@ -56,11 +56,22 @@ public class BillCalculator {
 			{
 				bill.setRoomAdditionalServiceNeeded(true);
 				adServiceList = helper.getRoomServiceData(user, "Room");
-				if(adServiceList.get(1).equals("yes"))
+				for(String str: adServiceList)
+				{
+					System.out.println("Item: "+ str);
+					//break;
+				}
+				if(adServiceList.size() > 0)
+				{
+				if(adServiceList.get(1).equals("Yes"))
 					bill.setRoomadServiceMealNeeded(true);
-				if(adServiceList.get(2).equals("yes"))
+				if(adServiceList.get(2).equals("Yes"))
 					bill.setRoomadServiceHKNeeded(true);
-					bill.setRoomAdServcMealType(adServiceList.get(3));
+				bill.setRoomAdServcMealType(adServiceList.get(3));
+				}else
+				{
+					System.out.println("Nothing fetched");
+				}
 			}
 		}else
 			bill.setRoomReserved(false);
@@ -88,14 +99,17 @@ public class BillCalculator {
 			{
 				bill.setBanquetAdditionalServiceNeeded(true);
 				adServiceList = helper.getRoomServiceData(user, "Banquet");
-				if(adServiceList.get(1).equals("yes"))
+				if(adServiceList.size() > 0)
+				{
+				if(adServiceList.get(1).equals("Yes"))
 					bill.setBanquetadServiceMealNeeded(true);
-				if(adServiceList.get(2).equals("yes"))
+				if(adServiceList.get(2).equals("Yes"))
 					bill.setBanquetadServiceHKlNeeded(true);
 					bill.setBanquetAdServcMealType(adServiceList.get(3));
+				}
 			}
 		}else
-			bill.setBanquetReserved(true);
+			bill.setBanquetReserved(false);
 		
 		//processing restaurant reservation entries
 		restaurantlist = helper.getReservationData(user,"restaurant");
@@ -143,13 +157,9 @@ public class BillCalculator {
 		bill.setDate(date);
 		String time = DateFormat.getTimeInstance().format(currentDate);
 		bill.setTime(time);
-		
-		//method to store billing details in expenses table
-		int id = helper.addBillEntry(bill);
-		
-		
+
 		//method call to display receipt to the user in next frame
-		CustomerReceipt.main(null,bill);
+		CustomerReceipt.main(null,bill,user);
 	}
 	
 	
