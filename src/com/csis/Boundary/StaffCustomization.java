@@ -272,9 +272,9 @@ public class StaffCustomization {
 	
 	/**
 	 * Listener for gender radio buttons
-	 * @param rdbtnMale
-	 * @param rdbtnFemale
-	 * @return gender value
+	 * @param rdbtnMale radio button for male
+	 * @param rdbtnFemale radio button for female
+	 * @return gender value male or female
 	 */
 	public String setGenderListener(JRadioButton rdbtnMale, JRadioButton rdbtnFemale) {
 		// TODO Auto-generated method stub

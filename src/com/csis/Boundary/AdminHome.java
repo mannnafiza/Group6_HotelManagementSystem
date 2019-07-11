@@ -22,8 +22,8 @@ public class AdminHome {
 
 	/**
 	 * Launch the application
-	 * @param args
-	 * @param user
+	 * @param args 
+	 * @param user object of UserInfo
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,7 +41,7 @@ public class AdminHome {
 	
 	/**
 	 * Create the application
-	 * @param user
+	 * @param user object of UserInfo
 	 */
 	public AdminHome(UserInfo user) {
 		this.user = user;
