@@ -9,6 +9,9 @@ public class Validate {
 	
 	//room service class
 	private String roomNumber = "";
+	private String serviceTypeMeal  = "";
+	private String serviceTypeHouseKeeping = "";
+	private String mealType  = "";
 	private String time= "";
 	
 	
@@ -44,10 +47,13 @@ public class Validate {
 		
 	}
 	
-	public Validate(String userName, String roomNumber, String time) {
+	public Validate(String userName, String roomNumber,  String serviceTypeMeal , String serviceTypeHouseKeeping ,String  mealType , String time) {
 		super();
 		this.userName = userName;
 		this.roomNumber = roomNumber;
+		this.serviceTypeMeal  = serviceTypeMeal ;
+		this.serviceTypeHouseKeeping  = serviceTypeHouseKeeping ;
+		this.mealType  = mealType ;
 		this.time = time;
 	}
 	
