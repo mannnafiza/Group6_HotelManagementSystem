@@ -91,12 +91,15 @@ public class AdminLogin {
 		txtPassword.setBounds(180, 174, 130, 20);
 		frame.getContentPane().add(txtPassword);
 		
+		/**
+		 * Action Listener for Login button
+		 */
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// get user inputs
 				username = txtUsername.getText();
-				password = txtPassword.getText();
+				password = new String(txtPassword.getPassword());
 				
 				//Create an instance of Validate class and pass all the inputs given by the user
 				Validate validate = new Validate(username,password);

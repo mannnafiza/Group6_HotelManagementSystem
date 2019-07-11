@@ -21,7 +21,9 @@ public class AdminHome {
 	UserInfo user;
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * @param args
+	 * @param user
 	 */
 	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
@@ -36,8 +38,10 @@ public class AdminHome {
 		});
 	}
 
+	
 	/**
-	 * Create the application.
+	 * Create the application
+	 * @param user
 	 */
 	public AdminHome(UserInfo user) {
 		this.user = user;
@@ -73,6 +77,9 @@ public class AdminHome {
 		lblReservation.setBounds(56, 265, 87, 31);
 		frame.getContentPane().add(lblReservation);
 		
+		/**
+		 * Event listener for reservation module
+		 */
 		lblReserve.addMouseListener(new MouseListener() {
 
 			@Override
@@ -114,6 +121,9 @@ public class AdminHome {
 		lblStaff.setBounds(246, 135, 96, 119);
 		frame.getContentPane().add(lblStaff);
 		
+		/**
+		 * Event listener for staff module
+		 */
 		lblStaff.addMouseListener(new MouseListener() {
 
 			@Override
@@ -160,6 +170,9 @@ public class AdminHome {
 		lblInventory.setBounds(431, 135, 96, 119);
 		frame.getContentPane().add(lblInventory);
 		
+		/**
+		 * Event Listener for inventory module
+		 */
 		lblInventory.addMouseListener(new MouseListener() {
 
 			@Override

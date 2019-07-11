@@ -74,6 +74,9 @@ public class StaffCustomization {
 		frame.getContentPane().setLayout(null);
 		
 		
+		/**
+		 * define listener for table
+		 */
 		listener = new ListSelectionListener() {
 			
 			
@@ -172,6 +175,9 @@ public class StaffCustomization {
 		
 		updateStaffTable();
 		
+		/**
+		 * Event listener for button "ADD"
+		 */
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,6 +192,9 @@ public class StaffCustomization {
 		btnAdd.setBounds(57, 462, 89, 23);
 		frame.getContentPane().add(btnAdd);
 		
+		/**
+		 * Event Listener for button "REMOVE"
+		 */
 		JButton btnRemove = new JButton("REMOVE");
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -199,6 +208,9 @@ public class StaffCustomization {
 		btnRemove.setBounds(317, 462, 89, 23);
 		frame.getContentPane().add(btnRemove);
 		
+		/**
+		 * Event Listener for button "UPDATE"
+		 */
 		JButton btnUpdate = new JButton("UPDATE");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -259,7 +271,7 @@ public class StaffCustomization {
 	}
 	
 	/**
-	 * 
+	 * Listener for gender radio buttons
 	 * @param rdbtnMale
 	 * @param rdbtnFemale
 	 * @return gender value
