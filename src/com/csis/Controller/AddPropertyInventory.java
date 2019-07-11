@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,6 +19,8 @@ import com.csis.Entities.AddProperty;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -100,24 +104,126 @@ public class AddPropertyInventory {
 		textFieldItem.setColumns(10);
 		textFieldItem.setBounds(83, 32, 182, 20);
 		panelAddProperty.add(textFieldItem);
+		textFieldItem.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+			
+				char item = arg0.getKeyChar();
+				if(!Character.isLetter(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					arg0.consume();
+				}
+				
+			}
+			
+			
+		});
 		
 		textFieldType = new JTextField();
 		textFieldType.setText("");
 		textFieldType.setColumns(10);
 		textFieldType.setBounds(83, 60, 182, 20);
 		panelAddProperty.add(textFieldType);
-		
+		textFieldType.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char item = e.getKeyChar();
+				if(!Character.isLetter(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});
 		textFieldQuantity = new JTextField();
 		textFieldQuantity.setText("");
 		textFieldQuantity.setColumns(10);
 		textFieldQuantity.setBounds(83, 85, 182, 20);
 		panelAddProperty.add(textFieldQuantity);
+		textFieldQuantity.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char item = e.getKeyChar();
+				if(!Character.isDigit(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+			
+		});
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
 		textFieldPrice.setBounds(83, 110, 182, 20);
 		panelAddProperty.add(textFieldPrice);
-		
+		textFieldPrice.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char item = e.getKeyChar();
+				if(!Character.isDigit(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});		
 		JLabel lblCategory = new JLabel("Category:");
 		lblCategory.setBounds(18, 144, 58, 14);
 		panelAddProperty.add(lblCategory);
@@ -130,11 +236,61 @@ public class AddPropertyInventory {
 		textFieldCategory.setBounds(83, 141, 182, 20);
 		panelAddProperty.add(textFieldCategory);
 		textFieldCategory.setColumns(10);
+		textFieldCategory.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char item = e.getKeyChar();
+				if(!Character.isLetter(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});
 		
 		textFieldUnitPrice = new JTextField();
 		textFieldUnitPrice.setBounds(83, 172, 182, 20);
 		panelAddProperty.add(textFieldUnitPrice);
 		textFieldUnitPrice.setColumns(10);
+		textFieldUnitPrice.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				char item = e.getKeyChar();
+				if(!Character.isDigit(item) ||  item == KeyEvent.VK_BACK_SPACE   || item ==KeyEvent.VK_DELETE  ) {
+					//getToolkit().beep();   
+					e.consume();
+				}
+			}
+			
+		});
 		
 		JButton buttonAddProperty = new JButton("Add");
 		buttonAddProperty.addActionListener(new ActionListener() {
@@ -159,6 +315,8 @@ public class AddPropertyInventory {
 				       ManageInventory.main(null);
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
+						JOptionPane jop = new JOptionPane();
+						jop.showMessageDialog(null," Please enter all empty Fields.");
 				}
 				}//else { System.out.print("Please check input ");}
 			}
