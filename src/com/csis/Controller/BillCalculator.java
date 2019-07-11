@@ -1,6 +1,8 @@
 package com.csis.Controller;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.csis.Boundary.CustomerReceipt;
 import com.csis.Boundary.DBHelper;
@@ -15,6 +17,7 @@ public class BillCalculator {
 	ArrayList<String> banquetlist = new ArrayList<>();
 	ArrayList<String> restaurantlist = new ArrayList<>();
 	ArrayList<String> meetinghalllist = new ArrayList<>();
+	ArrayList<String> adServiceList = new ArrayList<>();
 	String resType = "";
 	
 	//method to make use of DBHelper instance to fetch data from reservation_info table 
@@ -50,7 +53,15 @@ public class BillCalculator {
 			System.out.println("add Service=======: " + roomlist.get(9));
 			String adServiceStatus = roomlist.get(9);
 			if(adServiceStatus.equals("1"))
+			{
 				bill.setRoomAdditionalServiceNeeded(true);
+				adServiceList = helper.getRoomServiceData(user, "Room");
+				if(adServiceList.get(1).equals("yes"))
+					bill.setRoomadServiceMealNeeded(true);
+				if(adServiceList.get(2).equals("yes"))
+					bill.setRoomadServiceHKNeeded(true);
+					bill.setRoomAdServcMealType(adServiceList.get(3));
+			}
 		}else
 			bill.setRoomReserved(false);
 			
@@ -74,7 +85,15 @@ public class BillCalculator {
 			bill.setTimeBanquetReservedFor(banquetlist.get(7));	
 			String adServiceStatus = banquetlist.get(9);
 			if(adServiceStatus.equals("1"))
+			{
 				bill.setBanquetAdditionalServiceNeeded(true);
+				adServiceList = helper.getRoomServiceData(user, "Banquet");
+				if(adServiceList.get(1).equals("yes"))
+					bill.setBanquetadServiceMealNeeded(true);
+				if(adServiceList.get(2).equals("yes"))
+					bill.setBanquetadServiceHKlNeeded(true);
+					bill.setBanquetAdServcMealType(adServiceList.get(3));
+			}
 		}else
 			bill.setBanquetReserved(true);
 		
@@ -88,12 +107,7 @@ public class BillCalculator {
 		if(restaurantlist.size() > 0)
 		{
 			bill.setRestaurantReserved(true);		
-			//String status = restaurantlist.get(4);
-			//if(status.equals("yes"))
-			//{
-				//bill.setMealIncludedForRestaurant(true);
-				bill.setMealTypeForRestaurant(restaurantlist.get(5));
-			//}
+			bill.setMealTypeForRestaurant(restaurantlist.get(5));
 			bill.setDateRestaurantReservedFor(restaurantlist.get(6));
 			bill.setTimeRestaurantReservedFor(restaurantlist.get(7));
 			bill.setNumOfGuests(Integer.parseInt(restaurantlist.get(10)));
@@ -116,13 +130,23 @@ public class BillCalculator {
 			if(status.equals("yes"))
 			{
 				bill.setMealIncludedForHall(true);
-				//bill.setMealTypeForHall("Veg");
 			}
 			bill.setDateHallReservedFor((meetinghalllist.get(6)));
 			bill.setTimeHallReservedFor(meetinghalllist.get(7));
 			bill.setDurationOfMeeting(Integer.parseInt(meetinghalllist.get(8)));	
 		}else
 			bill.setHallReserved(false);	
+		
+		//set time and date of bill generation and set BillingData class fields accordingly
+		Date currentDate = new Date();
+		String date = DateFormat.getDateInstance().format(currentDate); 
+		bill.setDate(date);
+		String time = DateFormat.getTimeInstance().format(currentDate);
+		bill.setTime(time);
+		
+		//method to store billing details in expenses table
+		int id = helper.addBillEntry(bill);
+		
 		
 		//method call to display receipt to the user in next frame
 		CustomerReceipt.main(null,bill);
