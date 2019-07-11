@@ -99,7 +99,7 @@ public class AddProperty {
 		Unitprice = unitprice;
 	}
 	
-
+	
 	public Vector getVector() {
 		Vector v = new Vector();
 		
@@ -118,7 +118,8 @@ public class AddProperty {
 		return v;
 	}
 
-	public void validateTheProperty() {
+	public void isEmpty() {
+		
 		
 		
 	}
