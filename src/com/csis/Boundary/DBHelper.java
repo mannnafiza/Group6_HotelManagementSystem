@@ -455,8 +455,9 @@ public class DBHelper {
 public int roomService(Service serviceData)	{ //, serviceType  .   "','" + serviceData.isServiceType() +  
 	 int roomService = 0;		
 	//Get all the shoes! Shoes for days!
-	String sql = "Insert into roomService_Info (customerName  , roomNumber  ,serviceType ,time  )" 
-			+ " VALUES ('" + serviceData.getCustomerName() + "','" + serviceData.getRoomNumber() + "','" + serviceData.getServiceType() +"','" + serviceData.getTime() +"');";
+	String sql = "Insert into roomService_Info (customerName , resType , roomNumber, mealNeeded , houseKeepingNeeded , mealType, time  )" 
+			+ " VALUES ('" + serviceData.getCustomerName()  + "','" + serviceData.getResType()  + "','" + serviceData.getRoomNumber() + "','" + serviceData.getMealNeeded() 
+			+ "','" + serviceData.getHouseKeepingNeeded() + "','" + serviceData.getMealType() +"','" + serviceData.getTime() +"');";
 	
 	try {
 		//Connect to the database
