@@ -43,6 +43,7 @@ import java.util.Date;
 import java.awt.SystemColor;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import java.awt.Choice;
 
 
 public class RoomService {
@@ -57,7 +58,7 @@ public class RoomService {
 	boolean inputValid = false;
 	Service serviceData = new Service();
 	UserInfo user = new UserInfo();
-
+    String resType;
     
     
 	/**
@@ -76,11 +77,30 @@ public class RoomService {
 			}
 		});
 	}
+	
+	public static void main(String[] args, String resType) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RoomService window = new RoomService(resType);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 
 	/**
 	 * Create the application.
 	 */
 	public RoomService() {
+		initialize();
+	}
+	
+	public RoomService(String resType) {
+		this.resType = resType;
 		initialize();
 	}
 
@@ -109,7 +129,7 @@ public class RoomService {
 		JLabel lblRequestTime = new JLabel("Request Time : ");
 		lblRequestTime.setBounds(371, 253, 89, 20);
 		frame.getContentPane().add(lblRequestTime);
-		
+	
 		textFieldTime = new JTextField();
 		textFieldTime.addKeyListener(new KeyAdapter() {
 			@Override
@@ -172,6 +192,17 @@ public class RoomService {
 		frame.getContentPane().add(textFieldRoomNumber);
 		textFieldRoomNumber.setColumns(10);
 		
+//serviceData.getResType().equals("Banquet")
+		if(resType == "Banquet") {
+			textFieldRoomNumber.setVisible(false);
+			lblRoomNumber.setVisible(false);
+		}else {
+			textFieldRoomNumber.setVisible(true);
+			lblRoomNumber.setVisible(true);
+		}
+		
+		
+		
 		JLabel lblIconLogo = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/rsLogo.jpg")).getImage().getScaledInstance(180, 85, Image.SCALE_SMOOTH);
 		lblIconLogo.setIcon(new ImageIcon(img));		
@@ -182,7 +213,7 @@ public class RoomService {
 //		frame.add(btnProceed);
 //		frame.pack();
 //      frame.setVisible(true);
-	
+		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(95, 158, 160));
@@ -202,7 +233,7 @@ public class RoomService {
 		panel.add(rdbtnNonveg);
 		
 		JButton btnProceed = new JButton("Proceed");
-		btnProceed.setBounds(498, 401, 96, 23);
+		btnProceed.setBounds(558, 401, 96, 23);
 		frame.getContentPane().add(btnProceed);
 		
 		JCheckBox checkboxMeal = new JCheckBox("Meal");
@@ -217,6 +248,7 @@ public class RoomService {
 		        
 				if(checkboxMeal.isSelected()) {
 				   panel.setVisible(true);
+				   
 				}else {
 					panel.setVisible(false);
 				} 
@@ -264,17 +296,21 @@ public class RoomService {
         spinnerTime.setBounds(470, 284, 60, 25);
 		frame.getContentPane().add(spinnerTime);
 		
-		setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
+	//setMealListener(rdbtnVeg , rdbtnNonveg);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 								
-				RoomReservation.main(null, user);
-				
+				textFieldTime.setText("");
+				textFieldCustomerName.setText("");
+				textFieldRoomNumber.setText("");
+				//checkboxMeal;
+				//checkboxHouseKeeping.disable();
+				//rdbtnNonveg , rdbtnVeg , checkboxMeal, checkboxHouseKeeping
 			}
 		});
-		btnCancel.setBounds(336, 401, 89, 23);
+		btnCancel.setBounds(459, 401, 89, 23);
 		frame.getContentPane().add(btnCancel);
 	
 		btnProceed.addActionListener(new ActionListener() {
@@ -283,7 +319,7 @@ public class RoomService {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				 // TODO Auto-generated  method stub
+						        
 				customerName  = textFieldCustomerName.getText();
 					
 				  //Create an instance of Validate class and pass all the inputs given by the user
@@ -300,170 +336,92 @@ public class RoomService {
 					   //  if(validate.isCustmerDataValid()) {
 					    	 
 					    	 if(auth.matchUserName()) {
-					    	    
+					    	    //customername
+						        serviceData.setResType(resType);
 								System.out.println("Valid Username");
 								serviceData.setCustomerName(textFieldCustomerName.getText());
-
-								if(checkboxMeal.isSelected() == true) {
-								
-									//setMealListener(rdbtnVeg , rdbtnNonveg);
-									int rn = Integer.parseInt(textFieldRoomNumber.getText());
-									if( rn>=1  &&  rn<100) {
-									serviceData.setRoomNumber(rn);
-									setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
-									serviceData.setServiceType("Veg");
-									serviceData.setServiceType("Non-Veg");
+								//room number
+								int roomNo = Integer.parseInt(textFieldRoomNumber.getText());
+								float time = Float.parseFloat(textFieldTime.getText());
+								if( roomNo>=1  &&  roomNo<100 ) {
+									serviceData.setRoomNumber(roomNo);
+								}else {
+									JOptionPane.showMessageDialog(frame, "Please enter a valid room number");
+							      }
+								if(time >=1.00) {
 								    serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
-									JOptionPane.showMessageDialog(frame , "Your Request has been Proceed " );
-									
-									RoomReservation.main(null,user);
-									//frame.dispose();
-									}else {
-										JOptionPane.showMessageDialog(frame, "Please a valid room number");
-									}
-						//			serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
-								//	serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
-					                  
-
-									
-   /*   helper.insertRoomServiceInformation( serviceData.getCustomerName(), serviceData.getRoomNumber(), serviceData.getServiceType()
-    		  ,serviceData.getTime() );
-*/
-								
-									
-
-
 								}
-								else if(checkboxHouseKeeping.isSelected() == true) {
-									
-									
-									int rn = Integer.parseInt(textFieldRoomNumber.getText());
-									if( rn>=1  &&  rn<100) {
-									serviceData.setRoomNumber(rn);	
-									setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
-	/*check this one 	*/			serviceData.setServiceType("House Keeping");
-									serviceData.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
-	                     			serviceData.setTime(Float.parseFloat(textFieldTime.getText()));	
-								//	serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
-					                  JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
-					                  RoomReservation.main(null, user);
-										frame.dispose();
-									}else {
-										JOptionPane.showMessageDialog(frame, "Please a valid room number");
-									}
-
-								}
-								else if(checkboxMeal.isSelected() == true && checkboxHouseKeeping.isSelected() == true) {
-
-									int rn = Integer.parseInt(textFieldRoomNumber.getText());
-									if( rn>=1  &&  rn<100) {
-									serviceData.setRoomNumber(rn);
-									setMealListener(rdbtnVeg , rdbtnNonveg, checkboxHouseKeeping, checkboxMeal);
-									serviceData.setServiceType("Veg");
-									serviceData.setServiceType("Non-Veg");
-									serviceData.setServiceType("House Keeping");
-									serviceData.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
-									serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
-									//serviceData.setTime(Float.parseFloat(editor.getFormat().format(spinnerTime.getValue())));
-					                  JOptionPane.showMessageDialog(frame, "Your Request has been Proceed ");
-					                  RoomReservation.main(null,user);
-										frame.dispose();
-									}else {
-										JOptionPane.showMessageDialog(frame, "Please a valid room number");
-									}
-
-
-								}
-								else if(checkboxMeal.isSelected() == false && checkboxHouseKeeping.isSelected() == false) {
-									
-					                  JOptionPane.showMessageDialog(frame, "Please Select Service Type");
-
-								}
-
-					    		 
-					    		 
-					    	 }else {
-					    		  System.out.println(" Please check user Username ");
-				                  JOptionPane.showMessageDialog(frame, "Please check user Username ");
-
-					    	 }
-					    	 				    	 
+								 else {
+										JOptionPane.showMessageDialog(frame, "Please Enter a Valid Time");		
+										}
+									//mealstatus
+							   if(checkboxMeal.isSelected()) {
+								  String mealStatus = "Yes";
+								  serviceData.setMealNeeded(mealStatus);
+									     //meal type
+									     if(rdbtnVeg.isSelected()) {
+										  String mealService = "Veg";
+										  serviceData.setMealType(mealService);
+									      }else  {
+										  String mealServices = "Non-Veg";
+										  serviceData.setMealType(mealServices);
+									      }
+							   }
+							    else {
+								       String mealStatus = "No";
+								       serviceData.setMealNeeded(mealStatus);
+								     }  
+								        //housekeeping
+							   if(checkboxHouseKeeping.isSelected()) {
+								    String houseKeepingStatus = "Yes";
+								    serviceData.setHouseKeepingNeeded(houseKeepingStatus);
+							     } 
+								 else {
+								         String houseKeepingStatus = "No";
+								         serviceData.setHouseKeepingNeeded(houseKeepingStatus);	
+								       } 
+					 }
+					  else {
+					  		  System.out.println(" Please check user Username ");
+				               JOptionPane.showMessageDialog(frame, "Please check user Username ");
+					       }
+					    	 				
+					    	 frame.dispose();
 					    	 
-					     /*}else {
-					    	  System.out.println(" Please check the input fields ");
-					    	  JOptionPane.showMessageDialog(frame, "Please check the input fields ");
-					     }*/
-					    	 
-						} catch(Exception ex) {
-							System.out.println("Error in inserting " + ex.getMessage());
-						}
-					    	//Build the new Student
-								Service ns = new Service();
+					    	 /*Service ns = new Service();
 								ns.setCustomerName(textFieldCustomerName.getText());
+								ns.setResType(serviceData.getResType());
 								ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
-								ns.setServiceType("Veg");
-								ns.setServiceType("Non-Veg");
-								ns.setServiceType("HouseKeeping");
+								ns.setServiceTypeMeal(serviceData.getServiceTypeMeal());
+								ns.setServiceTypeHouseKeeping(serviceData.getServiceTypeHouseKeeping());
+								ns.setMealType(serviceData.getMealType() );  
 								ns.setTime(Float.parseFloat((textFieldTime.getText())));
 								
 								helper.roomService(ns);
-							//	Veg , Non-Veg  , House Keeping
+					    	 */
+						} catch(Exception ex) {
+							System.out.println("Error in inserting " + ex.getMessage());
+							JOptionPane jop = new JOptionPane();
+							jop.showMessageDialog(null," Empty Fields .");
+						}
+						
+					    	//Build the new Student
+								Service ns = new Service();
+								ns.setCustomerName(textFieldCustomerName.getText());
+								ns.setResType(serviceData.getResType());
+								ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
+								ns.setMealNeeded(serviceData.getMealNeeded());
+								ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
+								ns.setMealType(serviceData.getMealType() );  
+								ns.setTime(Float.parseFloat((textFieldTime.getText())));
+								
+								helper.roomService(ns);
 		
 			}
 			
 		});
-		
-		
+				
 	}
+
 	
-	/**
-	 * set if meal inclusive/exclusive
-	 * @param rdbtnYes
-	 * @param rdbtnNo     
-	 */
-	private void setMealListener(JRadioButton rdbtnVeg, JRadioButton rdbtnNonveg, JCheckBox checkboxHouseKeeping , JCheckBox checkboxMeal ) {
-		// TODO Auto-generated method stub
-		ButtonGroup bgroup = new ButtonGroup();
-        bgroup.add(rdbtnVeg);
-        bgroup.add(rdbtnNonveg);
-        
-		class ServiceActionListener implements ActionListener {
-		      public void actionPerformed(ActionEvent ex) {
-		     
-		    	  String  choice = checkboxMeal.getActionCommand();
-                  choice = bgroup.getSelection().getActionCommand();
-		          choice = checkboxHouseKeeping.getActionCommand();
-		      
-
-		      }
-		    }
-
-		  class ServiceItemListener implements ItemListener {
-		   			@Override
-			public void itemStateChanged(ItemEvent ex) {
-				// TODO Auto-generated method stub
-				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
-		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
-		        if(item.equals("Veg")) {
-			    	  serviceData.setServiceType("Veg");
-			      }else if(item.equals("Non-Veg"))  {
-			    	  serviceData.setServiceType("Non-Veg");
-			      }else {
-			    	  serviceData.setServiceType("House Keeping");
-			      }
-			}   
-		    }
-
-		    ActionListener al = new ServiceActionListener();
-		    rdbtnVeg.addActionListener(al);
-		    rdbtnNonveg.addActionListener(al);
-		    checkboxHouseKeeping.addActionListener(al);
-
-		    ItemListener il = new ServiceItemListener();
-		    rdbtnVeg.addItemListener(il);
-		    rdbtnNonveg.addItemListener(il);
-		    checkboxHouseKeeping.addItemListener(il);
-
-	}
-}	
-
+}
