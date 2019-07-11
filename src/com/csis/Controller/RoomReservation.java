@@ -168,7 +168,8 @@ public class RoomReservation {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				RoomService.main(null);
+				String resType = "Room";
+				RoomService.main(null, resType);
 			}
 			
 		} );
