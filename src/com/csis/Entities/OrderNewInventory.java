@@ -75,6 +75,20 @@ public class OrderNewInventory {
 		
 		return v;
 	}
+	
+public boolean isEmpty() {
+		
+	if(Item.equals("") || Quantity.equals(""))
+	{
+		System.out.println("No field should be empty....room");
+		return false;
+	}
+
+	
+	return true;
+		
+		
+	}
 
 
 }
