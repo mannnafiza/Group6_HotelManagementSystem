@@ -39,8 +39,8 @@ public class BillingData {
 
 	private boolean roomAdditionalServiceNeeded;
 	private boolean banquetAdditionalServiceNeeded;
-	private String roomAdServcType = "meal";
-	private String banquetAdServcType = "meal";
+	private String roomAdServcType = "";
+	private String banquetAdServcType = "";
 	private boolean roomadServiceMealNeeded;
 	private boolean banquetadServiceMealNeeded;
 	private boolean roomadServiceHKNeeded;
@@ -735,6 +735,18 @@ public class BillingData {
 	public String prepareBill() {
 		// TODO Auto-generated method stub
 
+		if (isRoomAdditionalServiceNeeded()) {
+			if(isRoomadServiceMealNeeded())
+				roomAdServcType += " Meal ";
+			if(isRoomadServiceHKNeeded())
+				roomAdServcType += " HouseKeeping ";
+		}
+		if (isBanquetAdditionalServiceNeeded()) {
+			if(isBanquetadServiceMealNeeded())
+				banquetAdServcType += " Meal ";
+			if(isBanquetadServiceHKlNeeded())
+				banquetAdServcType += " HouseKeeping ";
+		}
 		totalFee = totalAmount();
 		addRoomEntryToReceipt();
 		addRestaurantEntryToReceipt();
@@ -747,8 +759,8 @@ public class BillingData {
 		//discount = 10.00f;
 		sb.append("\t\t\t\t\tDiscount:\t$" + df.format(discount) + "\n");
 		totalFee -= discount;
-		sb.append("\t\t\t\t\tGST / PST(5%):\t$" + df.format(totalFee * 0.15) + "\n");
-		finalAmount = (float) (totalFee + (totalFee * 0.15));
+		sb.append("\t\t\t\t\tGST / PST(5%):\t$" + df.format(totalFee * 0.05) + "\n");
+		finalAmount = (float) (totalFee + (totalFee * 0.05));
 		sb.append("\t\t\t\t\t Balance due:\t$" + df.format(finalAmount));
 		return sb.toString();
 	}
@@ -757,6 +769,7 @@ public class BillingData {
 	private void addHallEntryToReceipt() {
 		// TODO Auto-generated method stub
 
+		System.out.println("Hall Reserved: "+ isHallReserved());
 		if (isHallReserved())
 		{
 			sb.append("\n* Meeting Hall *\n");
@@ -775,22 +788,23 @@ public class BillingData {
 	// method to create receipt format for banquet reservation fields
 	private void addbanquetEntryToReceipt() {
 		// TODO Auto-generated method stub
+		System.out.println("banquet Reserved: "+ isBanquetReserved());
 		if (isBanquetReserved()) {
 			sb.append("\n* Banquet *\n");
 			sb.append("Reserved for:\t\tDate: " + getDateBanquetReservedFor() + "\tTime: " + getTimeBanquetReservedFor()
 					+ "\n");
-			sb.append("Single Banquet hall type: \t\t\t\t\tUnit Cost:\t\t$" + banquetUnitFee + "\n");
+			sb.append("Single Banquet hall type: \t\t\t\tUnit Cost:\t\t$" + banquetUnitFee + "\n");
 			if (isMealIncludedForBanquet()) {
 				sb.append("Meal Included:\t\tYES");
 				// sb.append("\tType: " + getMealTypeForRoom());
 				sb.append("\t\t\t\tMeal Cost:\t\t$" + BANQUET_MEAL__COST + "\n");
 			}
 			if (isBanquetAdditionalServiceNeeded()) {
-				if(isBanquetadServiceMealNeeded())
-					roomAdServcType += " Meal ";
-				if(isBanquetadServiceHKlNeeded())
-					roomAdServcType += " HouseKeeping ";
-				sb.append("Additional Services:\t" + banquetAdServcType + "\t\t\t\tAdditional Services Cost:\t$"
+				/*
+				 * if(isBanquetadServiceMealNeeded()) banquetAdServcType += " Meal ";
+				 * if(isBanquetadServiceHKlNeeded()) banquetAdServcType += " HouseKeeping ";
+				 */
+				sb.append("Additional Services:\t" + banquetAdServcType + "\t\t\tAdditional Services Cost:\t$"
 						+ banquetAdditionalCharges + "\n");
 			}
 			sb.append("\t\t\t\t\t\tTotal Banquet Cost:\t$" + df.format(banquetFee) + "\n");
@@ -800,7 +814,9 @@ public class BillingData {
 	// method to create receipt format for restaurant reservation fields
 	private void addRestaurantEntryToReceipt() {
 		// TODO Auto-generated method stub
+		System.out.println("restaurant Reserved: "+ isRestaurantReserved());
 		if (isRestaurantReserved())
+		{
 			sb.append("\n* Restaurant *\n");
 			sb.append("Reserved for:\t\tDate: " + getDateRestaurantReservedFor() + "\tTime: " + getTimeRestaurantReservedFor()
 			+ "\t\tMeal of Day Type:\t" + getReservationFor() + "\n");
@@ -808,11 +824,13 @@ public class BillingData {
 			sb.append("Meal Type:\t\t" + getMealTypeForRestaurant() + "\t\t\t\tMeal Cost:\t\t$" + VEG_MEAL_UNIT_COST + "\n");
 			sb.append("Number of people:\t" + getNumOfGuests() + "person(s)\n");
 			sb.append("\t\t\t\t\t\tTotal Restaurant Cost:\t$" + df.format(restaurantFee) + "\n");
+		}
 	}
 
 	// method to create receipt format for room reservation fields
 	private void addRoomEntryToReceipt() {
 		// TODO Auto-generated method stub
+		System.out.println("room Reserved: "+ isRoomReserved());
 		if (isRoomReserved()) {
 			sb.append("\n* Room *\n");
 			sb.append("Reserved for:\t\tDate: " + getDateRoomReservedFor() + "\tTime: " + getTimeRoomReservedFor()
@@ -825,11 +843,12 @@ public class BillingData {
 			}
 			sb.append("Stay Duration:\t\t" + getNumOfDays() + "day(s)\n");
 			if (isRoomAdditionalServiceNeeded()) {
-				if(isRoomadServiceMealNeeded())
-					roomAdServcType += " Meal ";
-				if(isRoomadServiceHKNeeded())
-					roomAdServcType += " HouseKeeping ";
-				sb.append("Additional Services:\t" + roomAdServcType + "\t\t\t\tAdditional Services Cost:\t$"
+				/*
+				 * if(isRoomadServiceMealNeeded()) roomAdServcType += "Meal ";
+				 * if(isRoomadServiceHKNeeded()) roomAdServcType += "HouseKeeping ";
+				 */
+				System.out.println("Room Ad service: "+ roomAdServcType);
+				sb.append("Additional Services:\t" + roomAdServcType + "\t\t\tAdditional Services Cost:\t$"
 						+ roomAdditionalCharges + "\n");
 			}
 			sb.append("\t\t\t\t\t\tTotal Room Cost:\t$" + df.format(roomFee) + "\n");
@@ -881,8 +900,9 @@ public class BillingData {
 			if (isMealIncludedForRoom())
 				roomFee += VEG_MEAL_UNIT_COST;
 			
-			if (roomAdditionalServiceNeeded) {
+			if (isRoomAdditionalServiceNeeded()) {
 				if (roomAdServcType.contains("Meal")) {
+					
 					roomAdditionalCharges += VEG_MEAL_UNIT_COST;
 				}
 				if (roomAdServcType.contains("HouseKeeping")) {
@@ -933,4 +953,6 @@ public class BillingData {
 		totalFee = roomFee + banquetFee + restaurantFee + meetingHallFee;
 		return totalFee;
 	}
+	
+	
 }
