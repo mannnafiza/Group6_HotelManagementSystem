@@ -3,37 +3,15 @@ package com.csis.Entities;
 public class Service {
 	
 	private String customerName  = "";
+	private String resType;
 	private int roomNumber  = 0 ;
+	private String mealNeeded ; 
+	private String houseKeepingNeeded ; 
+	private String mealType;
 	private float time = 0;
-	private String serviceTypeMeal ; 
-	private String serviceTypeHouseKeeping ; 
-	private String serviceType;
 	
-	/**
-	 * @return the serviceTypeMeal
-	 */
-	public String getServiceTypeMeal() {
-		return serviceTypeMeal;
-	}
-	/**
-	 * @param serviceTypeMeal the serviceTypeMeal to set
-	 */
-	public void setServiceTypeMeal(String serviceTypeMeal) {
-		this.serviceTypeMeal = serviceTypeMeal;
-	}
-	/**
-	 * @return the serviceTypeHouseKeeping
-	 */
-	public String getServiceTypeHouseKeeping() {
-		return serviceTypeHouseKeeping;
-	}
-	/**
-	 * @param serviceTypeHouseKeeping the serviceTypeHouseKeeping to set
-	 */
-	public void setServiceTypeHouseKeeping(String serviceTypeHouseKeeping) {
-		this.serviceTypeHouseKeeping = serviceTypeHouseKeeping;
-	}
-		
+	
+			
 
 	/**
 	 * @return the customerName
@@ -77,14 +55,53 @@ public class Service {
 	/**
 	 * @return the serviceType
 	 */
-	public String getServiceType() {
-		return serviceType;
+	/**
+	 * @return the mealType
+	 */
+	public String getMealType() {
+		return mealType;
 	}
 	/**
-	 * @param serviceType the serviceType to set
+	 * @param mealType the mealType to set
 	 */
-	public void setServiceType(String serviceType) {
-		this.serviceType = serviceType;
+	public void setMealType(String mealType) {
+		this.mealType = mealType;
+	}
+	/**
+	 * @return the resType
+	 */
+	public String getResType() {
+		return resType;
+	}
+	/**
+	 * @param resType the resType to set
+	 */
+	public void setResType(String resType) {
+		this.resType = resType;
+	}
+	/**
+	 * @return the mealNeeded
+	 */
+	public String getMealNeeded() {
+		return mealNeeded;
+	}
+	/**
+	 * @param mealNeeded the mealNeeded to set
+	 */
+	public void setMealNeeded(String mealNeeded) {
+		this.mealNeeded = mealNeeded;
+	}
+	/**
+	 * @return the houseKeepingNeeded
+	 */
+	public String getHouseKeepingNeeded() {
+		return houseKeepingNeeded;
+	}
+	/**
+	 * @param houseKeepingNeeded the houseKeepingNeeded to set
+	 */
+	public void setHouseKeepingNeeded(String houseKeepingNeeded) {
+		this.houseKeepingNeeded = houseKeepingNeeded;
 	}
 	
 
