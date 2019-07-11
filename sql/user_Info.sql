@@ -56,6 +56,8 @@ create table newOrderInventory_Info(
 
 create table expenses_Info (
 	billId INT AUTO_INCREMENT PRIMARY KEY,
+	Date DATE,
+	Time TIME,
 	userId INT,
 	userName VARCHAR(50),
 	isRoomReserved VARCHAR(25),
