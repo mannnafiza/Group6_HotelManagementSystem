@@ -28,8 +28,11 @@ create table reservation_Info(
 create table roomService_Info (
         rmserid INT AUTO_INCREMENT PRIMARY KEY,
         customerName VARCHAR(50),
+        resType VARCHAR(50),
 	roomNumber INT,
-        serviceType VARCHAR(50),
+        serviceTypeMeal VARCHAR(50),
+        serviceTypeHouseKeeping VARCHAR(50),
+        mealType VARCHAR(50),
 	time FLOAT,
         FOREIGN KEY fk_cn(customerName)
 	REFERENCES reservation_Info(userName)	
