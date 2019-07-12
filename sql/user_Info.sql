@@ -76,6 +76,18 @@ create table expenses_Info (
 	finalAmount FLOAT
 );
 
+create table transactions_Info (
+	tran_Id INT AUTO_INCREMENT PRIMARY KEY,
+	Date VARCHAR(50),
+	Time VARCHAR(50),
+	userId INT,
+	userName VARCHAR(50),
+	amountPaid FLOAT,
+	paymentMode VARCHAR(50),
+	cardNumber LONG,
+	cardExpiryDate VARCHAR(50),
+	cardSecurityCode INT
+);
 
 create table staff_info (
 	id INT AUTO_INCREMENT PRIMARY KEY,
