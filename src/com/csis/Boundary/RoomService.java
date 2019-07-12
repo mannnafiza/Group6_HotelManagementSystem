@@ -52,7 +52,6 @@ public class RoomService {
 	private JTextField textFieldTime;
 	private JTextField textFieldCustomerName;
 	private JTextField textFieldRoomNumber;
-	private Validate validate = new Validate();
     private String	customerName  = "";
     String errorMsg;
 	boolean inputValid = false;

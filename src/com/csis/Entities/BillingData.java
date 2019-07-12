@@ -793,7 +793,7 @@ public class BillingData {
 			sb.append("\n* Banquet *\n");
 			sb.append("Reserved for:\t\tDate: " + getDateBanquetReservedFor() + "\tTime: " + getTimeBanquetReservedFor()
 					+ "\n");
-			sb.append("Single Banquet hall type: \t\t\t\tUnit Cost:\t\t$" + banquetUnitFee + "\n");
+			sb.append("Single Banquet hall type: \t\t\t\t\tUnit Cost:\t\t$" + banquetUnitFee + "\n");
 			if (isMealIncludedForBanquet()) {
 				sb.append("Meal Included:\t\tYES");
 				// sb.append("\tType: " + getMealTypeForRoom());
@@ -921,8 +921,7 @@ public class BillingData {
 				banquetFee += banquetAdditionalCharges;
 			}
 		}
-
-		
+	
 		  if (isHallReserved) {
 			  
 			 meetingHallFee += PER_HOUR_HALL_FEE * getDurationOfMeeting();
