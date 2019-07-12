@@ -15,9 +15,6 @@ public class Authenticate {
 	 */
 	public Authenticate() {
 		super();
-		/*
-		 * this.username = username; this.password = password;
-		 */
 	}
 	
 	/**
@@ -66,15 +63,11 @@ public class Authenticate {
 	//method to verify password input
 	public boolean matchpassword()
 	{
-		ArrayList<String> list = new ArrayList<>();
-		list = db.listPasswords();
+		String pswrd = db.getPassword(username);
 		
-		for(String str: list)
-		{
-			//System.out.println("User: " + str);
-			if(password.equals(str))
+			if(password.equals(pswrd))
 				return true;
-		}		
+		//}		
 		return false;		
 	}
 

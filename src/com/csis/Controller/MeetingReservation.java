@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
-import com.csis.Boundary.CustomerReceipt;
+import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
@@ -244,8 +244,6 @@ public class MeetingReservation {
 		btnBack.setForeground(new Color(51, 153, 102));
 		btnBack.setBounds(95, 360, 89, 23);
 		frame.getContentPane().add(btnBack);
-		
-		
 		
 		
 	}

@@ -14,6 +14,7 @@ import com.csis.Entities.BillingData;
 import com.csis.Entities.OrderNewInventory;
 import com.csis.Entities.Service;
 import com.csis.Entities.Staff;
+import com.csis.Entities.Transaction;
 import com.csis.Entities.UserInfo;
 
 import java.sql.Date;
@@ -93,11 +94,11 @@ public class DBHelper {
 		return s1;
 	}
 
-	//method to get all the passwords from user_Info table
-	public ArrayList<String> listPasswords() {
-		ArrayList<String> s1 = new ArrayList<String>();
+	//method to get the password for a specific user from user_Info table
+	public String getPassword(String usernm) {
 
-		String sql = "SELECT password FROM user_Info";
+		String s1 = "";
+		String sql = "SELECT password FROM user_Info where userName = '" + usernm + "'";
 		try {
 			// connect to the database
 			connectDB();
@@ -106,7 +107,7 @@ public class DBHelper {
 
 			while (rs.next())
 			{			
-				s1.add(rs.getString("password"));				
+				s1 = rs.getString(1);
 			}
 
 			disconnectDB();
@@ -139,8 +140,7 @@ public class DBHelper {
 		  {
 			  s1.add("Id: " + rs.getInt("id") + " ,Name: " + rs.getString("userName") + " ,Password: " + rs.getString("password") + " ,Gender: " + rs.getString("gender") + " ,City: " + rs.getString("city"));
 			  System.out.println(s1);
-		  }
-	  
+		  }	  
 	  disconnectDB();
 	  }catch(SQLException sx)
 	  {
@@ -1063,6 +1063,42 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			  disconnectDB();
 		  } catch(SQLException sx) {
 			  System.out.println("Error inserting data into the expenses table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+		return 0;
+	}
+
+	public int addtransactionEntry(Transaction t) {
+		// TODO Auto-generated method stub
+		
+		 String insertSql = "INSERT INTO transactions_info (Date, Time, userId, userName, amountPaid, paymentMode, cardNumber, cardExpiryDate, cardSecurityCode) " +
+	  				"values (?,?,?,?,?,?,?,?,?)";
+		  
+		  try {
+			  connectDB();
+			  
+			  //create statement
+			  pstmt = conn.prepareStatement(insertSql);
+			  
+			  //set the parameters of query
+			  pstmt.setString(1, t.getDate());
+			  pstmt.setString(2, t.getTime());
+			  pstmt.setInt(3, t.getUserId());
+			  pstmt.setString(4, t.getUserName());
+			  pstmt.setFloat(5, t.getAmountPaid());
+			  pstmt.setString(6, t.getPaymentMode());
+			  pstmt.setLong(7, t.getCardNumber());
+			  pstmt.setString(8, t.getExpiryDate());
+			  pstmt.setInt(9, t.getCode());
+			  
+			  //execute			  
+			  pstmt.executeUpdate();
+			  
+			  disconnectDB();
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the transaction table");
 			  System.out.println(sx.getMessage()); 
 			  System.out.println(sx.getErrorCode());
 			  System.out.println(sx.getSQLState());

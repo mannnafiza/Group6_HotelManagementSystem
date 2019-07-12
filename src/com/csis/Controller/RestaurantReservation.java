@@ -11,7 +11,7 @@ import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.csis.Boundary.CustomerReceipt;
+import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Restaurant;
@@ -201,7 +201,6 @@ public class RestaurantReservation {
 		btnCalculateMyBill.setBounds(363, 328, 128, 23);
 		btnCalculateMyBill.setForeground(new Color(51, 153, 102));
 		frame.getContentPane().add(btnCalculateMyBill);
-		
 		
 		
 		/**

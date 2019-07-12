@@ -2,34 +2,25 @@ package com.csis.Boundary;
 
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
-import java.awt.Checkbox;
 import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.text.DateFormatter;
 
 import com.csis.Controller.Authenticate;
-import com.csis.Controller.BanquetReservation;
-import com.csis.Controller.RoomReservation;
 import com.csis.Controller.Validate;
 import com.csis.Entities.Service;
 import com.csis.Entities.UserInfo;
@@ -38,12 +29,9 @@ import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
-import java.util.Date;
 
-import java.awt.SystemColor;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import java.awt.Choice;
 
 
 public class RoomService {
@@ -52,8 +40,7 @@ public class RoomService {
 	private JTextField textFieldTime;
 	private JTextField textFieldCustomerName;
 	private JTextField textFieldRoomNumber;
-	 Validate validate = new Validate();
-    private String	customerName  = "";
+    String	customerName  = "";
     String errorMsg;
 	boolean inputValid = false;
 	Service serviceData = new Service();
@@ -107,7 +94,7 @@ public class RoomService {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		//frame.setBackground(UIManager.getColor("" ));
@@ -200,7 +187,6 @@ public class RoomService {
 			textFieldRoomNumber.setVisible(true);
 			lblRoomNumber.setVisible(true);
 		}
-		
 		
 		
 		JLabel lblIconLogo = new JLabel("");
@@ -401,8 +387,7 @@ public class RoomService {
 					    	 */
 						} catch(Exception ex) {
 							System.out.println("Error in inserting " + ex.getMessage());
-							JOptionPane jop = new JOptionPane();
-							jop.showMessageDialog(null," Empty Fields .");
+							JOptionPane.showMessageDialog(null," Empty Fields .");
 							
 						}
 						

@@ -2,6 +2,8 @@ package com.csis.Boundary;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
-public class CustomerReceipt {
+public class CustomerBill {
 
 	private JFrame frame;
 	private JLabel lblBillFor;
@@ -27,6 +29,7 @@ public class CustomerReceipt {
 	JTextArea textAreaEntries;
 	JLabel lblDateValue;
 	BillingData bill = new BillingData();
+	BillingData bill2 = new BillingData();
 	DBHelper helper = new DBHelper();
 	private JScrollPane scrollPane;
 	private UserInfo user = new UserInfo();
@@ -38,7 +41,7 @@ public class CustomerReceipt {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerReceipt window = new CustomerReceipt(bill,user);
+					CustomerBill window = new CustomerBill(bill,user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +53,7 @@ public class CustomerReceipt {
 	/**
 	 * Create the application.
 	 */
-	public CustomerReceipt(BillingData bill, UserInfo user) {
+	public CustomerBill(BillingData bill, UserInfo user) {
 		this.bill = bill;
 		this.user = user;
 		initialize();
@@ -110,7 +113,16 @@ public class CustomerReceipt {
 		
 		//method to store billing details in expenses table
 		int id = helper.addBillEntry(user,bill);
-		
+		btnPayBill.addActionListener(new ActionListener()
+		{		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				Payment.main(null,bill);
+				frame.dispose();
+			}
+		});
 		
 	}
 
