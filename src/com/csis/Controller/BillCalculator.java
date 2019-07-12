@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.csis.Boundary.CustomerReceipt;
+import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.UserInfo;
@@ -27,7 +27,7 @@ public class BillCalculator {
 		
 		//set name of user for receipt
 		bill.setName(user.getUsername());
-		
+		bill.setUserId(user.getId());
 		//processing room reservation entries
 		roomlist = helper.getReservationData(user,"room");
 		for(String str: roomlist)
@@ -159,7 +159,7 @@ public class BillCalculator {
 		bill.setTime(time);
 
 		//method call to display receipt to the user in next frame
-		CustomerReceipt.main(null,bill,user);
+		CustomerBill.main(null,bill,user);
 	}
 	
 	

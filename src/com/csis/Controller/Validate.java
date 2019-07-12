@@ -13,6 +13,9 @@ public class Validate {
 	private String serviceTypeHouseKeeping = "";
 	private String mealType  = "";
 	private String time= "";
+	private int cardNumber;
+	private String expiryDate;
+	private int code;
 	
 	
 	/**
@@ -60,9 +63,13 @@ public class Validate {
 	
 	 // default constructor
 	 
-	public Validate() {
+	public Validate(int cardNumber2, String expirydate, int code) {
 		super();
 		// TODO Auto-generated constructor stub
+		this.cardNumber = cardNumber2;
+		this.expiryDate = expirydate;
+		this.code = code;
+		
 	}
 
 	//method to validate the registration page's user credentials
@@ -107,6 +114,17 @@ public class Validate {
 		return true;
 	}
 	
+	public boolean istransactionDataValid() {
+		// TODO Auto-generated method stub
+		if(cardNumber==0 || expiryDate.equals("") || code==0)
+		{
+			System.out.println("No field should be empty....");
+			return false;
+		}
+		
+		return true;
+		
+	}	
 	
 	//method to validate if the password meets all the minimum requirements
 	private boolean checkPassword(String password) {
@@ -145,5 +163,7 @@ public class Validate {
 			return false;
 		
 		return true;
-	}	
+	}
+
+
 }

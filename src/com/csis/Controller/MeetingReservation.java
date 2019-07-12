@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
-import com.csis.Boundary.CustomerReceipt;
+import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
