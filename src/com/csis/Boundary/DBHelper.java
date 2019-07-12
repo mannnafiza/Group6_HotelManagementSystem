@@ -94,11 +94,11 @@ public class DBHelper {
 		return s1;
 	}
 
-	//method to get all the passwords from user_Info table
-	public ArrayList<String> listPasswords() {
-		ArrayList<String> s1 = new ArrayList<String>();
+	//method to get the password for a specific user from user_Info table
+	public String getPassword(String usernm) {
 
-		String sql = "SELECT password FROM user_Info";
+		String s1 = "";
+		String sql = "SELECT password FROM user_Info where userName = '" + usernm + "'";
 		try {
 			// connect to the database
 			connectDB();
@@ -107,7 +107,7 @@ public class DBHelper {
 
 			while (rs.next())
 			{			
-				s1.add(rs.getString("password"));				
+				s1 = rs.getString(1);
 			}
 
 			disconnectDB();
