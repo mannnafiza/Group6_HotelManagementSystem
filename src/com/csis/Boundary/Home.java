@@ -2,7 +2,6 @@ package com.csis.Boundary;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -23,7 +22,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 
 public class Home {
 
@@ -275,8 +273,7 @@ public class Home {
 					if(auth.matchUserName() && auth.matchpassword())
 					{
 						System.out.println("Login Successful");
-						JOptionPane jop = new JOptionPane();
-						jop.showMessageDialog(null,"Login Successful");
+						JOptionPane.showMessageDialog(null,"Login Successful");
 						
 						//set user information
 						UserInfo user = new UserInfo();

@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
-import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
+import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
 import com.csis.Entities.UserInfo;
@@ -76,76 +76,79 @@ public class MeetingReservation {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 517, 462);
+		frame.setBounds(100, 100, 642, 464);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		JLabel lblMeetingReservation = new JLabel("Meeting Reservation");
-		lblMeetingReservation.setForeground(Color.WHITE);
-		lblMeetingReservation.setFont(new Font("Serif", Font.ITALIC, 20));
-		lblMeetingReservation.setBounds(125, 54, 232, 25);
+		lblMeetingReservation.setForeground(color);
+		lblMeetingReservation.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		lblMeetingReservation.setBounds(224, 79, 232, 25);
 		frame.getContentPane().add(lblMeetingReservation);
 		
 		JLabel lblUsername = new JLabel((String) null);
-		lblUsername.setForeground(Color.WHITE);
-		lblUsername.setBounds(344, 29, 76, 14);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUsername.setForeground(color);
+		lblUsername.setBounds(540, 25, 76, 25);
 		lblUsername.setText(user.getUsername());
 		frame.getContentPane().add(lblUsername);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblDate = new JLabel("Date");
-		lblDate.setForeground(Color.WHITE);
-		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDate.setForeground(color);
+		lblDate.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblDate.setBackground(new Color(95, 158, 160));
-		lblDate.setBounds(85, 127, 46, 14);
+		lblDate.setBounds(85, 160, 46, 25);
 		frame.getContentPane().add(lblDate);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(164, 121, 91, 20);
+		dateChooser.setBounds(164, 165, 91, 20);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		frame.getContentPane().add(dateChooser);
 		
 		JLabel labelMeetingDuration = new JLabel("Duration");
-		labelMeetingDuration.setForeground(Color.WHITE);
-		labelMeetingDuration.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		labelMeetingDuration.setBounds(85, 175, 89, 23);
+		labelMeetingDuration.setForeground(color);
+		labelMeetingDuration.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labelMeetingDuration.setBounds(85, 213, 89, 23);
 		frame.getContentPane().add(labelMeetingDuration);
 		
 		JLabel lblhours = new JLabel("(hours)");
-		lblhours.setForeground(Color.WHITE);
-		lblhours.setBounds(95, 197, 46, 14);
+		lblhours.setForeground(color);
+		lblhours.setBounds(95, 235, 46, 14);
 		frame.getContentPane().add(lblhours);
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setBounds(168, 175, 29, 35);
+		spinner.setBounds(184, 209, 29, 35);
 		frame.getContentPane().add(spinner);
 		
 		JLabel lblMeetingMeal = new JLabel("Meal ");
-		lblMeetingMeal.setForeground(Color.WHITE);
-		lblMeetingMeal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMeetingMeal.setBounds(86, 234, 87, 14);
+		lblMeetingMeal.setForeground(color);
+		lblMeetingMeal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMeetingMeal.setBounds(85, 283, 76, 20);
 		frame.getContentPane().add(lblMeetingMeal);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
-		rdbtnYes.setForeground(Color.WHITE);
+		rdbtnYes.setForeground(color);
 		rdbtnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		rdbtnYes.setBackground(new Color(95, 158, 160));
-		rdbtnYes.setBounds(88, 255, 109, 23);
+		rdbtnYes.setBackground(new Color(201, 210, 218));
+		rdbtnYes.setBounds(164, 280, 109, 23);
 		frame.getContentPane().add(rdbtnYes);
 		
 		JRadioButton rdbtnNo = new JRadioButton("No");
-		rdbtnNo.setForeground(Color.WHITE);
+		rdbtnNo.setForeground(color);
 		rdbtnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		rdbtnNo.setBackground(new Color(95, 158, 160));
-		rdbtnNo.setBounds(88, 281, 109, 23);
+		rdbtnNo.setBackground(new Color(201, 210, 218));
+		rdbtnNo.setBounds(275, 280, 109, 23);
 		frame.getContentPane().add(rdbtnNo);
 		
 		JLabel lblTime = new JLabel("Time");
-		lblTime.setForeground(Color.WHITE);
-		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTime.setForeground(color);
+		lblTime.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTime.setBackground(new Color(95, 158, 160));
-		lblTime.setBounds(323, 129, 46, 14);
+		lblTime.setBounds(338, 165, 46, 20);
 		frame.getContentPane().add(lblTime);
 		
 		Calendar calendar = Calendar.getInstance();
@@ -165,12 +168,13 @@ public class MeetingReservation {
 
         spinnerTime.setEditor(editor);
         spinnerTime.setForeground(Color.WHITE);
-        spinnerTime.setBounds(379, 124, 89, 25);
+        spinnerTime.setBounds(414, 162, 89, 25);
 		frame.getContentPane().add(spinnerTime);
 		
 		JButton btnCalculateMyBill = new JButton("Calculate my Bill");		
-		btnCalculateMyBill.setBounds(340, 360, 128, 23);
-		btnCalculateMyBill.setForeground(new Color(51, 153, 102));
+		btnCalculateMyBill.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCalculateMyBill.setBounds(471, 360, 128, 23);
+		btnCalculateMyBill.setForeground(color);
 		frame.getContentPane().add(btnCalculateMyBill);
 		
 		
@@ -185,6 +189,7 @@ public class MeetingReservation {
 		 * set action listener for button
 		 */
 		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -230,20 +235,33 @@ public class MeetingReservation {
 				
 			}
 		});
-		btnConfirm.setForeground(new Color(51, 153, 102));
-		btnConfirm.setBounds(216, 360, 89, 23);
+		btnConfirm.setForeground(color);
+		btnConfirm.setBounds(349, 360, 89, 23);
 		frame.getContentPane().add(btnConfirm);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Reservation.main(null, user);
 				frame.dispose();
 			}
 		});
-		btnBack.setForeground(new Color(51, 153, 102));
-		btnBack.setBounds(95, 360, 89, 23);
+		btnBack.setForeground(color);
+		btnBack.setBounds(215, 360, 89, 23);
 		frame.getContentPane().add(btnBack);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Home.main(null);
+				frame.dispose();
+			}
+		});
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOut.setForeground(color);
+		btnLogOut.setBounds(85, 360, 89, 23);
+		frame.getContentPane().add(btnLogOut);
 		
 		
 	}

@@ -2,7 +2,6 @@ package com.csis.Boundary;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ButtonGroup;
@@ -15,14 +14,9 @@ import com.csis.Controller.Authenticate;
 import com.csis.Controller.Validate;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Canvas;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -242,8 +236,7 @@ public class Registration {
 					if(auth.matchUserName())
 					{
 						System.out.println("The username already exists, choose a different one.");
-						JOptionPane jop = new JOptionPane();
-						jop.showMessageDialog(null,"The username already exists, choose a different one.");
+						JOptionPane.showMessageDialog(null,"The username already exists, choose a different one.");
 					}else
 					{
 						//store the user inputs in the user_Info table

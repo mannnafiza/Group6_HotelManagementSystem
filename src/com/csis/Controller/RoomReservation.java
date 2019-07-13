@@ -9,7 +9,6 @@ import java.awt.Font;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.event.ListSelectionEvent;
@@ -25,7 +24,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,12 +31,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
-import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
 import com.csis.Boundary.RoomService;
-import com.csis.Entities.BillingData;
 import com.csis.Entities.Room;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
@@ -322,7 +318,7 @@ public class RoomReservation {
 	
 	
 	protected boolean checkAvailability(java.sql.Date sqlDate, String roomType) {
-		boolean result = false;
+		//boolean result = false;
 		ArrayList<String> rooms = new ArrayList<>();
 		rooms = helper.getRoomList(sqlDate);
 		
