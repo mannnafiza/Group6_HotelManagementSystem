@@ -76,40 +76,42 @@ public class Registration {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
-		frame.setBounds(100, 100, 525, 391);
+		frame.setBounds(00, 100, 642, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		Color color = new Color(85, 96, 128);
 		
 		JLabel lblIcon = new JLabel();
 		Image img = new ImageIcon(this.getClass().getResource("/logo.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblIcon.setIcon(new ImageIcon(img));
-		lblIcon.setBounds(220, -1, 80, 69);
+		lblIcon.setBounds(257, 6, 80, 69);
 		frame.getContentPane().add(lblIcon);
 		
 		JLabel lblTopic = new JLabel("Hotel Management System");
-		lblTopic.setBounds(162, 59, 249, 25);
+		lblTopic.setBounds(175, 86, 249, 25);
 		frame.getContentPane().add(lblTopic);
-		lblTopic.setFont(new Font("Serif", Font.ITALIC, 20));
-		lblTopic.setForeground(Color.WHITE);
+		lblTopic.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		lblTopic.setForeground(color);
 		
 		JLabel lbluserIcon = new JLabel("");
 		img = new ImageIcon(this.getClass().getResource("/usernameIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		lbluserIcon.setIcon(new ImageIcon(img));
-		lbluserIcon.setBounds(101, 113, 29, 32);
+		lbluserIcon.setBounds(101, 136, 29, 32);
 		frame.getContentPane().add(lbluserIcon);
 		
 		JLabel lblpasswordIcon = new JLabel("");
 		img = new ImageIcon(this.getClass().getResource("/passwordIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		lblpasswordIcon.setIcon(new ImageIcon(img));
-		lblpasswordIcon.setBounds(101, 156, 29, 25);
+		lblpasswordIcon.setBounds(101, 187, 42, 38);
 		frame.getContentPane().add(lblpasswordIcon);
 		
-		Color color = new Color(51, 153, 102);
+		
 		
 		txtFieldName = new JTextField();
-		txtFieldName.setBounds(162, 113, 199, 25);
+		txtFieldName.setBounds(257, 145, 199, 25);
 		frame.getContentPane().add(txtFieldName);
 		txtFieldName.setColumns(10);
 		//txtFieldName.setText("Kulbirk");
@@ -117,49 +119,51 @@ public class Registration {
 		txtFieldName.setForeground(color);
 
 		pswrdField = new JPasswordField();
-		pswrdField.setBounds(162, 156, 199, 25);
+		pswrdField.setBounds(257, 192, 199, 25);
 		frame.getContentPane().add(pswrdField);
 		//pswrdField.setText("hh");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,12));		
 		pswrdField.setForeground(color);
 		
 		JButton btnSignUp = new JButton("Sign Up");
-		btnSignUp.setBounds(162, 277, 80, 23);
+		btnSignUp.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSignUp.setBounds(222, 336, 80, 23);
 		frame.getContentPane().add(btnSignUp);
 		btnSignUp.setForeground(color);
 			
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(281, 277, 80, 23);
+		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCancel.setBounds(326, 336, 80, 23);
 		frame.getContentPane().add(btnCancel);
 		//btnCancel.setBackground(new Color(105,205,105));
 		btnCancel.setForeground(color);
 		
 		JLabel lblExistingMember = new JLabel("Already a Member?");
 		lblExistingMember.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblExistingMember.setBounds(141, 310, 129, 25);
-		lblExistingMember.setForeground(new Color(0,0,0));
+		lblExistingMember.setBounds(188, 389, 129, 25);
+		lblExistingMember.setForeground(Color.DARK_GRAY);
 		frame.getContentPane().add(lblExistingMember);
 		
 		JLabel lblClickHereTo = new JLabel("Click here to login");
 		lblClickHereTo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblClickHereTo.setBounds(271, 310, 129, 25);
-		lblClickHereTo.setForeground(Color.white);
+		lblClickHereTo.setBounds(327, 389, 129, 25);
+		lblClickHereTo.setForeground(Color.DARK_GRAY);
 		//lblClickHereTo.setForeground(new Color(205,205,205));
 		frame.getContentPane().add(lblClickHereTo);
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
-		rdbtnMale.setBounds(161, 194, 93, 23);
+		rdbtnMale.setBounds(256, 238, 93, 23);
 		frame.getContentPane().add(rdbtnMale);
-		rdbtnMale.setBackground(new Color(95, 158, 160));
-		rdbtnMale.setForeground(Color.WHITE);
+		rdbtnMale.setBackground(new Color(201, 210, 218));
+		rdbtnMale.setForeground(color);
 		rdbtnMale.setFont(new Font("Tahoma", Font.BOLD, 14));
 		rdbtnMale.setSelected(true);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
-		rdbtnFemale.setBackground(new Color(95, 158, 160));
-		rdbtnFemale.setForeground(Color.WHITE);
+		rdbtnFemale.setBackground(new Color(201, 210, 218));
+		rdbtnFemale.setForeground(color);
 		rdbtnFemale.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rdbtnFemale.setBounds(256, 194, 105, 23);
+		rdbtnFemale.setBounds(351, 238, 105, 23);
 		frame.getContentPane().add(rdbtnFemale);
 		
 		txtFieldCity = new JTextField();
@@ -167,23 +171,47 @@ public class Registration {
 		txtFieldCity.setForeground(new Color(51, 153, 102));
 		txtFieldCity.setFont(new Font("Serif", Font.PLAIN, 16));
 		txtFieldCity.setColumns(10);
-		txtFieldCity.setBounds(162, 235, 199, 25);
+		txtFieldCity.setBounds(257, 282, 199, 25);
 		frame.getContentPane().add(txtFieldCity);
 		
 		JLabel lblGenderIcon = new JLabel("");
 		img = new ImageIcon(this.getClass().getResource("/genderIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		lblGenderIcon.setIcon(new ImageIcon(img));
-		lblGenderIcon.setBounds(101, 192, 29, 25);
+		lblGenderIcon.setBounds(101, 236, 29, 35);
 		frame.getContentPane().add(lblGenderIcon);
 		
 		JLabel lblLocationIcon = new JLabel("");
 		img = new ImageIcon(this.getClass().getResource("/locationIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		lblLocationIcon.setIcon(new ImageIcon(img));
-		lblLocationIcon.setBounds(101, 235, 29, 25);
+		lblLocationIcon.setBounds(101, 279, 29, 38);
 		frame.getContentPane().add(lblLocationIcon);
 		
 		btngrp.add(rdbtnMale);
 		btngrp.add(rdbtnFemale);
+		
+		JLabel label = new JLabel("Username");
+		label.setForeground(new Color(85, 96, 128));
+		label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label.setBounds(146, 145, 101, 21);
+		frame.getContentPane().add(label);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setForeground(new Color(85, 96, 128));
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPassword.setBounds(146, 196, 101, 21);
+		frame.getContentPane().add(lblPassword);
+		
+		JLabel lblGender = new JLabel("Gender");
+		lblGender.setForeground(new Color(85, 96, 128));
+		lblGender.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblGender.setBounds(149, 238, 101, 21);
+		frame.getContentPane().add(lblGender);
+		
+		JLabel lblCity = new JLabel("City");
+		lblCity.setForeground(new Color(85, 96, 128));
+		lblCity.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCity.setBounds(146, 285, 101, 21);
+		frame.getContentPane().add(lblCity);
 		
 		
 		
