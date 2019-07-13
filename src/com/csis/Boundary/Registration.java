@@ -78,7 +78,7 @@ public class Registration {
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
-		frame.setBounds(00, 100, 642, 464);
+		frame.setBounds(100, 100, 642, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

@@ -18,6 +18,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Reservation {
 
@@ -53,9 +56,9 @@ public class Reservation {
 		
 	}
 	
-	public Reservation() {
-		initialize();
-	}
+//	public Reservation() {
+//		initialize();
+//	}
 	
 	
 
@@ -64,40 +67,42 @@ public class Reservation {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 581, 391);
+		frame.setBounds(100, 100, 642, 464);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		JLabel lblTitle = new JLabel("Welcome");
-		lblTitle.setForeground(Color.WHITE);
-		lblTitle.setFont(new Font("Serif", Font.ITALIC, 20));
-		lblTitle.setBounds(216, 54, 188, 25);
+		lblTitle.setForeground(color);
+		lblTitle.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 22));
+		lblTitle.setBounds(216, 54, 263, 25);
 		frame.getContentPane().add(lblTitle);
 		lblTitle.setText("Welcome " + user.getUsername());
 		System.out.println(user.getUsername());
 		
 		JLabel lblRooms = new JLabel("");
-		lblRooms.setBounds(51, 131, 70, 62);
+		lblRooms.setBounds(51, 131, 70, 85);
 		Image imgRoom = new ImageIcon(this.getClass().getResource("/room.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblRooms.setIcon(new ImageIcon(imgRoom));
 		frame.getContentPane().add(lblRooms);
 		
 		JLabel lblMeetingText = new JLabel("Meeting Halls");
-		lblMeetingText.setForeground(Color.WHITE);
-		lblMeetingText.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblMeetingText.setForeground(color);
+		lblMeetingText.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblMeetingText.setBounds(184, 227, 125, 25);
 		frame.getContentPane().add(lblMeetingText);
 		
 		JLabel lblMeetings = new JLabel("");
-		lblMeetings.setBounds(184, 131, 88, 62);
+		lblMeetings.setBounds(184, 119, 100, 97);
 		Image imgMeeting = new ImageIcon(this.getClass().getResource("/meetinghall.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblMeetings.setIcon(new ImageIcon(imgMeeting));
 		frame.getContentPane().add(lblMeetings);
 		
 		JLabel lblRoomText = new JLabel("Rooms");
-		lblRoomText.setForeground(Color.WHITE);
-		lblRoomText.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblRoomText.setForeground(color);
+		lblRoomText.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblRoomText.setBounds(64, 227, 57, 25);
 		frame.getContentPane().add(lblRoomText);
 		
@@ -108,20 +113,20 @@ public class Reservation {
 		frame.getContentPane().add(lblRestaurant);
 		
 		JLabel lblRestaurantText = new JLabel("Restaurant");
-		lblRestaurantText.setForeground(Color.WHITE);
-		lblRestaurantText.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblRestaurantText.setForeground(color);
+		lblRestaurantText.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblRestaurantText.setBounds(350, 227, 100, 25);
 		frame.getContentPane().add(lblRestaurantText);
 		
 		JLabel lblBanquet = new JLabel("");
-		lblBanquet.setBounds(475, 131, 80, 62);
+		lblBanquet.setBounds(475, 131, 90, 85);
 		frame.getContentPane().add(lblBanquet);
 		Image imgBanquet = new ImageIcon(this.getClass().getResource("/banquet.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblBanquet.setIcon(new ImageIcon(imgBanquet));
 		
 		JLabel lblBanquetText = new JLabel("Banquet");
-		lblBanquetText.setForeground(Color.WHITE);
-		lblBanquetText.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblBanquetText.setForeground(color);
+		lblBanquetText.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblBanquetText.setBounds(485, 227, 80, 25);
 		frame.getContentPane().add(lblBanquetText);
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
@@ -134,6 +139,18 @@ public class Reservation {
 		setMeetingListener(lblMeetings);
 		setBanquetListener(lblBanquet);
 		setRestaurantListener(lblRestaurant);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Home.main(null);
+				frame.dispose();
+			}
+		});
+		btnLogOut.setForeground(new Color(85, 96, 128));
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOut.setBounds(273, 326, 100, 23);
+		frame.getContentPane().add(btnLogOut);
 		
 	}
 
