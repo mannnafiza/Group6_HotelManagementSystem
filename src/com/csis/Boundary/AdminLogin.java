@@ -59,42 +59,46 @@ public class AdminLogin {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(0, 0, 0));
-		frame.setBounds(100, 100, 445, 328);
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBounds(100, 100, 642, 464);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblImg = new JLabel("New label");
-		Image img = new ImageIcon(this.getClass().getResource("/admin.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
+		Color color = new Color(85, 96, 128);
+		
+		JLabel lblImg = new JLabel("");
+		Image img = new ImageIcon(this.getClass().getResource("/adminlogin.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblImg.setIcon(new ImageIcon(img));
-		lblImg.setBounds(180, 11, 67, 93);
+		lblImg.setBounds(256, 11, 123, 146);
 		frame.getContentPane().add(lblImg);
 		
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUsername.setForeground(Color.WHITE);
-		lblUsername.setBounds(85, 126, 67, 21);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblUsername.setForeground(color);
+		lblUsername.setBounds(176, 221, 106, 21);
 		frame.getContentPane().add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setForeground(Color.WHITE);
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPassword.setBounds(85, 173, 67, 21);
+		lblPassword.setForeground(color);
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPassword.setBounds(176, 282, 89, 21);
 		frame.getContentPane().add(lblPassword);
 		
 		txtUsername = new JTextField();
-		txtUsername.setBounds(180, 127, 130, 20);
+		txtUsername.setBounds(313, 222, 130, 20);
 		frame.getContentPane().add(txtUsername);
 		txtUsername.setColumns(10);
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setColumns(10);
-		txtPassword.setBounds(180, 174, 130, 20);
+		txtPassword.setBounds(313, 283, 130, 20);
 		frame.getContentPane().add(txtPassword);
 		
 		/**
 		 * Action Listener for Login button
 		 */
 		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.setForeground(color);
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// get user inputs
@@ -130,7 +134,13 @@ public class AdminLogin {
 				  
 			}
 		});
-		btnLogin.setBounds(169, 224, 89, 23);
+		btnLogin.setBounds(256, 348, 89, 23);
 		frame.getContentPane().add(btnLogin);
+		
+		JLabel lblAdmin = new JLabel("ADMIN");
+		lblAdmin.setForeground(color);
+		lblAdmin.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblAdmin.setBounds(256, 159, 101, 23);
+		frame.getContentPane().add(lblAdmin);
 	}
 }

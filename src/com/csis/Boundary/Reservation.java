@@ -143,7 +143,12 @@ public class Reservation {
 		JButton btnLogOut = new JButton("Log Out");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Home.main(null);
+				if(user.getUsername().equals("admin")) {
+					AdminLogin.main(null);
+				} else {
+					Home.main(null);
+				}
+				
 				frame.dispose();
 			}
 		});

@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
+import com.csis.Boundary.AdminLogin;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
@@ -305,7 +306,12 @@ public class RoomReservation {
 		JButton btnLogOut = new JButton("Log Out");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Home.main(null);
+				if(user.getUsername().equals("admin")) {
+					AdminLogin.main(null);
+				} else {
+					Home.main(null);
+				}
+				
 				frame.dispose();
 			}
 		});

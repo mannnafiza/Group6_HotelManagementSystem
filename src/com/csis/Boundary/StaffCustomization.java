@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -19,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -70,9 +73,9 @@ public class StaffCustomization {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(0, 0, 0));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.getContentPane().setLayout(null);
-		
+		Color color = new Color(85, 96, 128);
 		
 		/**
 		 * define listener for table
@@ -104,9 +107,9 @@ public class StaffCustomization {
 		};
 		
 		JLabel label = new JLabel("ADMIN");
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font("Nirmala UI", Font.BOLD, 22));
-		label.setBounds(262, 31, 110, 57);
+		label.setForeground(color);
+		label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		label.setBounds(340, 33, 110, 57);
 		frame.getContentPane().add(label);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -119,12 +122,12 @@ public class StaffCustomization {
 		
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setForeground(color);
 		lblUsername.setBounds(25, 368, 73, 14);
 		frame.getContentPane().add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setForeground(Color.WHITE);
+		lblPassword.setForeground(color);
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblPassword.setBounds(25, 413, 73, 14);
 		frame.getContentPane().add(lblPassword);
@@ -145,25 +148,25 @@ public class StaffCustomization {
 		frame.getContentPane().add(txtPassword);
 		
 		JLabel lblGender = new JLabel("Gender:");
-		lblGender.setForeground(Color.WHITE);
+		lblGender.setForeground(color);
 		lblGender.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblGender.setBounds(370, 369, 63, 14);
 		frame.getContentPane().add(lblGender);
 		
 		rdbtnMale = new JRadioButton("Male");
-		rdbtnMale.setForeground(Color.WHITE);
-		rdbtnMale.setBackground(Color.BLACK);
+		rdbtnMale.setForeground(color);
+		rdbtnMale.setBackground(new Color(201, 210, 218));
 		rdbtnMale.setBounds(448, 365, 63, 23);
 		frame.getContentPane().add(rdbtnMale);
 		
 		rdbtnFemale = new JRadioButton("Female");
-		rdbtnFemale.setBackground(Color.BLACK);
-		rdbtnFemale.setForeground(Color.WHITE);
+		rdbtnFemale.setBackground(new Color(201, 210, 218));
+		rdbtnFemale.setForeground(color);
 		rdbtnFemale.setBounds(526, 365, 87, 23);
 		frame.getContentPane().add(rdbtnFemale);
 		
 		JLabel lblCity = new JLabel("City");
-		lblCity.setForeground(Color.WHITE);
+		lblCity.setForeground(color);
 		lblCity.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCity.setBounds(370, 414, 63, 14);
 		frame.getContentPane().add(lblCity);
@@ -187,8 +190,7 @@ public class StaffCustomization {
 			}
 		});
 		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAdd.setForeground(Color.WHITE);
-		btnAdd.setBackground(Color.BLACK);
+		btnAdd.setForeground(color);
 		btnAdd.setBounds(57, 462, 89, 23);
 		frame.getContentPane().add(btnAdd);
 		
@@ -202,9 +204,8 @@ public class StaffCustomization {
 				updateStaffTable();
 			}
 		});
-		btnRemove.setForeground(Color.WHITE);
+		btnRemove.setForeground(color);
 		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnRemove.setBackground(Color.BLACK);
 		btnRemove.setBounds(317, 462, 89, 23);
 		frame.getContentPane().add(btnRemove);
 		
@@ -226,17 +227,34 @@ public class StaffCustomization {
 				updateStaffTable();
 			}
 		});
-		btnUpdate.setForeground(Color.WHITE);
+		btnUpdate.setForeground(color);
 		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnUpdate.setBackground(Color.BLACK);
 		btnUpdate.setBounds(560, 462, 89, 23);
 		frame.getContentPane().add(btnUpdate);
 		
 		JLabel lblId = new JLabel("ID");
-		lblId.setForeground(Color.WHITE);
+		lblId.setForeground(color);
 		lblId.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblId.setBounds(271, 321, 46, 14);
 		frame.getContentPane().add(lblId);
+		
+		JLabel lblAdminIcon = new JLabel("");
+		lblAdminIcon.setBounds(220, 11, 123, 94);
+		Image imgAdmin = new ImageIcon(this.getClass().getResource("/adminlogin.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
+		lblAdminIcon.setIcon(new ImageIcon(imgAdmin));
+		frame.getContentPane().add(lblAdminIcon);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminLogin.main(null);
+				frame.dispose();
+			}
+		});
+		btnLogOut.setForeground(new Color(85, 96, 128));
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOut.setBounds(560, 11, 89, 23);
+		frame.getContentPane().add(btnLogOut);
 		
 		
 		frame.setBounds(100, 100, 686, 535);

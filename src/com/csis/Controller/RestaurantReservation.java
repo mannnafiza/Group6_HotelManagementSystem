@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.csis.Boundary.AdminLogin;
 import com.csis.Boundary.CustomerBill;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Home;
@@ -278,7 +279,12 @@ public class RestaurantReservation {
 		JButton btnLogOut = new JButton("Log Out");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Home.main(null);
+				if(user.getUsername().equals("admin")) {
+					AdminLogin.main(null);
+				} else {
+					Home.main(null);
+				}
+				
 				frame.dispose();
 			}
 		});

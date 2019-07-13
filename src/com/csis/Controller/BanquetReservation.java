@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
+import com.csis.Boundary.AdminLogin;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
@@ -259,7 +260,12 @@ public class BanquetReservation {
 		JButton btnLogOut = new JButton("Log Out");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Home.main(null);
+				if(user.getUsername().equals("admin")) {
+					AdminLogin.main(null);
+				} else {
+					Home.main(null);
+				}
+				
 				frame.dispose();
 			}
 		});
