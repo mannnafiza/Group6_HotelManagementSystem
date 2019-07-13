@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class Home {
 
@@ -63,40 +64,50 @@ public class Home {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
-		frame.setBounds(100, 100, 525, 391);
+		frame.setBounds(100, 100, 642, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		Color color = new Color(85, 96, 128);
+
 		
 		JLabel lblIcon = new JLabel();
 		Image img = new ImageIcon(this.getClass().getResource("/logo.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
 		lblIcon.setIcon(new ImageIcon(img));
-		lblIcon.setBounds(220, 11, 80, 69);
+		lblIcon.setBounds(308, 16, 117, 105);
 		frame.getContentPane().add(lblIcon);
 		
 		JLabel lblTopic = new JLabel("Hotel Management System");
-		lblTopic.setBounds(153, 79, 249, 25);
+		lblTopic.setBounds(233, 132, 249, 25);
 		frame.getContentPane().add(lblTopic);
-		lblTopic.setFont(new Font("Serif", Font.ITALIC, 20));
-		lblTopic.setForeground(Color.WHITE);
+		lblTopic.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		lblTopic.setForeground(color);
+		
+		
 		
 		JLabel lbluserIcon = new JLabel("");
-		img = new ImageIcon(this.getClass().getResource("/usernameIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		img = new ImageIcon(this.getClass().getResource("/usernameicon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		lbluserIcon.setIcon(new ImageIcon(img));
-		lbluserIcon.setBounds(101, 140, 29, 32);
+		lbluserIcon.setBounds(166, 182, 29, 32);
 		frame.getContentPane().add(lbluserIcon);
 		
 		JLabel lblpasswordIcon = new JLabel("");
-		img = new ImageIcon(this.getClass().getResource("/passwordIcon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		img = new ImageIcon(this.getClass().getResource("/passwordicon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		lblpasswordIcon.setIcon(new ImageIcon(img));
-		lblpasswordIcon.setBounds(101, 192, 29, 25);
+		lblpasswordIcon.setBounds(166, 235, 36, 46);
 		frame.getContentPane().add(lblpasswordIcon);
+		img = new ImageIcon(this.getClass().getResource("/icon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		
-		Color color = new Color(51, 153, 102);
+		JLabel lblAdminIcon = new JLabel("");
+		img = new ImageIcon(this.getClass().getResource("/adminlogin.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		lblAdminIcon.setIcon(new ImageIcon(img));
+		lblAdminIcon.setBounds(10, 16, 42, 52);
+		frame.getContentPane().add(lblAdminIcon);
 		
 		txtFieldName = new JTextField();
-		txtFieldName.setBounds(162, 140, 199, 25);
+		txtFieldName.setBounds(320, 189, 199, 25);
 		frame.getContentPane().add(txtFieldName);
 		txtFieldName.setColumns(10);
 		//txtFieldName.setText("Kulbirk");
@@ -104,14 +115,15 @@ public class Home {
 		txtFieldName.setForeground(color);
 
 		pswrdField = new JPasswordField();
-		pswrdField.setBounds(162, 192, 199, 25);
+		pswrdField.setBounds(320, 246, 199, 25);
 		frame.getContentPane().add(pswrdField);
 		//pswrdField.setText("Kul1irk");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,14));		
 		pswrdField.setForeground(color);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(162, 265, 80, 23);
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogin.setBounds(236, 326, 80, 23);
 		frame.getContentPane().add(btnLogin);
 		//btnLogin.setBorder(new CustomBorder(8,2));
 		//btnLogin.setBackground(new Color(255,255,255));
@@ -119,29 +131,89 @@ public class Home {
 	
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(281, 265, 80, 23);
+		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCancel.setBounds(362, 326, 80, 23);
 		frame.getContentPane().add(btnCancel);
 		//btnCancel.setBackground(new Color(105,205,105));
 		btnCancel.setForeground(color);
 		
 		JLabel lblNewMember = new JLabel("New Member?");
 		lblNewMember.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewMember.setBounds(162, 310, 108, 25);
-		lblNewMember.setForeground(new Color(0,0,0));
+		lblNewMember.setBounds(223, 374, 108, 25);
+		lblNewMember.setForeground(Color.DARK_GRAY);
 		frame.getContentPane().add(lblNewMember);
 		
 		JLabel lblClickHereTo = new JLabel("Create an account");
 		lblClickHereTo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblClickHereTo.setBounds(261, 310, 129, 25);
-		lblClickHereTo.setForeground(Color.white);
+		lblClickHereTo.setBounds(327, 374, 129, 25);
+		lblClickHereTo.setForeground(Color.DARK_GRAY);
 		//lblClickHereTo.setForeground(new Color(205,205,205));
 		frame.getContentPane().add(lblClickHereTo);	
 		
-		JLabel lblAdmin = new JLabel("Admin");
-		lblAdmin.setForeground(Color.WHITE);
-		lblAdmin.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		lblAdmin.setBounds(435, 23, 64, 14);
+		JLabel lblAdmin = new JLabel("Admin Login");
+		lblAdmin.setForeground(color);
+		lblAdmin.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblAdmin.setBounds(47, 36, 91, 14);
 		frame.getContentPane().add(lblAdmin);
+		
+		JLabel lblUName = new JLabel("Username");
+		lblUName.setForeground(color);
+		lblUName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblUName.setBounds(205, 192, 101, 21);
+		frame.getContentPane().add(lblUName);
+		
+		JLabel lblPswd = new JLabel("Password");
+		lblPswd.setForeground(color);
+		lblPswd.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPswd.setBounds(205, 246, 101, 25);
+		frame.getContentPane().add(lblPswd);
+		
+		JLabel label = new JLabel("*");
+		label.setForeground(Color.RED);
+		label.setBounds(523, 197, 46, 14);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("*");
+		label_1.setForeground(Color.RED);
+		label_1.setBounds(523, 253, 46, 14);
+		frame.getContentPane().add(label_1);
+		
+		
+		
+		lblAdminIcon.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				AdminLogin.main(null);
+				frame.dispose();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		
 		lblAdmin.addMouseListener(new MouseListener() {
@@ -276,8 +348,4 @@ public class Home {
 			
 				});
 	}
-	
-	
-	
-	
 }
