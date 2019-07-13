@@ -268,19 +268,19 @@ public class RoomService {
         SpinnerDateModel model = new SpinnerDateModel();
         model.setValue(calendar.getTime());
 
-        JSpinner spinnerTime = new JSpinner(model);
-		/*spinnerTime.setBounds(414, 283, 50, 20);
-		frame.getContentPane().add(spinnerTime);*/
-
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinnerTime, "HH:mm"); //add "HH:mm a" for am/pm
-        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false); 
-        formatter.setOverwriteMode(true);
-
-        spinnerTime.setEditor(editor);
-        spinnerTime.setForeground(Color.WHITE);
-        spinnerTime.setBounds(470, 284, 60, 25);
-		frame.getContentPane().add(spinnerTime);
+//        JSpinner spinnerTime = new JSpinner(model);
+//		/*spinnerTime.setBounds(414, 283, 50, 20);
+//		frame.getContentPane().add(spinnerTime);*/
+//
+//        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinnerTime, "HH:mm"); //add "HH:mm a" for am/pm
+//        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+//        formatter.setAllowsInvalid(false); 
+//        formatter.setOverwriteMode(true);
+//
+//        spinnerTime.setEditor(editor);
+//        spinnerTime.setForeground(Color.WHITE);
+//        spinnerTime.setBounds(470, 284, 60, 25);
+//		frame.getContentPane().add(spinnerTime);
 		
 	//setMealListener(rdbtnVeg , rdbtnNonveg);
 		
@@ -412,6 +412,8 @@ public class RoomService {
 		});
 				
 	}
+
+
 
 	
 }
