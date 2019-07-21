@@ -66,18 +66,20 @@ public class CustomerBill {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 818, 488);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		lblBillFor = new JLabel("Bill for");
-		lblBillFor.setForeground(new Color(255, 255, 255));
-		lblBillFor.setBounds(407, 11, 161, 29);
-		lblBillFor.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblBillFor.setForeground(color);
+		lblBillFor.setBounds(324, 11, 244, 29);
+		lblBillFor.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 18));
 		frame.getContentPane().add(lblBillFor);
 		
 		lblYourReservations = new JLabel("Your Reservations:");
 		lblYourReservations.setBounds(32, 49, 142, 21);
-		lblYourReservations.setForeground(new Color(255, 255, 255));
+		lblYourReservations.setForeground(color);
 		lblYourReservations.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		frame.getContentPane().add(lblYourReservations);
 		
@@ -87,22 +89,23 @@ public class CustomerBill {
 		
 		textAreaEntries = new JTextArea();
 		scrollPane.setViewportView(textAreaEntries);
-		textAreaEntries.setForeground(new Color(0, 128, 128));
+		textAreaEntries.setForeground(color);
 		
 		JButton btnPayBill = new JButton("Pay Bill");
-		btnPayBill.setForeground(new Color(0, 128, 0));
-		btnPayBill.setBounds(290, 415, 89, 23);
+		btnPayBill.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnPayBill.setForeground(color);
+		btnPayBill.setBounds(361, 415, 89, 23);
 		frame.getContentPane().add(btnPayBill);
 		
 		JLabel lblDate = new JLabel("Date:");
-		lblDate.setForeground(new Color(255, 255, 255));
+		lblDate.setForeground(color);
 		lblDate.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblDate.setBackground(new Color(95, 158, 160));
 		lblDate.setBounds(604, 18, 46, 14);
 		frame.getContentPane().add(lblDate);
 		
 		lblDateValue = new JLabel("");
-		lblDateValue.setForeground(new Color(255, 255, 255));
+		lblDateValue.setForeground(color);
 		lblDateValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblDateValue.setBackground(new Color(95, 158, 160));
 		lblDateValue.setBounds(660, 15, 161, 20);

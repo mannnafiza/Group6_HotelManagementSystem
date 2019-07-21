@@ -253,7 +253,7 @@ public class AdminHome {
 		btnLogOut.setBounds(527, 11, 89, 23);
 		frame.getContentPane().add(btnLogOut);
 		
-		String[] reportArray = { "Reservation", "Inventory"};
+		String[] reportArray = { "Reservation", "Inventory", "Transactions"};
 		
 		JComboBox comboBox = new JComboBox(reportArray);
 		comboBox.setRenderer(new MyComboBoxRenderer("REPORT"));
@@ -284,18 +284,23 @@ public class AdminHome {
 		
 		btnGenerateReport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(choice == "Reservation") {
+				if(choice.equals("Reservation")) {
 					//helper.connectDB();
 					ArrayList<String> reservationData = null;
 					reservationData = getReservationData();
 					
 					writeToFile("Reservation_Report", reservationData);
 					
-				} else if(choice == "Inventory") {
+				} else if(choice.equals("Inventory")) {
 					ArrayList<String> inventoryData = null;
 					inventoryData = getInventoryData();
 					writeToFile("Inventory_Report", inventoryData);
-				} else {
+				} else if(choice.equals("Transactions")) {
+					ArrayList<String> transactionData = null;
+					transactionData = getTransactionData();
+					writeToFile("Transaction_Report", transactionData);
+				}
+				else {
 					btnGenerateReport.setVisible(false);
 				}
 			}
@@ -358,7 +363,7 @@ public class AdminHome {
 	
 	/**
 	 * 
-	 * @return contents of inventory
+	 * @return contents of inventory table
 	 */
 	public  ArrayList<String> getInventoryData() {
 		ArrayList<String> s1 = new ArrayList<String>();
@@ -376,6 +381,44 @@ public class AdminHome {
 				  s1.add("Item Id: " + rs.getInt("itemId") + "\n" + "Item: " + rs.getString("Item") + ", Type: " + rs.getString("Type") +
 						  ", Quantity: " + rs.getInt("Quantity") + ", Price: " + rs.getFloat("Price") + 
 						  ", Category: " + rs.getString("Category") + ", Unit Price: " + rs.getFloat("Unitprice"));
+				  System.out.println(s1);
+			  }	  
+		  helper.disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return s1;
+		
+	}
+	
+	
+	/**
+	 * 
+	 * @return contents of transaction_info table
+	 */
+	public  ArrayList<String> getTransactionData() {
+		ArrayList<String> s1 = new ArrayList<String>();
+		  
+		  String sql = "SELECT * FROM transactions_info";
+		  
+		  try {
+			  helper.connectDB();
+			  this.stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next())
+				{
+				
+				  s1.add("Transaction Id: " + rs.getInt("tran_Id") + "\n" + "Date: " + rs.getString("Date") + ", Time: " + rs.getString("Time") +
+						  ", User Id: " + rs.getInt("userId") + ", User Name: " + rs.getString("userName") + 
+						  ", Amount Paid: " + rs.getFloat("amountPaid") + ", Payment Mode: " + rs.getString("paymentMode") + 
+						  ", Card Number: " + rs.getString("cardNumber") + ", Card Expiry Date: " + rs.getString("cardExpiryDate") + 
+						  ", Card Security Code: " + rs.getString("cardSecurityCode"));
 				  System.out.println(s1);
 			  }	  
 		  helper.disconnectDB();
