@@ -22,6 +22,7 @@ import com.csis.Entities.BillingData;
 import com.csis.Entities.Transaction;
 
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -70,27 +71,31 @@ public class Payment {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 12));
-		frame.setBounds(100, 100, 581, 462);
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
+		frame.setBounds(100, 100, 642, 464);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		JLabel lblAmount = new JLabel("Amount To Be Paid : ");
+		lblAmount.setForeground(color);
 		lblAmount.setBounds(58, 32, 136, 22);
-		lblAmount.setForeground(new Color(255, 255, 255));
 		lblAmount.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		frame.getContentPane().add(lblAmount);
 		
 		JLabel lblAmountValue = new JLabel("");
-		lblAmountValue.setForeground(Color.WHITE);
+		lblAmountValue.setForeground(color);
 		lblAmountValue.setText(Float.toString(bill.getFinalAmount()));
 		lblAmountValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		lblAmountValue.setBounds(204, 32, 136, 22);
 		frame.getContentPane().add(lblAmountValue);
 		
 		JLabel lblPaymentMethod = new JLabel("Payment Method:");
-		lblPaymentMethod.setForeground(Color.WHITE);
+		lblPaymentMethod.setForeground(color);
 		lblPaymentMethod.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		lblPaymentMethod.setBounds(58, 65, 136, 22);
 		frame.getContentPane().add(lblPaymentMethod);
@@ -98,14 +103,14 @@ public class Payment {
 		JRadioButton rdbtnCard = new JRadioButton("Card");
 		rdbtnCard.setBounds(275, 64, 68, 23);
 		frame.getContentPane().add(rdbtnCard);
-		rdbtnCard.setBackground(new Color(95, 158, 160));
-		rdbtnCard.setForeground(Color.WHITE);
+		rdbtnCard.setBackground(new Color(201, 210, 218));
+		rdbtnCard.setForeground(color);
 		rdbtnCard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JRadioButton rdbtnCash = new JRadioButton("Cash");
 		rdbtnCash.setSelected(true);
-		rdbtnCash.setBackground(new Color(95, 158, 160));
-		rdbtnCash.setForeground(Color.WHITE);
+		rdbtnCash.setBackground(new Color(201, 210, 218));
+		rdbtnCash.setForeground(color);
 		rdbtnCash.setFont(new Font("Tahoma", Font.BOLD, 14));
 		rdbtnCash.setBounds(186, 64, 105, 23);
 		frame.getContentPane().add(rdbtnCash);
@@ -114,8 +119,8 @@ public class Payment {
 		btngrp.add(rdbtnCash);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(196, 98, 284, 149);
-		panel.setBackground(new Color(95, 158, 160));
+		panel.setBounds(196, 98, 284, 205);
+		panel.setBackground(new Color(201, 210, 218));
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setVisible(false);
@@ -129,9 +134,9 @@ public class Payment {
 		panel.add(lblExpiryIcon);
 		
 		textFieldcardNum = new JTextField("Card Number");
-		textFieldcardNum.setBounds(47, 25, 199, 25);
+		textFieldcardNum.setBounds(49, 65, 199, 25);
 		panel.add(textFieldcardNum);
-		textFieldcardNum.setForeground(new Color(51, 153, 102));
+		textFieldcardNum.setForeground(color);
 		textFieldcardNum.setFont(new Font("Serif", Font.PLAIN, 16));
 		textFieldcardNum.setColumns(10);
 		
@@ -140,31 +145,35 @@ public class Payment {
 		panel.add(lblCardIcon);
 		
 		textFieldSecurityCode = new JTextField("Security Code");
-		textFieldSecurityCode.setBounds(47, 102, 201, 25);
+		textFieldSecurityCode.setBounds(47, 154, 201, 25);
 		panel.add(textFieldSecurityCode);
-		textFieldSecurityCode.setForeground(new Color(51, 153, 102));
+		textFieldSecurityCode.setForeground(color);
 		textFieldSecurityCode.setFont(new Font("Serif", Font.PLAIN, 16));
 		textFieldSecurityCode.setColumns(10);
 		
 		JLabel lblEnterPaymentInformation = new JLabel("Enter Payment Information");
-		lblEnterPaymentInformation.setForeground(Color.WHITE);
-		lblEnterPaymentInformation.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEnterPaymentInformation.setBounds(57, -10, 173, 32);
+		lblEnterPaymentInformation.setForeground(color);
+		lblEnterPaymentInformation.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 16));
+		lblEnterPaymentInformation.setBounds(49, 11, 225, 32);
 		panel.add(lblEnterPaymentInformation);
 		
 		textFieldExpiryDate = new JTextField("MM/YY");
-		textFieldExpiryDate.setForeground(new Color(51, 153, 102));
+		textFieldExpiryDate.setForeground(color);
 		textFieldExpiryDate.setFont(new Font("Serif", Font.PLAIN, 16));
 		textFieldExpiryDate.setColumns(10);
-		textFieldExpiryDate.setBounds(47, 65, 199, 25);
+		textFieldExpiryDate.setBounds(49, 109, 199, 25);
 		panel.add(textFieldExpiryDate);
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(202, 258, 89, 23);
+		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCancel.setBounds(204, 354, 89, 23);
+		btnCancel.setForeground(color);
 		frame.getContentPane().add(btnCancel);
 		
 		JButton btnPay = new JButton("Pay Now");
-		btnPay.setBounds(338, 258, 89, 23);
+		btnPay.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPay.setForeground(color);
+		btnPay.setBounds(358, 354, 89, 23);
 		frame.getContentPane().add(btnPay);
 		
 		rdbtnCard.addActionListener(new ActionListener()

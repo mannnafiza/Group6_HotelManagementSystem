@@ -96,25 +96,34 @@ public class RoomService {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(95, 158, 160));
-		//frame.setBackground(UIManager.getColor("" ));
-		frame.setBackground(UIManager.getColor("Blue"));
-		frame.setBounds(100, 100, 801, 501);
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		frame.getContentPane().setForeground(new Color(0, 0, 0));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
+		frame.setBounds(100, 100, 642, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		
 		JLabel labelRSS = new JLabel("   Room Service  System");
-		labelRSS.setFont(new Font("Tahoma", Font.BOLD, 11));
-		labelRSS.setBounds(206, 11, 324, 41);
+		labelRSS.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		labelRSS.setBounds(321, 69, 324, 41);
+		labelRSS.setForeground(color);
 		frame.getContentPane().add(labelRSS);
 		
+		
 		JLabel labelRT = new JLabel("Request Type :");
-		labelRT.setBounds(34, 248, 109, 31);
+		labelRT.setFont(new Font("Tahoma", Font.BOLD, 12));
+		labelRT.setBounds(10, 248, 133, 31);
+		labelRT.setForeground(color);
 		frame.getContentPane().add(labelRT);
 		
 		JLabel lblRequestTime = new JLabel("Request Time : ");
-		lblRequestTime.setBounds(371, 253, 89, 20);
+		lblRequestTime.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRequestTime.setBounds(342, 253, 118, 20);
+		lblRequestTime.setForeground(color);
 		frame.getContentPane().add(lblRequestTime);
 	
 		textFieldTime = new JTextField();
@@ -135,15 +144,21 @@ public class RoomService {
 		textFieldTime.setColumns(10);
 		
 		JLabel lblMinutes = new JLabel("Minutes");
-		lblMinutes.setBounds(529, 253, 46, 14);
+		lblMinutes.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblMinutes.setBounds(529, 253, 60, 14);
+		lblMinutes.setForeground(color);
 		frame.getContentPane().add(lblMinutes);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name :");
-		lblCustomerName.setBounds(34, 194, 109, 20);
+		lblCustomerName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCustomerName.setBounds(10, 194, 133, 20);
+		lblCustomerName.setForeground(color);
 		frame.getContentPane().add(lblCustomerName);
 		
 		JLabel lblRoomNumber = new JLabel("Room Number(1 to 100) :");
-		lblRoomNumber.setBounds(316, 193, 144, 22);
+		lblRoomNumber.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRoomNumber.setBounds(316, 193, 177, 22);
+		lblRoomNumber.setForeground(color);
 		frame.getContentPane().add(lblRoomNumber);
 		
 		textFieldCustomerName = new JTextField();
@@ -175,7 +190,7 @@ public class RoomService {
 				
 			}
 		});
-		textFieldRoomNumber.setBounds(470, 194, 111, 20);
+		textFieldRoomNumber.setBounds(492, 195, 111, 20);
 		frame.getContentPane().add(textFieldRoomNumber);
 		textFieldRoomNumber.setColumns(10);
 		
@@ -190,10 +205,10 @@ public class RoomService {
 		
 		
 		JLabel lblIconLogo = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/rsLogo.jpg")).getImage().getScaledInstance(180, 85, Image.SCALE_SMOOTH);
+		Image img = new ImageIcon(this.getClass().getResource("/rsLogo.png")).getImage().getScaledInstance(180, 85, Image.SCALE_SMOOTH);
 		lblIconLogo.setIcon(new ImageIcon(img));		
 		//lblIconLogo.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblIconLogo.setBounds(204, 39, 210, 130);
+		lblIconLogo.setBounds(121, 0, 177, 176);
 		frame.getContentPane().add(lblIconLogo);
 		
 //		frame.add(btnProceed);
@@ -204,6 +219,8 @@ public class RoomService {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(95, 158, 160));
 		panel.setBounds(121, 290, 79, 86);
+		panel.setForeground(color);
+		panel.setBackground(new Color(201, 210, 218));
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setVisible(false);
@@ -211,20 +228,28 @@ public class RoomService {
 		JRadioButton rdbtnVeg = new JRadioButton("Veg");
 		rdbtnVeg.setBackground(new Color(95, 158, 160));
 		rdbtnVeg.setBounds(6, 7, 109, 23);
+		rdbtnVeg.setForeground(color);
+		rdbtnVeg.setBackground(new Color(201, 210, 218));
 		panel.add(rdbtnVeg);
 		
 		JRadioButton rdbtnNonveg = new JRadioButton("Non-Veg");
 		rdbtnNonveg.setBackground(new Color(95, 158, 160));
 		rdbtnNonveg.setBounds(6, 38, 109, 23);
+		rdbtnNonveg.setForeground(color);
+		rdbtnNonveg.setBackground(new Color(201, 210, 218));
 		panel.add(rdbtnNonveg);
 		
 		JButton btnProceed = new JButton("Proceed");
-		btnProceed.setBounds(558, 401, 96, 23);
+		btnProceed.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnProceed.setBounds(503, 391, 96, 23);
+		btnProceed.setForeground(color);
 		frame.getContentPane().add(btnProceed);
 		
 		JCheckBox checkboxMeal = new JCheckBox("Meal");
 		checkboxMeal.setBackground(new Color(95, 158, 160));
 		checkboxMeal.setBounds(128, 252, 60, 23);
+		checkboxMeal.setForeground(color);
+		checkboxMeal.setBackground(new Color(201, 210, 218));
 		frame.getContentPane().add(checkboxMeal);
 		checkboxMeal.addActionListener(new ActionListener() {
 
@@ -247,6 +272,8 @@ public class RoomService {
 		JCheckBox checkboxHouseKeeping = new JCheckBox("House Keeping");
 		checkboxHouseKeeping.setBackground(new Color(95, 158, 160));
 		checkboxHouseKeeping.setBounds(190, 252, 123, 23);
+		checkboxHouseKeeping.setForeground(color);
+		checkboxHouseKeeping.setBackground(new Color(201, 210, 218));
 		frame.getContentPane().add(checkboxHouseKeeping);
 		checkboxHouseKeeping.addActionListener(new ActionListener() {
 
@@ -285,6 +312,8 @@ public class RoomService {
 	//setMealListener(rdbtnVeg , rdbtnNonveg);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCancel.setForeground(color);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 								
@@ -296,7 +325,7 @@ public class RoomService {
 				//rdbtnNonveg , rdbtnVeg , checkboxMeal, checkboxHouseKeeping
 			}
 		});
-		btnCancel.setBounds(459, 401, 89, 23);
+		btnCancel.setBounds(404, 391, 89, 23);
 		frame.getContentPane().add(btnCancel);
 	
 		btnProceed.addActionListener(new ActionListener() {

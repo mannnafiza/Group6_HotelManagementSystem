@@ -1,5 +1,6 @@
 package com.csis.Controller;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -64,9 +66,15 @@ public class ChangeInventory {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		frame.getContentPane().setForeground(new Color(0, 0, 0));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
 		frame.setBounds(100, 100, 872, 483);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		Color color = new Color(85, 96, 128);
 		
 		//create the custom selection listener to add to the table
 				lsl = new ListSelectionListener()	{
@@ -92,8 +100,9 @@ public class ChangeInventory {
 		
 		
 		JLabel lblStock = new JLabel("Stock");
-		lblStock.setFont(new Font("Calibri Light", Font.BOLD, 13));
-		lblStock.setBounds(162, 11, 74, 26);
+		lblStock.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		lblStock.setBounds(356, 11, 74, 26);
+		lblStock.setForeground(color);
 		frame.getContentPane().add(lblStock);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -104,6 +113,8 @@ public class ChangeInventory {
 		scrollPane.setViewportView(table);
 		
 		JButton btnEditInventory = new JButton("Edit Inventory");
+		btnEditInventory.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnEditInventory.setForeground(color);
 		btnEditInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -126,42 +137,57 @@ public class ChangeInventory {
 		frame.getContentPane().add(btnEditInventory);
 		
 		JButton btnDeleteInventory = new JButton("Delete Inventory");
+		btnDeleteInventory.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDeleteInventory.setForeground(color);
 		btnDeleteInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sd.deleteInventory(Integer.parseInt(textFieldItemId.getText()));
 				updateTable();
 			}
 		});
-		btnDeleteInventory.setBounds(10, 144, 128, 23);
+		btnDeleteInventory.setBounds(10, 144, 142, 23);
 		frame.getContentPane().add(btnDeleteInventory);
 		
 		JLabel label = new JLabel("Item:");
-		label.setBounds(135, 363, 46, 14);
+		label.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label.setBounds(135, 363, 691, 14);
+		label.setForeground(color);
 		frame.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("Type:");
-		label_1.setBounds(262, 363, 46, 14);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_1.setBounds(262, 363, 564, 14);
+		label_1.setForeground(color);
 		frame.getContentPane().add(label_1);
 		
 		JLabel label_2 = new JLabel("Quantity:");
-		label_2.setBounds(385, 363, 46, 14);
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_2.setBounds(385, 363, 441, 14);
+		label_2.setForeground(color);
 		frame.getContentPane().add(label_2);
 		
 		JLabel label_3 = new JLabel("Price :");
-		label_3.setBounds(492, 365, 58, 11);
+		label_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_3.setBounds(492, 365, 334, 11);
+		label_3.setForeground(color);
 		frame.getContentPane().add(label_3);
 		
 		JLabel label_4 = new JLabel("Category:");
-		label_4.setBounds(612, 363, 58, 14);
+		label_4.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_4.setBounds(612, 363, 214, 14);
+		label_4.setForeground(color);
 		frame.getContentPane().add(label_4);
 		
 		JLabel label_5 = new JLabel("Unit Price:");
-		label_5.setBounds(754, 363, 58, 14);
+		label_5.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_5.setBounds(754, 363, 72, 14);
+		label_5.setForeground(color);
 		frame.getContentPane().add(label_5);
 		
 		textFieldUnitPrice = new JTextField();
 		textFieldUnitPrice.setColumns(10);
 		textFieldUnitPrice.setBounds(752, 388, 94, 20);
+		textFieldUnitPrice.setForeground(color);
 		frame.getContentPane().add(textFieldUnitPrice);
 		
 		textFieldCategory = new JTextField();
@@ -192,6 +218,8 @@ public class ChangeInventory {
 		frame.getContentPane().add(textFieldItem);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ManageInventory.main(null);
@@ -201,6 +229,8 @@ public class ChangeInventory {
 		frame.getContentPane().add(btnBack);
 		
 		JButton btnShowInventory = new JButton("Show Inventory");
+		btnShowInventory.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnShowInventory.setForeground(color);
 		btnShowInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateTable();
@@ -212,7 +242,9 @@ public class ChangeInventory {
 		frame.getContentPane().add(btnShowInventory);
 		
 		JLabel lblItemId = new JLabel("Item ID");
-		lblItemId.setBounds(38, 363, 46, 14);
+		lblItemId.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblItemId.setBounds(38, 363, 788, 14);
+		lblItemId.setForeground(color);
 		frame.getContentPane().add(lblItemId);
 		
 		textFieldItemId = new JTextField();

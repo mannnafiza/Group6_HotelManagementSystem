@@ -5,8 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Panel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class ManageInventory {
 
@@ -59,11 +63,19 @@ public class ManageInventory {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 644, 422);
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		frame.getContentPane().setForeground(new Color(0, 0, 0));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
+		frame.setBounds(100, 100, 642, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		JButton btnAddInventory = new JButton("Add Inventory");
+		btnAddInventory.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAddInventory.setForeground(color);
 		btnAddInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//panel.setVisible(true);
@@ -74,6 +86,8 @@ public class ManageInventory {
 		frame.getContentPane().add(btnAddInventory);
 		
 		JButton btnNewOrder = new JButton("New Order");
+		btnNewOrder.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewOrder.setForeground(color);
 		btnNewOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//table.setVisible(true);
@@ -85,6 +99,8 @@ public class ManageInventory {
 		frame.getContentPane().add(btnNewOrder);
 		
 		JButton btnChangeInventory = new JButton("Change Inventory");
+		btnChangeInventory.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnChangeInventory.setForeground(color);
 		btnChangeInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -95,7 +111,7 @@ public class ManageInventory {
 		frame.getContentPane().add(btnChangeInventory);
 		
 		table = new JTable();
-		table.setBounds(176, 34, 442, 248);
+		table.setBounds(176, 37, 424, 296);
 		frame.getContentPane().add(table);
 		
 		updateTable();

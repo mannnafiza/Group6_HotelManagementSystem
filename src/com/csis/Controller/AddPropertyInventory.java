@@ -1,5 +1,6 @@
 package com.csis.Controller;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -70,40 +72,53 @@ public class AddPropertyInventory {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 870, 483);
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		frame.getContentPane().setForeground(new Color(0, 0, 0));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
+		frame.setBounds(100, 100, 642, 464);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		Color color = new Color(85, 96, 128);
+		
 		JLabel lblAddNewProperty = new JLabel("Add New Property");
-		lblAddNewProperty.setFont(new Font("Calibri", Font.BOLD, 13));
-		lblAddNewProperty.setBounds(46, 11, 148, 49);
+		lblAddNewProperty.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		lblAddNewProperty.setBounds(245, 0, 288, 34);
+		lblAddNewProperty.setForeground(color);
 		frame.getContentPane().add(lblAddNewProperty);
 		
-		JPanel panelAddProperty = new JPanel();
-		panelAddProperty.setBounds(129, 71, 330, 311);
-		frame.getContentPane().add(panelAddProperty);
-		panelAddProperty.setLayout(null);
+
 		
 		JLabel lblItem = new JLabel("Item:");
-		lblItem.setBounds(30, 35, 46, 14);
-		panelAddProperty.add(lblItem);
+		lblItem.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblItem.setBounds(210, 56, 71, 25);
+		lblItem.setForeground(color);
+		frame.getContentPane().add(lblItem);
 		
 		JLabel labelType = new JLabel("Type:");
-		labelType.setBounds(30, 63, 46, 14);
-		panelAddProperty.add(labelType);
+		labelType.setFont(new Font("Tahoma", Font.BOLD, 12));
+		labelType.setBounds(210, 107, 89, 29);
+		labelType.setForeground(color);
+		frame.getContentPane().add(labelType);
 		
 		JLabel labelQuantity = new JLabel("Quantity:");
-		labelQuantity.setBounds(18, 88, 46, 14);
-		panelAddProperty.add(labelQuantity);
+		labelQuantity.setFont(new Font("Tahoma", Font.BOLD, 12));
+		labelQuantity.setBounds(210, 165, 102, 29);
+		labelQuantity.setForeground(color);
+		frame.getContentPane().add(labelQuantity);
 		
 		JLabel labelPrice = new JLabel("Price :");
-		labelPrice.setBounds(30, 113, 46, 14);
-		panelAddProperty.add(labelPrice);
+		labelPrice.setFont(new Font("Tahoma", Font.BOLD, 12));
+		labelPrice.setBounds(210, 227, 64, 20);
+		labelPrice.setForeground(color);
+		frame.getContentPane().add(labelPrice);
 		
 		textFieldItem = new JTextField();
 		textFieldItem.setColumns(10);
-		textFieldItem.setBounds(83, 32, 182, 20);
-		panelAddProperty.add(textFieldItem);
+		textFieldItem.setBounds(335, 60, 182, 20);
+		textFieldItem.setForeground(color);
+		frame.getContentPane().add(textFieldItem);
 		textFieldItem.addKeyListener(new KeyListener() {
 
 			@Override
@@ -136,8 +151,9 @@ public class AddPropertyInventory {
 		textFieldType = new JTextField();
 		textFieldType.setText("");
 		textFieldType.setColumns(10);
-		textFieldType.setBounds(83, 60, 182, 20);
-		panelAddProperty.add(textFieldType);
+		textFieldType.setBounds(335, 113, 182, 20);
+		textFieldType.setForeground(color);
+		frame.getContentPane().add(textFieldType);
 		textFieldType.addKeyListener(new KeyListener() {
 
 			@Override
@@ -166,8 +182,9 @@ public class AddPropertyInventory {
 		textFieldQuantity = new JTextField();
 		textFieldQuantity.setText("");
 		textFieldQuantity.setColumns(10);
-		textFieldQuantity.setBounds(83, 85, 182, 20);
-		panelAddProperty.add(textFieldQuantity);
+		textFieldQuantity.setBounds(335, 171, 182, 20);
+		textFieldQuantity.setForeground(color);
+		frame.getContentPane().add(textFieldQuantity);
 		textFieldQuantity.addKeyListener(new KeyListener() {
 
 			@Override
@@ -197,8 +214,9 @@ public class AddPropertyInventory {
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
-		textFieldPrice.setBounds(83, 110, 182, 20);
-		panelAddProperty.add(textFieldPrice);
+		textFieldPrice.setBounds(335, 229, 182, 20);
+		textFieldPrice.setForeground(color);
+		frame.getContentPane().add(textFieldPrice);
 		textFieldPrice.addKeyListener(new KeyListener() {
 
 			@Override
@@ -225,16 +243,20 @@ public class AddPropertyInventory {
 			
 		});		
 		JLabel lblCategory = new JLabel("Category:");
-		lblCategory.setBounds(18, 144, 58, 14);
-		panelAddProperty.add(lblCategory);
+		lblCategory.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCategory.setBounds(210, 277, 102, 29);
+		lblCategory.setForeground(color);
+		frame.getContentPane().add(lblCategory);
 		
 		JLabel lblUnitPrice = new JLabel("Unit Price:");
-		lblUnitPrice.setBounds(18, 175, 58, 14);
-		panelAddProperty.add(lblUnitPrice);
+		lblUnitPrice.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUnitPrice.setForeground(color);
+		lblUnitPrice.setBounds(210, 324, 115, 29);
+		frame.getContentPane().add(lblUnitPrice);
 		
 		textFieldCategory = new JTextField();
-		textFieldCategory.setBounds(83, 141, 182, 20);
-		panelAddProperty.add(textFieldCategory);
+		textFieldCategory.setBounds(335, 283, 182, 20);
+		frame.getContentPane().add(textFieldCategory);
 		textFieldCategory.setColumns(10);
 		textFieldCategory.addKeyListener(new KeyListener() {
 
@@ -263,8 +285,8 @@ public class AddPropertyInventory {
 		});
 		
 		textFieldUnitPrice = new JTextField();
-		textFieldUnitPrice.setBounds(83, 172, 182, 20);
-		panelAddProperty.add(textFieldUnitPrice);
+		textFieldUnitPrice.setBounds(335, 333, 182, 20);
+		frame.getContentPane().add(textFieldUnitPrice);
 		textFieldUnitPrice.setColumns(10);
 		textFieldUnitPrice.addKeyListener(new KeyListener() {
 
@@ -293,6 +315,8 @@ public class AddPropertyInventory {
 		});
 		
 		JButton buttonAddProperty = new JButton("Add");
+		buttonAddProperty.setFont(new Font("Tahoma", Font.BOLD, 12));
+		buttonAddProperty.setForeground(color);
 		buttonAddProperty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//textFieldItem, textFieldType,textFieldQuantity, textFieldPrice, textFieldCategory, textFieldUnitPrice
@@ -321,16 +345,18 @@ public class AddPropertyInventory {
 				}//else { System.out.print("Please check input ");}
 			}
 		});
-		buttonAddProperty.setBounds(180, 235, 89, 23);
-		panelAddProperty.add(buttonAddProperty);
+		buttonAddProperty.setBounds(410, 393, 89, 23);
+		frame.getContentPane().add(buttonAddProperty);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ManageInventory.main(null);
 			}
 		});
-		btnBack.setBounds(46, 393, 89, 23);
+		btnBack.setBounds(273, 393, 89, 23);
 		frame.getContentPane().add(btnBack);
 		
 		
