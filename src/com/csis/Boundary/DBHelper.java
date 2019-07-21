@@ -66,6 +66,15 @@ public class DBHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * @return connection to database
+	 */
+	public Connection getConnection() {
+		return this.conn;
+	}
+	
+	
 	//method to get all the user names from user_Info table
 	public ArrayList<String> listUserNames() 
 	{
@@ -1105,4 +1114,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 		  }
 		return 0;
 	}
+	
+	
+	
 }

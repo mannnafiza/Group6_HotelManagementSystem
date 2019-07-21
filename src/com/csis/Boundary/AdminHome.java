@@ -1,15 +1,26 @@
 package com.csis.Boundary;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.jws.soap.SOAPBinding.Use;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 
 import com.csis.Entities.UserInfo;
 
@@ -17,11 +28,18 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.ListCellRenderer;
+import javax.swing.JComboBox;
 
 public class AdminHome {
 
 	private JFrame frame;
 	UserInfo user;
+	private String choice = "";
+	DBHelper helper = new DBHelper();
+	private ResultSet rs = null;
+	private Statement stmt = null;
 
 	/**
 	 * Launch the application
@@ -235,8 +253,197 @@ public class AdminHome {
 		btnLogOut.setBounds(527, 11, 89, 23);
 		frame.getContentPane().add(btnLogOut);
 		
+		String[] reportArray = { "Reservation", "Inventory"};
+		
+		JComboBox comboBox = new JComboBox(reportArray);
+		comboBox.setRenderer(new MyComboBoxRenderer("REPORT"));
+		comboBox.setBounds(499, 60, 117, 20);
+		comboBox.setSelectedIndex(-1);
+		frame.getContentPane().add(comboBox);
+		
+		JButton btnGenerateReport = new JButton("Generate");
+		btnGenerateReport.setVisible(false);
+		
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if((String) comboBox.getSelectedItem() != "") {
+					btnGenerateReport.setVisible(true);
+					choice = (String) comboBox.getSelectedItem();
+					System.out.println("<<<<<<<<<<<<<<<<<<<<<"+ choice+ ">>>>>>>>>>>>>>>>>>>>>>>>>>");
+				}
+				
+				
+				
+			}
+			
+		});
+		
+		
+		btnGenerateReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(choice == "Reservation") {
+					//helper.connectDB();
+					ArrayList<String> reservationData = null;
+					reservationData = getReservationData();
+					
+					writeToFile("Reservation_Report", reservationData);
+					
+				} else if(choice == "Inventory") {
+					ArrayList<String> inventoryData = null;
+					inventoryData = getInventoryData();
+					writeToFile("Inventory_Report", inventoryData);
+				} else {
+					btnGenerateReport.setVisible(false);
+				}
+			}
+
+			
+		});
+		btnGenerateReport.setForeground(new Color(85, 96, 128));
+		btnGenerateReport.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGenerateReport.setBounds(499, 104, 117, 23);
+		frame.getContentPane().add(btnGenerateReport);
+		
+		
+		
+		
+		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+
+	
+	/**
+	 * 
+	 * @return contents of reservation_info table
+	 */
+	public  ArrayList<String> getReservationData() {
+		// TODO Auto-generated method stub
+		ArrayList<String> s1 = new ArrayList<String>();
+		  
+		  String sql = "SELECT * FROM reservation_Info";
+		  
+		  try {
+			  helper.connectDB();
+			  this.stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next())
+				{
+				
+				  s1.add("Id: " + rs.getInt("resId") + "\n" + "UserId: " + rs.getInt("userId") + ", Name: " + rs.getString("userName") +
+						  ", Reservation Type: " + rs.getString("resType") + ", Room Type: " + rs.getString("roomType") + 
+						  ", Stay Duration: " + rs.getString("stayDuration") + ", Meal Status: " + rs.getString("mealStatus") +
+						   ", MealType: " + rs.getString("mealType") + ", Date: " + rs.getDate("resDate") + ", Time: " + rs.getTime("resTime") +
+						    ", Meeting Duration: " + rs.getInt("meetingDuration") + ", Additional Service: " + rs.getInt("addService") +
+						    ", No. of Guests: " + rs.getInt("noGuest") + ", Reservation For: " + rs.getString("resFor"));
+				  System.out.println(s1);
+			  }	  
+		  helper.disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return s1;
+	}
+	
+	
+	/**
+	 * 
+	 * @return contents of inventory
+	 */
+	public  ArrayList<String> getInventoryData() {
+		ArrayList<String> s1 = new ArrayList<String>();
+		  
+		  String sql = "SELECT * FROM propertyinventory_info";
+		  
+		  try {
+			  helper.connectDB();
+			  this.stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next())
+				{
+				
+				  s1.add("Item Id: " + rs.getInt("itemId") + "\n" + "Item: " + rs.getString("Item") + ", Type: " + rs.getString("Type") +
+						  ", Quantity: " + rs.getInt("Quantity") + ", Price: " + rs.getFloat("Price") + 
+						  ", Category: " + rs.getString("Category") + ", Unit Price: " + rs.getFloat("Unitprice"));
+				  System.out.println(s1);
+			  }	  
+		  helper.disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return s1;
+		
+	}
+	
+	/**
+	 * 
+	 * @param fileName is the name of the file to be created
+	 * @return the message for confirmation of file generation
+	 */
+	public String writeToFile(String fileName, ArrayList<String> data) {
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(fileName + ".txt", "UTF-8");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return "Report Not Generated";
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return "Report Not Generated";
+		}
+		
+		for(int i = 0; i < data.size(); i++) {
+			writer.println(data.get(i) + "\n");
+			writer.println("---------------------------------------------------------------------------------------------------------------------------"+
+			"---------------------------------------------------------------------------------------------------------------------------");
+		}
+		
+		writer.close();
+		return "Report Generated";
+	}
+	
+	
+	
+	/**
+	 * class for comboBoxRenderring
+	 * @author Mann
+	 *
+	 */
+	class MyComboBoxRenderer extends JLabel implements ListCellRenderer {
+		  private String _title;
+
+		  public MyComboBoxRenderer(String title) {
+		    _title = title;
+		  }
+
+		  @Override
+		  public Component getListCellRendererComponent(JList list, Object value,
+		      int index, boolean isSelected, boolean hasFocus) {
+		    if (index == -1 && value == null)
+		      setText(_title);
+		    else
+		      setText(value.toString());
+		    return this;
+		  }
+	}
+	
 
 }
