@@ -122,7 +122,7 @@ public class CustomerBill {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				Payment.main(null,bill);
+				Payment.main(null,bill, user);
 				frame.dispose();
 			}
 		});

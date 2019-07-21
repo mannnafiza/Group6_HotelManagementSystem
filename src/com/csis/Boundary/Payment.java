@@ -20,6 +20,7 @@ import javax.swing.JRadioButton;
 import com.csis.Controller.Validate;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.Transaction;
+import com.csis.Entities.UserInfo;
 
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -30,12 +31,13 @@ import javax.swing.JButton;
 public class Payment {
 
 	private JFrame frame;
+	UserInfo user;
 	BillingData bill = new BillingData();
 	private ButtonGroup btngrp = new ButtonGroup();
 	private JTextField textFieldSecurityCode;
 	private JTextField textFieldcardNum;
 	private JTextField textFieldExpiryDate;
-	String modeOfPayment;
+	String modeOfPayment = "";
 	int cardNumber;
 	String expirydate;
 	int code;
@@ -45,11 +47,11 @@ public class Payment {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args,BillingData bill) {
+	public static void main(String[] args,BillingData bill, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Payment window = new Payment(bill);
+					Payment window = new Payment(bill, user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,8 +63,9 @@ public class Payment {
 	/**
 	 * Create the application.
 	 */
-	public Payment(BillingData bill) {
+	public Payment(BillingData bill, UserInfo user) {
 		this.bill = bill;
+		this.user = user;
 		initialize();
 	}
 
@@ -278,7 +281,7 @@ public class Payment {
 				
 				//method call to add transaction to the database
 				helper.addtransactionEntry(t);
-				PaymentReceipt.main(null,t);
+				PaymentReceipt.main(null,t, user);
 				
 				frame.dispose();
 			}

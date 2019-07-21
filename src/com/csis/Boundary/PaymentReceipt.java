@@ -5,10 +5,19 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import com.csis.Entities.Transaction;
+import com.csis.Entities.UserInfo;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,16 +27,20 @@ public class PaymentReceipt {
 
 	private JFrame frame;
 	private Transaction t;
+	DBHelper helper = new DBHelper();
+	private ResultSet rs = null;
+	private PreparedStatement pstmt = null;
+	UserInfo user;
 
 	/**
 	 * Launch the application.
 	 * @param t 
 	 */
-	public static void main(String[] args, Transaction t) {
+	public static void main(String[] args, Transaction t, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PaymentReceipt window = new PaymentReceipt(t);
+					PaymentReceipt window = new PaymentReceipt(t, user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,8 +52,9 @@ public class PaymentReceipt {
 	/**
 	 * Create the application.
 	 */
-	public PaymentReceipt(Transaction t) {
+	public PaymentReceipt(Transaction t, UserInfo user) {
 		this.t = t;
+		this.user = user;
 		initialize();
 	}
 
@@ -151,18 +165,18 @@ public class PaymentReceipt {
 		JButton btnExit = new JButton("Exit");
 		btnExit.setForeground(color);
 		btnExit.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnExit.setBounds(158, 351, 89, 23);
+		btnExit.setBounds(46, 351, 89, 23);
 		frame.getContentPane().add(btnExit);
 		
 		JButton btnContinue = new JButton("Continue Reservation");
 		btnContinue.setForeground(color);
 		btnContinue.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnContinue.setBounds(304, 351, 203, 23);
+		btnContinue.setBounds(187, 351, 203, 23);
 		frame.getContentPane().add(btnContinue);
 		
 		lblDateValue.setText(t.getDate());
 		lblTimeValue.setText(t.getTime());
-		lblName.setText(t.getUserName());
+		lblName.setText(user.getUsername());
 		lblAmountValue.setText(Float.toString(t.getAmountPaid()));
 		lblModeOfPayment.setText(t.getPaymentMode());
 		if(lblModeOfPayment.equals("Cash"))
@@ -171,6 +185,20 @@ public class PaymentReceipt {
 			panel.setVisible(true);
 		lblCardNum.setText(Integer.toString(t.getCardNumber()));
 		lblExpiryDate.setText(t.getExpiryDate());
+		
+		JButton btnSaveReceipt = new JButton("Save Receipt");
+		btnSaveReceipt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> paymentReceipt = null;
+				paymentReceipt = getPaymentData(user);
+				System.out.println("<<<<<<<<<<<<<Receipt Data>>>>>>>>>>>>>>>>.");
+				writeToFile("Payment_Receipt", paymentReceipt);
+			}
+		});
+		btnSaveReceipt.setForeground(new Color(85, 96, 128));
+		btnSaveReceipt.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSaveReceipt.setBounds(413, 351, 203, 23);
+		frame.getContentPane().add(btnSaveReceipt);
 		
 		
 		btnContinue.addActionListener(new ActionListener() {
@@ -193,6 +221,77 @@ public class PaymentReceipt {
 				frame.dispose();
 			}
 		});
+	}
+	
+	
+	/**
+	 * 
+	 * @return contents of expenses_info table for specific user
+	 */
+	public  ArrayList<String> getPaymentData(UserInfo user) {
+		ArrayList<String> s1 = new ArrayList<String>();
+		  
+		 String sql = "SELECT * FROM expenses_info where userName = ?";
+		  
+		  try {
+			  helper.connectDB();
+		  
+			  //create statement 
+			  pstmt = helper.getConnection().prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, user.getUsername());
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  s1.add("Bill Id: " + rs.getInt("billId") + "\n" + "Date: " + rs.getDate("Date") + ", Time: " + rs.getTime("Time") + 
+						  ", User Name: " + rs.getString("userName") + "Room Status: " + rs.getString("isRoomReserved") + ", Meeting Hall Status:" + 
+						  rs.getString("isHallReserved") + ", Restaurant Status: " + rs.getString("isRestaurantReserved") + "Banquet Status: " +
+						  rs.getString("isBanquetReserved") + ", Room Total: " + rs.getFloat("roomTotal") + "Meeting Hall Total: " + rs.getFloat("hallTotal") +
+						  ", Restaurant Total: " + rs.getFloat("restaurantTotal") + "Bnaquet Total: " + rs.getFloat("banquetTotal") +
+						  ", Total Amount: " + rs.getFloat("totalAmount") + ", Discount: " + rs.getFloat("discount") + ", Final Amount: " +
+						  rs.getFloat("finalAnmount"));
+				  System.out.println(s1);
+			  }	  
+		  helper.disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return s1;
+		
+	}
+	
+	/**
+	 * 
+	 * @param fileName is the name of the file to be created
+	 * @return the message for confirmation of file generation
+	 */
+	public String writeToFile(String fileName, ArrayList<String> data) {
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(fileName + ".txt", "UTF-8");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return "Report Not Generated";
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return "Report Not Generated";
+		}
+		
+		for(int i = 0; i < data.size(); i++) {
+			writer.println(data.get(i) + "\n");
+			writer.println("---------------------------------------------------------------------------------------------------------------------------"+
+			"---------------------------------------------------------------------------------------------------------------------------");
+		}
+		
+		writer.close();
+		return "Report Generated";
 	}
 
 }
