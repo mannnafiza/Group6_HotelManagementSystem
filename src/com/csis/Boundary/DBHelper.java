@@ -562,7 +562,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 	  
 	 /**
 	  * 
-	  * @param date
+	  * @param date, date for which reservation is made
 	  * @return type of reservation for specific date
 	  */
 	  public ArrayList<String> getReservationType(Date date) {

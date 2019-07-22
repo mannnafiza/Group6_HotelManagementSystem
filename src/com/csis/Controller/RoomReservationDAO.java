@@ -2,34 +2,38 @@ package com.csis.Controller;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Font;
-
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.text.DateFormatter;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.text.DateFormatter;
 
 import com.csis.Boundary.AdminLogin;
 import com.csis.Boundary.DBHelper;
@@ -40,7 +44,7 @@ import com.csis.Entities.Room;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 
-public class RoomReservation {
+public class RoomReservationDAO {
 
 	private JFrame frame;
 	UserInfo user;
@@ -50,6 +54,10 @@ public class RoomReservation {
 	boolean inputValid = false;
 	Room roomData = new Room();
 	DBHelper helper = new DBHelper();
+	
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
 	
 
 	/**
@@ -62,7 +70,7 @@ public class RoomReservation {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RoomReservation window = new RoomReservation(user);
+					RoomReservationDAO window = new RoomReservationDAO(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,7 +83,7 @@ public class RoomReservation {
 	 * Create the application.
 	 * @param user
 	 */
-	public RoomReservation(UserInfo user) {
+	public RoomReservationDAO(UserInfo user) {
 		this.user = user;
 		initialize();
 	}
@@ -246,7 +254,7 @@ public class RoomReservation {
 						
 						System.out.println(sqlDate);
 						if(!checkAvailability(sqlDate, roomData.getRoomType())) {
-							helper.insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
+							insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
 							
 							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
 							
@@ -326,7 +334,7 @@ public class RoomReservation {
 	protected boolean checkAvailability(java.sql.Date sqlDate, String roomType) {
 		//boolean result = false;
 		ArrayList<String> rooms = new ArrayList<>();
-		rooms = helper.getRoomList(sqlDate);
+		rooms = getRoomList(sqlDate);
 		
 		return rooms.contains(roomType);
 		
@@ -528,4 +536,100 @@ public class RoomReservation {
 			
 		return inputValid;
 	}
+	
+	
+	
+	/**
+	 * 
+	 * @param userId is the id of user
+	 * @param usrname, name of the user
+	 * @param resType, reservation type (room, meeting, banquet, restaurant)
+	 * @param roomType, type of the room
+	 * @param stayDuration, duration to book
+	 * @param mealStatus, if meal is included
+	 * @param mealType, type of the meal included
+	 * @param resDate, date on reservation is made
+	 * @param resTime, time at which reservation is made
+	 * @param meetingDuration, duration for meeting
+	 * @param addService, additional service if required
+	 * @param noOfGuest, number of guest
+	 * @param resFor, if reservation for breakfast, brunch, lunch, dinner
+	 */
+	public void insertReservationInformation(int userId, String usrname, String resType, String roomType,
+			  int stayDuration, String mealStatus, String mealType, java.sql.Date resDate, Time resTime, int meetingDuration,
+			  boolean addService, int noOfGuest, String resFor){
+		  
+		  
+		  String insertSql = "INSERT INTO reservation_info (userId, userName, resType, roomType, stayDuration, mealStatus, mealType, resDate, resTime,  meetingDuration, addService, noGuest, resFor) " +
+	  				"values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		  
+		  try {
+			  helper.connectDB();
+			  
+			  //create statement
+			  pstmt = helper.getConnection().prepareStatement(insertSql);
+			  
+			  //set the parameters of query
+			  pstmt.setInt(1, userId);
+			  pstmt.setString(2, usrname);
+			  pstmt.setString(3, resType);
+			  pstmt.setString(4, roomType);
+			  pstmt.setInt(5, stayDuration);
+			  pstmt.setString(6, mealStatus);
+			  pstmt.setString(7, mealType);
+			  pstmt.setDate(8, resDate);
+			  pstmt.setTime(9, resTime);
+			  pstmt.setInt(10, meetingDuration);
+			  pstmt.setBoolean(11, addService);
+			  pstmt.setInt(12, noOfGuest);
+			  pstmt.setString(13, resFor);
+			  
+			  //execute			  
+			  pstmt.executeUpdate();
+			  
+			  helper.disconnectDB();
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+	  }
+	
+	
+	
+	/**
+	   * 
+	   * @param date, date for which user tries to reserve
+	   * @return list of rooms for specific date
+	   */
+	  public ArrayList<String> getRoomList(java.sql.Date date){
+		  String sql = "SELECT roomType from reservation_info where resDate = ?";
+		  ArrayList<String> roomType = new ArrayList<>();
+		  try {
+			  helper.connectDB();
+			  
+			  
+			//create statement 
+			  pstmt = helper.getConnection().prepareStatement(sql);
+		  	  
+			  pstmt.setDate(1,  date);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  roomType.add(rs.getString("roomType"));
+			  }
+			  
+			  helper.disconnectDB();
+			  
+		  } catch(SQLException sx) {
+			  System.out.println("Error inserting data into the reservation table");
+			  System.out.println(sx.getMessage()); 
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState());
+		  }
+		  return roomType;
+	  }
+	
+	
 }

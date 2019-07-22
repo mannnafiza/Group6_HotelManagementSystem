@@ -7,10 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import com.csis.Controller.BanquetReservation;
-import com.csis.Controller.MeetingReservation;
-import com.csis.Controller.RestaurantReservation;
-import com.csis.Controller.RoomReservation;
+import com.csis.Controller.BanquetReservationDAO;
+import com.csis.Controller.MeetingReservationDAO;
+import com.csis.Controller.RestaurantReservationDAO;
+import com.csis.Controller.RoomReservationDAO;
 import com.csis.Entities.UserInfo;
 
 import javax.swing.JLabel;
@@ -196,7 +196,7 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				RestaurantReservation.main(null, user);
+				RestaurantReservationDAO.main(null, user);
 				frame.dispose();
 			}
 			
@@ -238,7 +238,7 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				BanquetReservation.main(null, user);	
+				BanquetReservationDAO.main(null, user);	
 				frame.dispose();
 			}
 			
@@ -280,7 +280,7 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				MeetingReservation.main(null, user);
+				MeetingReservationDAO.main(null, user);
 				frame.dispose();
 			}
 			
@@ -322,7 +322,7 @@ public class Reservation {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				RoomReservation.main(null, user);
+				RoomReservationDAO.main(null, user);
 				frame.dispose();
 			}
 			
