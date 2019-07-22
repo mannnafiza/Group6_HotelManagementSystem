@@ -11,6 +11,8 @@ import java.awt.Image;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -155,15 +157,30 @@ public class StaffCustomization {
 		
 		rdbtnMale = new JRadioButton("Male");
 		rdbtnMale.setForeground(color);
+		rdbtnMale.setActionCommand("Male");
 		rdbtnMale.setBackground(new Color(201, 210, 218));
 		rdbtnMale.setBounds(448, 365, 63, 23);
 		frame.getContentPane().add(rdbtnMale);
 		
 		rdbtnFemale = new JRadioButton("Female");
 		rdbtnFemale.setBackground(new Color(201, 210, 218));
+		rdbtnFemale.setActionCommand("Female");
 		rdbtnFemale.setForeground(color);
 		rdbtnFemale.setBounds(526, 365, 87, 23);
 		frame.getContentPane().add(rdbtnFemale);
+		
+		ButtonGroup genderGroup = new ButtonGroup();
+		genderGroup.add(rdbtnMale);
+		genderGroup.add(rdbtnFemale);
+		
+		//set listener
+		RadioListener listener = new RadioListener();
+		rdbtnMale.addActionListener(listener);
+		rdbtnMale.addChangeListener(listener);
+		rdbtnMale.addItemListener(listener);
+		rdbtnFemale.addActionListener(listener);
+		rdbtnFemale.addChangeListener(listener);
+		rdbtnFemale.addItemListener(listener);
 		
 		JLabel lblCity = new JLabel("City");
 		lblCity.setForeground(color);
@@ -184,8 +201,10 @@ public class StaffCustomization {
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setGenderListener(rdbtnMale, rdbtnFemale);
-				helper.createStaff(txtUsername.getText(), txtPassword.getText(), setGenderListener(rdbtnMale,rdbtnFemale) , txtCity.getText());
+				
+				//setGender(setGenderListener(rdbtnMale, rdbtnFemale));
+				System.out.println("TO ADD GENDER: " + option);
+				helper.createStaff(txtUsername.getText(), txtPassword.getText(), option , txtCity.getText());
 				updateStaffTable();
 			}
 		});
@@ -220,7 +239,7 @@ public class StaffCustomization {
 				stf.setUsername(txtUsername.getText());
 				stf.setPassword(txtPassword.getText());
 				stf.setCity(txtCity.getText());
-				stf.setGender(setGenderListener(rdbtnMale, rdbtnFemale));
+				stf.setGender(option);
 				
 				helper.updateStaff(stf);
 				
@@ -288,54 +307,47 @@ public class StaffCustomization {
 		
 	}
 	
+	
+	
 	/**
-	 * Listener for gender radio buttons
-	 * @param rdbtnMale radio button for male
-	 * @param rdbtnFemale radio button for female
-	 * @return gender value male or female
+	 * listen to the change in radio button value for gender
+	 * @author Mann
+	 *
 	 */
-	public String setGenderListener(JRadioButton rdbtnMale, JRadioButton rdbtnFemale) {
-		// TODO Auto-generated method stub
+	
+	class RadioListener implements ActionListener, ItemListener, ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("ChangeEvent received from: "
+ 		           + e.getSource());
+		}
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("ItemEvent received: " 
+ 		           + e.getItem()
+ 		           + " is now "
+ 		           + ((e.getStateChange() == ItemEvent.SELECTED)?
+ 			      "selected.":"unselected"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String factoryName = null;
+
+	        System.out.print("ActionEvent received: ");
+	        if (e.getActionCommand() == "Male") {
+	        	option = "Male";
+	    	    System.out.println(option + " pressed.");
+	        } else {
+	        	option = "Female";
+	    	    System.out.println(option + " pressed.");
+	        }
+		}
 		
-		Staff staff = new Staff();
-		ButtonGroup radioGroup = new ButtonGroup();
-		radioGroup.add(rdbtnMale);
-		radioGroup.add(rdbtnFemale);
-		
-		class StaffActionListener implements ActionListener {
-		      public void actionPerformed(ActionEvent ex) {
-		      String choice = radioGroup.getSelection().getActionCommand();
-		      }
-		    }
-
-		  class StaffItemListener implements ItemListener {
-		   			@Override
-			public void itemStateChanged(ItemEvent ex) {
-				// TODO Auto-generated method stub
-				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
-				System.out.println("XXXXXXXXXXXXXX<<<<<<>>>>>>>>XXXXXXXXXXXXX" + item);
-		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
-		        if(item.equals("Male")) {
-			    	  staff.setGender("male");
-			    	  option = item;
-			      }else {
-			    	  staff.setGender("female");
-			    	  option = item;
-			      }
-		        
-			}
-		    }
-
-		    ActionListener al = new StaffActionListener();
-		    rdbtnMale.addActionListener(al);
-		    rdbtnFemale.addActionListener(al);
-
-		    ItemListener il = new StaffItemListener();
-		    rdbtnMale.addItemListener(il);
-		    rdbtnFemale.addItemListener(il);
-		  
-		    
-		    System.out.print("YYYYYYYYYYYYY<<<<<<>>>>>>>>YYYYYYY" + option);
-		    return option;
 	}
 }

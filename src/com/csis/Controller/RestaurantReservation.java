@@ -21,6 +21,8 @@ import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.DateFormatter;
 import javax.swing.JRadioButton;
 import javax.swing.AbstractButton;
@@ -42,6 +44,7 @@ public class RestaurantReservation {
 	Restaurant restaurantData = new Restaurant();
 	String errorMsg;
 	boolean inputValid = false;
+	String resForOption = "";
 
 	/**
 	 * Launch the application.
@@ -110,8 +113,8 @@ public class RestaurantReservation {
 		frame.getContentPane().add(dateChooser);
 		
 		JRadioButton rdbtnBreakfast = new JRadioButton("Breakfast");
-		rdbtnBreakfast.setSelected(true);
 		rdbtnBreakfast.setForeground(color);
+		rdbtnBreakfast.setActionCommand("Breakfast");
 		rdbtnBreakfast.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnBreakfast.setBounds(202, 125, 91, 23);
 		rdbtnBreakfast.setBackground(new Color(201, 210, 218));
@@ -119,6 +122,7 @@ public class RestaurantReservation {
 		
 		JRadioButton rdbtnBrunch = new JRadioButton("Brunch");
 		rdbtnBrunch.setForeground(color);
+		rdbtnBrunch.setActionCommand("Brunch");
 		rdbtnBrunch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnBrunch.setBackground(new Color(201, 210, 218));
 		rdbtnBrunch.setBounds(295, 125, 78, 23);
@@ -126,6 +130,7 @@ public class RestaurantReservation {
 		
 		JRadioButton rdbtnLunch = new JRadioButton("Lunch");
 		rdbtnLunch.setForeground(color);
+		rdbtnLunch.setActionCommand("Lunch");
 		rdbtnLunch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnLunch.setBackground(new Color(201, 210, 218));
 		rdbtnLunch.setBounds(392, 125, 78, 23);
@@ -133,10 +138,37 @@ public class RestaurantReservation {
 		
 		JRadioButton rdbtnDinner = new JRadioButton("Dinner");
 		rdbtnDinner.setForeground(color);
+		rdbtnDinner.setActionCommand("Dinner");
 		rdbtnDinner.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbtnDinner.setBackground(new Color(201, 210, 218));
 		rdbtnDinner.setBounds(472, 125, 109, 23);
 		frame.getContentPane().add(rdbtnDinner);
+		
+		
+		ButtonGroup resForGroup = new ButtonGroup();
+		resForGroup.add(rdbtnBreakfast);
+		resForGroup.add(rdbtnBrunch);
+		resForGroup.add(rdbtnLunch);
+		resForGroup.add(rdbtnDinner);
+		
+		//set Listener
+		RadioListener listener = new RadioListener();
+		rdbtnBreakfast.addActionListener(listener);
+		rdbtnBreakfast.addChangeListener(listener);
+		rdbtnBreakfast.addItemListener(listener);
+		
+		rdbtnBrunch.addActionListener(listener);
+		rdbtnBrunch.addChangeListener(listener);
+		rdbtnBrunch.addItemListener(listener);
+		
+		rdbtnLunch.addActionListener(listener);
+		rdbtnLunch.addChangeListener(listener);
+		rdbtnLunch.addItemListener(listener);
+		
+		rdbtnDinner.addActionListener(listener);
+		rdbtnDinner.addChangeListener(listener);
+		rdbtnDinner.addItemListener(listener);
+		
 		
 		JLabel lblReservationFor = new JLabel("Reservation for:");
 		lblReservationFor.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -214,7 +246,7 @@ public class RestaurantReservation {
 		 */
 		setDateListener(dateChooser);
 		setMealListener(rdbtnVeg, rdbtnNonVeg);
-		setReservationForListener(rdbtnBreakfast, rdbtnBrunch, rdbtnLunch, rdbtnDinner);
+		
 		
 		/**
 		 * set action listener for button
@@ -224,6 +256,7 @@ public class RestaurantReservation {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setNumberOfGuest(spinGuests);
+				restaurantData.setReservationFor(resForOption);
 				validateInfo(restaurantData.getDate(), restaurantData.getNoOfGuest(), restaurantData.getMealType());
 				if(inputValid) {
 					System.out.println(restaurantData.getMealType() + " " + restaurantData.getNoOfGuest() + " " 
@@ -307,58 +340,7 @@ public class RestaurantReservation {
 		return actualDate;
 	}
 	
-	/**
-	 * set the meal reservation type for restaurant
-	 * @param rdbtnBreakfast
-	 * @param rdbtnBrunch
-	 * @param rdbtnLunch
-	 * @param rdbtnDinner
-	 */
-	private void setReservationForListener(JRadioButton rdbtnBreakfast, JRadioButton rdbtnBrunch,
-			JRadioButton rdbtnLunch, JRadioButton rdbtnDinner) {
-		// TODO Auto-generated method stub
-		ButtonGroup radioGroup = new ButtonGroup();
-		radioGroup.add(rdbtnBreakfast);
-		radioGroup.add(rdbtnBrunch);
-		radioGroup.add(rdbtnLunch);
-		radioGroup.add(rdbtnDinner);
-		
-		class RestaurantActionListener implements ActionListener {
-		      public void actionPerformed(ActionEvent ex) {
-		      String choice = radioGroup.getSelection().getActionCommand();
-		      }
-		    }
 
-		  class RestaurantItemListener implements ItemListener {
-		   			@Override
-			public void itemStateChanged(ItemEvent ex) {
-				// TODO Auto-generated method stub
-				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
-		        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
-		        if(item.equals("Breakfast")) {
-			    	  restaurantData.setReservationFor("Breakfast");;
-			      }else if(item.equals("Brunch")){
-			    	  restaurantData.setReservationFor("Brunch");
-			      }else if(item.equals("Lunch")) {
-			    	  restaurantData.setReservationFor("Lunch");
-			      }else {
-			    	  restaurantData.setReservationFor("Dinner");
-			      }
-			}
-		    }
-
-		    ActionListener al = new RestaurantActionListener();
-		    rdbtnBreakfast.addActionListener(al);
-		    rdbtnBrunch.addActionListener(al);
-		    rdbtnLunch.addActionListener(al);
-		    rdbtnDinner.addActionListener(al);
-
-		    ItemListener il = new RestaurantItemListener();
-		    rdbtnBreakfast.addItemListener(il);
-		    rdbtnBrunch.addItemListener(il);
-		    rdbtnLunch.addItemListener(il);
-		    rdbtnDinner.addItemListener(il);
-	}
 
 	/**
 	 * set the number of guests
@@ -368,6 +350,8 @@ public class RestaurantReservation {
 		// TODO Auto-generated method stub
 		restaurantData.setNoOfGuest(Integer.parseInt(spinGuests.getValue().toString()));
 	}
+	
+	
 
 	/**
 	 * set the meal type veg/non-veg
@@ -451,5 +435,54 @@ public class RestaurantReservation {
 			inputValid = false;
 		}
 		return inputValid;
+	}
+	
+	
+	/**
+	 * listen to the change in radio button value for reservation meal category
+	 * @author Mann
+	 *
+	 */
+	
+	class RadioListener implements ActionListener, ItemListener, ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("ChangeEvent received from: "
+ 		           + e.getSource());
+		}
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("ItemEvent received: " 
+ 		           + e.getItem()
+ 		           + " is now "
+ 		           + ((e.getStateChange() == ItemEvent.SELECTED)?
+ 			      "selected.":"unselected"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String factoryName = null;
+
+	        System.out.print("ActionEvent received: ");
+	        if (e.getActionCommand() == "Breakfast") {
+	        	resForOption = "Breakfast";
+	    	    System.out.println(resForOption + " pressed.");
+	        } else if(e.getActionCommand() == "Brunch") {
+	        	resForOption = "Brunch";
+	    	    System.out.println(resForOption + " pressed.");
+	        } else if(e.getActionCommand() == "Lunch") {
+	        	resForOption = "Lunch";
+	        	System.out.println(resForOption + " pressed");
+	        } else {
+	        	resForOption = "Dinner";
+	        	System.out.println(resForOption + " pressed");
+	        }
+		}
+		
 	}
 }
