@@ -28,10 +28,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class StaffCustomization {
+public class StaffDAO {
 
 	private JFrame frame;
 	private JTable table;
@@ -42,9 +46,15 @@ public class StaffCustomization {
 	JRadioButton rdbtnFemale;
 	private ListSelectionListener listener;
 	private DefaultTableModel tm = new DefaultTableModel();
+	
 	DBHelper helper = new DBHelper();
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
+	
 	private JTextField txtId;
 	String option = "";
+	
 
 	/**
 	 * Launch the application.
@@ -53,7 +63,7 @@ public class StaffCustomization {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StaffCustomization window = new StaffCustomization();
+					StaffDAO window = new StaffDAO();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,7 +75,7 @@ public class StaffCustomization {
 	/**
 	 * Create the application.
 	 */
-	public StaffCustomization() {
+	public StaffDAO() {
 		initialize();
 	}
 
@@ -89,7 +99,7 @@ public class StaffCustomization {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				int currId = (int) table.getValueAt(table.getSelectedRow(), 0);
-				Staff staff= helper.getStaffMember(currId);
+				Staff staff= getStaffMember(currId);
 				txtId.setText(String.valueOf(staff.getId()));
 				txtUsername.setText(staff.getUsername());
 				txtPassword.setText(staff.getPassword());
@@ -204,7 +214,7 @@ public class StaffCustomization {
 				
 				//setGender(setGenderListener(rdbtnMale, rdbtnFemale));
 				System.out.println("TO ADD GENDER: " + option);
-				helper.createStaff(txtUsername.getText(), txtPassword.getText(), option , txtCity.getText());
+				createStaff(txtUsername.getText(), txtPassword.getText(), option , txtCity.getText());
 				updateStaffTable();
 			}
 		});
@@ -219,7 +229,7 @@ public class StaffCustomization {
 		JButton btnRemove = new JButton("REMOVE");
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				helper.deleteStaffMember(Integer.parseInt(txtId.getText()));
+				deleteStaffMember(Integer.parseInt(txtId.getText()));
 				updateStaffTable();
 			}
 		});
@@ -241,7 +251,7 @@ public class StaffCustomization {
 				stf.setCity(txtCity.getText());
 				stf.setGender(option);
 				
-				helper.updateStaff(stf);
+				updateStaff(stf);
 				
 				updateStaffTable();
 			}
@@ -296,7 +306,7 @@ public class StaffCustomization {
 		
 		
 		ArrayList<Staff> sf = new ArrayList<>();
-		sf = helper.listStaff();
+		sf = listStaff();
 		for(Staff staff : sf) {
 			tm.addRow(staff.getVector());
 		}
@@ -350,4 +360,150 @@ public class StaffCustomization {
 		}
 		
 	}
+	
+	
+	
+	
+	
+	 /**
+	   * create a new staff member
+	   * @param username
+	   * @param password
+	   * @param gender
+	   * @param city
+	   */
+	  public void createStaff(String username, String password, String gender, String city){
+			
+			String sql = "insert into staff_info (username, password, gender, city) values (?,?,?,?)";
+			
+			try {
+				helper.connectDB();
+				
+				pstmt = helper.getConnection().prepareStatement(sql);
+				pstmt.setString(1, username);
+				pstmt.setString(2, password);
+				pstmt.setString(3, gender);
+				pstmt.setString(4, city);
+				
+				pstmt.executeUpdate();
+				helper.disconnectDB();
+				
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+		}	  
+	  /**
+	   * 
+	   * @return list of all staff members
+	   */
+	  public ArrayList<Staff> listStaff(){
+			ArrayList<Staff> staffArr = new ArrayList<>();
+			
+			String sql = "Select * from staff_info";
+			try {
+				helper.connectDB();
+				stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					Staff s = new Staff();
+					s.setId(rs.getInt("id"));
+					s.setUsername(rs.getString("username"));
+					s.setPassword(rs.getString("password"));
+					s.setGender(rs.getString("gender"));
+					s.setCity(rs.getString("city"));
+					staffArr.add(s);
+				}
+				helper.disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+			
+			return staffArr;
+		}	  
+	  /**
+	   * 
+	   * @param id
+	   * @return a staff member
+	   */
+	  public Staff getStaffMember(int id) {
+			Staff s = new Staff();
+			
+			String sql = "Select * from staff_info where id = ?";
+			
+			try {
+				helper.connectDB();
+				pstmt = helper.getConnection().prepareStatement(sql);
+				pstmt.setInt(1,  id);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					s.setId(rs.getInt("id"));
+					s.setUsername(rs.getString("username"));
+					s.setPassword(rs.getString("password"));
+					s.setGender(rs.getString("gender"));
+					s.setCity(rs.getString("city"));
+				}
+				helper.disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+			
+			return s;
+		}	  
+	  /**
+	   * delete a staff member
+	   * @param id
+	   */
+	  public void deleteStaffMember(int id) {
+			String sql = "delete from staff_Info where id = ?";
+			try {
+				helper.connectDB();
+				
+				pstmt =helper.getConnection().prepareStatement(sql);
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+				
+				helper.disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+		}	  
+	  /**
+	   * update a staff member information
+	   * @param s
+	   */
+	  public void updateStaff(Staff s) {
+			String sql = "update staff_Info set username = ?, password = ?, gender = ?, city = ? where id = ?";
+					
+			try {
+				helper.connectDB();
+				pstmt = helper.getConnection().prepareStatement(sql);
+				pstmt.setString(1, s.getUsername());
+				pstmt.setString(2, s.getPassword());
+				pstmt.setString(3, s.getGender());
+				pstmt.setString(4, s.getCity());
+				pstmt.setInt(5, s.getId());
+				
+				pstmt.executeUpdate();
+				helper.disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+		}
 }

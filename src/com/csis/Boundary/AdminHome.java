@@ -145,7 +145,7 @@ public class AdminHome {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				StaffCustomization.main(null);
+				StaffDAO.main(null);
 			}
 
 			@Override

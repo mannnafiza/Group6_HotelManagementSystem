@@ -93,7 +93,7 @@ create table staff_info (
 	userName VARCHAR,
 	password VARCHAR,
 	gender VARCHAR,
-	city VARCHAR);
+	city VARCHAR(50));
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Admin123', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Kulbir123', 'Male', 'Victoria');
