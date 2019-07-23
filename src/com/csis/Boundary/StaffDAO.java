@@ -21,6 +21,9 @@ import com.csis.Entities.Staff;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -33,6 +36,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.awt.event.ActionEvent;
 
 public class StaffDAO {
@@ -41,11 +45,17 @@ public class StaffDAO {
 	private JTable table;
 	private JTextField txtUsername;
 	private JTextField txtPassword;
+	
 	private JTextField txtCity;
 	JRadioButton rdbtnMale;
 	JRadioButton rdbtnFemale;
 	private ListSelectionListener listener;
 	private DefaultTableModel tm = new DefaultTableModel();
+	
+	//for deccryption
+		private static final String key = "aesEncryptionKey";
+		private static final String initVector = "encryptionIntVec";
+		private String encryptPass = "";
 	
 	DBHelper helper = new DBHelper();
 	private ResultSet rs = null;
@@ -212,9 +222,10 @@ public class StaffDAO {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				encryptPass = encrypt(txtPassword.getText());
 				//setGender(setGenderListener(rdbtnMale, rdbtnFemale));
 				System.out.println("TO ADD GENDER: " + option);
-				createStaff(txtUsername.getText(), txtPassword.getText(), option , txtCity.getText());
+				createStaff(txtUsername.getText(), encryptPass, option , txtCity.getText());
 				updateStaffTable();
 			}
 		});
@@ -247,7 +258,8 @@ public class StaffDAO {
 				Staff stf = new Staff();
 				stf.setId(Integer.parseInt(txtId.getText()));
 				stf.setUsername(txtUsername.getText());
-				stf.setPassword(txtPassword.getText());
+				String updatePass = txtPassword.getText();
+				stf.setPassword(updatePass);
 				stf.setCity(txtCity.getText());
 				stf.setGender(option);
 				
@@ -505,5 +517,28 @@ public class StaffDAO {
 				System.out.println(sx.getErrorCode());
 				System.out.println(sx.getSQLState());
 			}
+		}
+	  
+	  
+	  /***
+		 * 
+		 * @param value is the original password in string format
+		 * @return the encrypted hashed value of password as a string
+		 */
+		public static String encrypt(String value) {
+			try {
+				IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+				SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+				Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+				cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+				byte[] encrypted = cipher.doFinal(value.getBytes());
+				return Base64.getEncoder().encodeToString(encrypted);
+				//return Base64.encodeBase64String(encrypted);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return null;
 		}
 }

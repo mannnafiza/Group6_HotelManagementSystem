@@ -1,7 +1,7 @@
 create table user_Info (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	userName VARCHAR(50),
-	password VARCHAR(9),
+	password VARCHAR(500),
 	gender VARCHAR(50),
 	city VARCHAR(9)
 );
@@ -91,7 +91,7 @@ create table transactions_Info (
 create table staff_info (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	userName VARCHAR,
-	password VARCHAR,
+	password VARCHAR(500),
 	gender VARCHAR,
 	city VARCHAR(50));
 
