@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +23,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -36,9 +40,14 @@ public class Registration {
 	private ButtonGroup btngrp = new ButtonGroup();
 	private String userName = "";
 	private String password = "";
+	private String encryptedPassword = "";
 	private String gender = "";
 	private String city = "";
 	private DBHelper db = new DBHelper();
+	
+	//for encryption
+	private static final String key = "aesEncryptionKey";
+	private static final String initVector = "encryptionIntVec";
 	
 	/**
 	 * Launch the application
@@ -219,6 +228,7 @@ public class Registration {
 				// TODO Auto-generated method stub
 				userName = txtFieldName.getText();
 				password = new String(pswrdField.getPassword());
+				encryptedPassword = encrypt(password);
 				city = txtFieldCity.getText();
 				if(rdbtnMale.isSelected())
 					gender = "male";
@@ -227,7 +237,7 @@ public class Registration {
 				
 				
 				//Create an instance of Validate class and pass all the inputs given by the user
-				Validate validate = new Validate(userName, password , gender, city);
+				Validate validate = new Validate(userName, encryptedPassword , gender, city);
 				if(validate.isSignUpDataValid())
 				{
 					System.out.println("All the inputs are valid.");
@@ -240,7 +250,7 @@ public class Registration {
 					}else
 					{
 						//store the user inputs in the user_Info table
-						db.insertNewUser(userName, password, gender, city);
+						db.insertNewUser(userName, encryptedPassword, gender, city);
 						ArrayList<String> newList = new ArrayList<>();
 						newList = db.getUserProfile(userName);
 						
@@ -307,5 +317,29 @@ public class Registration {
 	
 		});
 
+	}
+	
+	
+	
+	/***
+	 * 
+	 * @param value is the original password in string format
+	 * @return the encrypted hashed value of password as a string
+	 */
+	public static String encrypt(String value) {
+		try {
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+			byte[] encrypted = cipher.doFinal(value.getBytes());
+			return Base64.getEncoder().encodeToString(encrypted);
+			//return Base64.encodeBase64String(encrypted);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }

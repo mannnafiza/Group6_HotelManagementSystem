@@ -2,6 +2,8 @@ package com.csis.EntitiesTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 
 import com.csis.Entities.Room;
@@ -25,6 +27,14 @@ class UnitTestRoom {
 	void testisMeal() {
 		room.setMeal("yes");
 		assertEquals("yes", room.isMeal());
+	}
+	
+	@Test
+	void testReservationDate() {
+		Date date = new Date();
+		room.setReserveDate((java.sql.Date) date);
+		
+		assertEquals(date, room.getReserveDate());
 	}
 	
 
