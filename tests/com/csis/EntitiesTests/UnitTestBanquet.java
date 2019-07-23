@@ -17,7 +17,7 @@ class UnitTestBanquet {
 	}
 	
 	@Test
-	void test() {
+	void testMealType() {
 		banquet.setMeal("veg");
 		assertEquals("veg", banquet.isMeal());
 	}
