@@ -1,7 +1,7 @@
 create table user_Info (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	userName VARCHAR(50),
-	password VARCHAR(9),
+	password VARCHAR(500),
 	gender VARCHAR(50),
 	city VARCHAR(9)
 );
@@ -89,31 +89,31 @@ create table transactions_Info (
 );
 
 create table staff_info (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY, 
 	userName VARCHAR,
-	password VARCHAR,
+	password VARCHAR(500),
 	gender VARCHAR,
-	city VARCHAR);
+	city VARCHAR(50));
 
-insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Admin123', 'Male', 'Surrey');
-insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Kulbir123', 'Male', 'Victoria');
-insert into user_Info (id, userName, password, gender, city) values (3, 'Bev', 'Aman123', 'Male', 'Richmond');
-insert into user_Info (id, userName, password, gender, city) values (4, 'Pauletta', 'Aman123', 'Female', 'Burnaby');
-insert into user_Info (id, userName, password, gender, city) values (5, 'Teddi', 'Aman1', 'Female', 'Victoria');
-insert into user_Info (id, userName, password, gender, city) values (6, 'Miller', 'Aman123', 'Male', 'Victoria');
-insert into user_Info (id, userName, password, gender, city) values (7, 'Orton', 'Kulbir1', 'Male', 'Burnaby');
-insert into user_Info (id, userName, password, gender, city) values (8, 'Ricki', 'Kulbir1', 'Female', 'Vancouver');
-insert into user_Info (id, userName, password, gender, city) values (9, 'Ronnie', 'Kulbir123', 'Female', 'Vancouver');
-insert into user_Info (id, userName, password, gender, city) values (10, 'Donetta', 'Aman123', 'Female', 'Surrey');
-insert into user_Info (id, userName, password, gender, city) values (11, 'Graeme', 'Nafiza123', 'Male', 'Richmond');
-insert into user_Info (id, userName, password, gender, city) values (12, 'Alix', 'Nafiza123', 'Male', 'Surrey');
-insert into user_Info (id, userName, password, gender, city) values (13, 'Allard', 'Kulbir1', 'Male', 'Burnaby');
-insert into user_Info (id, userName, password, gender, city) values (14, 'Sarah', 'Nafiza123', 'Female', 'Victoria');
-insert into user_Info (id, userName, password, gender, city) values (15, 'Robinett', 'Aman123', 'Female', 'Vancouver');
-insert into user_Info (id, userName, password, gender, city) values (16, 'Puff', 'Nafiza123', 'Male', 'Richmond');
-insert into user_Info (id, userName, password, gender, city) values (17, 'Winfield', 'Kulbir123', 'Male', 'Burnaby');
-insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 'Nafiza1', 'Male', 'Surrey');
-insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'Kulbir123', 'Male', 'Surrey');
-insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'Aman123', 'Male', 'Victoria');
+insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
+insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Ybx420ouUsfak+MtRRxWHg==', 'Male', 'Victoria');
+insert into user_Info (id, userName, password, gender, city) values (3, 'Bev', 'KszTy1QLxfs0ngAVCzDu3A==', 'Male', 'Richmond');
+insert into user_Info (id, userName, password, gender, city) values (4, 'Pauletta', '79OPV6GWGD+uaa9leZQBug==', 'Female', 'Burnaby');
+insert into user_Info (id, userName, password, gender, city) values (5, 'Teddi', 'urx+nS0vdE4+dyjMMDuZGQ==', 'Female', 'Victoria');
+insert into user_Info (id, userName, password, gender, city) values (6, 'Miller', 'eOmqANjJ3eCzz3oDXM8yPA==', 'Male', 'Victoria');
+insert into user_Info (id, userName, password, gender, city) values (7, 'Orton', 'e1vhOLkszBr2d4roMuGnDQ==', 'Male', 'Burnaby');
+insert into user_Info (id, userName, password, gender, city) values (8, 'Ricki', 'GJOm7E8PdyPkQpV/vireYA==', 'Female', 'Vancouver');
+insert into user_Info (id, userName, password, gender, city) values (9, 'Ronnie', 'YTuldEyEyEQbasoJ6gVbuQ==', 'Female', 'Vancouver');
+insert into user_Info (id, userName, password, gender, city) values (10, 'Donetta', 'cDPnVqyugWaBR0YY1IFMVQ==', 'Female', 'Surrey');
+insert into user_Info (id, userName, password, gender, city) values (11, 'Graeme', 'TKlO/ydDILvDTIHZlPp7AQ==', 'Male', 'Richmond');
+insert into user_Info (id, userName, password, gender, city) values (12, 'Alix', 'uaIL16HDvd/goFeUUvnlgg==', 'Male', 'Surrey');
+insert into user_Info (id, userName, password, gender, city) values (13, 'Allard', '3OX+QchxWDdwsccDMbAZDg==', 'Male', 'Burnaby');
+insert into user_Info (id, userName, password, gender, city) values (14, 'Sarah', 'czl1nwXRajIFW2YYC4xWxg==', 'Female', 'Victoria');
+insert into user_Info (id, userName, password, gender, city) values (15, 'Robinett', 'G+a6Xz+9CeQu6Kxo3Oimng==', 'Female', 'Vancouver');
+insert into user_Info (id, userName, password, gender, city) values (16, 'Puff', '+jX+bu02l3sxhTHPN3hnvg==', 'Male', 'Richmond');
+insert into user_Info (id, userName, password, gender, city) values (17, 'Winfield', 'p8WZ80fDj8r4V8eVyFv7fQ==', 'Male', 'Burnaby');
+insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 'a3+RglUbgaFxVbENbEqdZQ==', 'Male', 'Surrey');
+insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'ASXqI5h+S7CfrWtL0JcRVA==', 'Male', 'Surrey');
+insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'vRSHKvtElYHCK75l/hvnMA==', 'Male', 'Victoria');
 
 

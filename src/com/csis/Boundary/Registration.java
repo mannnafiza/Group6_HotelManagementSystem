@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import com.csis.Controller.Authenticate;
+import com.csis.Controller.RegistrationDAO;
 import com.csis.Controller.Validate;
 
 import java.awt.Color;
@@ -20,6 +24,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -36,9 +41,14 @@ public class Registration {
 	private ButtonGroup btngrp = new ButtonGroup();
 	private String userName = "";
 	private String password = "";
+	private String encryptedPassword = "";
 	private String gender = "";
 	private String city = "";
-	private DBHelper db = new DBHelper();
+	private RegistrationDAO registrationDAO =  new RegistrationDAO();
+	
+	//for encryption
+	private static final String key = "aesEncryptionKey";
+	private static final String initVector = "encryptionIntVec";
 	
 	/**
 	 * Launch the application
@@ -162,7 +172,7 @@ public class Registration {
 		
 		txtFieldCity = new JTextField();
 		//txtFieldCity.setText("Burnaby");
-		txtFieldCity.setForeground(new Color(51, 153, 102));
+		txtFieldCity.setForeground(color);
 		txtFieldCity.setFont(new Font("Serif", Font.PLAIN, 16));
 		txtFieldCity.setColumns(10);
 		txtFieldCity.setBounds(257, 282, 199, 25);
@@ -207,10 +217,7 @@ public class Registration {
 		lblCity.setBounds(146, 285, 101, 21);
 		frame.getContentPane().add(lblCity);
 		
-		
-		
-		
-		
+		//button listener	
 		btnSignUp.addActionListener(new ActionListener()
 		{
 			@Override
@@ -219,6 +226,7 @@ public class Registration {
 				// TODO Auto-generated method stub
 				userName = txtFieldName.getText();
 				password = new String(pswrdField.getPassword());
+				encryptedPassword = encrypt(password);
 				city = txtFieldCity.getText();
 				if(rdbtnMale.isSelected())
 					gender = "male";
@@ -231,7 +239,7 @@ public class Registration {
 				if(validate.isSignUpDataValid())
 				{
 					System.out.println("All the inputs are valid.");
-					Authenticate auth = new Authenticate();
+					Authenticate auth = new Authenticate("Registration Task");
 					auth.setUsername(userName);
 					if(auth.matchUserName())
 					{
@@ -240,9 +248,9 @@ public class Registration {
 					}else
 					{
 						//store the user inputs in the user_Info table
-						db.insertNewUser(userName, password, gender, city);
+						registrationDAO.insertNewUser(userName, encryptedPassword, gender, city);
 						ArrayList<String> newList = new ArrayList<>();
-						newList = db.getUserProfile(userName);
+						newList = registrationDAO.getUserProfile(userName);
 						
 						//to see the profile of newly added user
 						for(String str: newList)
@@ -307,5 +315,29 @@ public class Registration {
 	
 		});
 
+	}
+	
+	
+	
+	/***
+	 * 
+	 * @param value is the original password in string format
+	 * @return the encrypted hashed value of password as a string
+	 */
+	public static String encrypt(String value) {
+		try {
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+			byte[] encrypted = cipher.doFinal(value.getBytes());
+			return Base64.getEncoder().encodeToString(encrypted);
+			//return Base64.encodeBase64String(encrypted);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }

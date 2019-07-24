@@ -2,19 +2,24 @@
 
 import java.util.ArrayList;
 
-import com.csis.Boundary.DBHelper;
-
 public class Authenticate {
 
 	private String username = "";
 	private String password = "";
-	private DBHelper db = new DBHelper();
+	private String purpose = "";
+	private HomeDAO homeDAO = new HomeDAO();
+	private RegistrationDAO registrationDAO =  new RegistrationDAO();
+	
+	//default constructor
+	public Authenticate() {	
+		
+	}
 	/**
-	 * @param username
-	 * @param password
+	 * @param purpose 
 	 */
-	public Authenticate() {
+	public Authenticate(String purpose) {
 		super();
+		this.purpose = purpose;
 	}
 	
 	/**
@@ -46,14 +51,21 @@ public class Authenticate {
 	}
 
 	//method to verify username input
+	/**
+	 * @return the boolean value whether username verified or not
+	 */
 	public boolean matchUserName()
 	{
 		ArrayList<String> list = new ArrayList<>();
-		list = db.listUserNames();
-		
+		if(purpose.equals("Login Task"))
+			list = homeDAO.listUserNames();
+		if(purpose.equals("Registration Task"))
+			list = registrationDAO.listUserNames();
+		if(purpose.equals(""))
+			list = homeDAO.listUserNames();
+			
 		for(String str: list)
 		{
-			//System.out.println("User: " + str);
 			if(username.equals(str))
 				return true;
 		}		
@@ -61,13 +73,17 @@ public class Authenticate {
 	}
 	
 	//method to verify password input
+	/**
+	 * @return the boolean value whether password verified or not
+	 */
 	public boolean matchpassword()
 	{
-		String pswrd = db.getPassword(username);
+		String pswrd = homeDAO.getPassword(username);
 		
 			if(password.equals(pswrd))
+			{
 				return true;
-		//}		
+			}	
 		return false;		
 	}
 

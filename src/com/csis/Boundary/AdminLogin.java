@@ -3,7 +3,10 @@ package com.csis.Boundary;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
-
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -29,6 +32,10 @@ public class AdminLogin {
 	private JPasswordField txtPassword;
 	String username = "";
 	String password = "";
+
+	//for encryption
+	private static final String key = "aesEncryptionKey";
+	private static final String initVector = "encryptionIntVec";
 
 	/**
 	 * Launch the application.
@@ -114,7 +121,7 @@ public class AdminLogin {
 					//create an instance of Authenticate class to verify userName and password inputs
 					Authenticate auth = new Authenticate();
 					auth.setUsername(username);
-					auth.setPassword(password);
+					auth.setPassword(encrypt(password));
 						
 						if(auth.matchUserName() && auth.matchpassword())
 						{
@@ -142,5 +149,27 @@ public class AdminLogin {
 		lblAdmin.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
 		lblAdmin.setBounds(256, 159, 101, 23);
 		frame.getContentPane().add(lblAdmin);
+	}
+	
+	/***
+	 * 
+	 * @param value is the original password in string format
+	 * @return the encrypted hashed value of password as a string
+	 */
+	public static String encrypt(String value) {
+		try {
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+			byte[] encrypted = cipher.doFinal(value.getBytes());
+			return Base64.getEncoder().encodeToString(encrypted);
+			//return Base64.encodeBase64String(encrypted);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +24,7 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Base64;
 import java.awt.event.ActionEvent;
 
 public class Home {
@@ -30,6 +34,13 @@ public class Home {
 	private JPasswordField pswrdField;
 	private String userName = "";
 	private String password = "";
+	private String encryptedPassword = "";
+	
+	//for deccryption
+	private static final String key = "aesEncryptionKey";
+	private static final String initVector = "encryptionIntVec";
+	
+	
 
 	/**
 	 * Launch the application
@@ -257,6 +268,8 @@ public class Home {
 			  // TODO Auto-generated  method stub
 			  userName = txtFieldName.getText();
 			  password = new String(pswrdField.getPassword());
+			  encryptedPassword = encrypt(password);
+			  
 				
 			  //Create an instance of Validate class and pass all the inputs given by the user
 			  Validate validate = new Validate(userName,password);
@@ -266,9 +279,9 @@ public class Home {
 				  System.out.println("All inputs are valid."); 
 				  
 				  //create an instance of Authenticate class to verify userName and password inputs
-				  Authenticate auth = new Authenticate();
+				  Authenticate auth = new Authenticate("Login Task");
 					auth.setUsername(userName);
-					auth.setPassword(password);
+					auth.setPassword(encryptedPassword);
 					
 					if(auth.matchUserName() && auth.matchpassword())
 					{
@@ -344,5 +357,28 @@ public class Home {
 					}
 			
 				});
+	}
+	
+	
+	/***
+	 * 
+	 * @param value is the original password in string format
+	 * @return the encrypted hashed value of password as a string
+	 */
+	public static String encrypt(String value) {
+		try {
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+			byte[] encrypted = cipher.doFinal(value.getBytes());
+			return Base64.getEncoder().encodeToString(encrypted);
+			//return Base64.encodeBase64String(encrypted);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }
