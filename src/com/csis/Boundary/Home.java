@@ -279,7 +279,7 @@ public class Home {
 				  System.out.println("All inputs are valid."); 
 				  
 				  //create an instance of Authenticate class to verify userName and password inputs
-				  Authenticate auth = new Authenticate();
+				  Authenticate auth = new Authenticate("Login Task");
 					auth.setUsername(userName);
 					auth.setPassword(encryptedPassword);
 					

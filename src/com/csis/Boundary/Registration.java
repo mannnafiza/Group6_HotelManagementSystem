@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import com.csis.Controller.Authenticate;
+import com.csis.Controller.RegistrationDAO;
 import com.csis.Controller.Validate;
 
 import java.awt.Color;
@@ -43,7 +44,7 @@ public class Registration {
 	private String encryptedPassword = "";
 	private String gender = "";
 	private String city = "";
-	private DBHelper db = new DBHelper();
+	private RegistrationDAO registrationDAO =  new RegistrationDAO();
 	
 	//for encryption
 	private static final String key = "aesEncryptionKey";
@@ -171,7 +172,7 @@ public class Registration {
 		
 		txtFieldCity = new JTextField();
 		//txtFieldCity.setText("Burnaby");
-		txtFieldCity.setForeground(new Color(51, 153, 102));
+		txtFieldCity.setForeground(color);
 		txtFieldCity.setFont(new Font("Serif", Font.PLAIN, 16));
 		txtFieldCity.setColumns(10);
 		txtFieldCity.setBounds(257, 282, 199, 25);
@@ -216,10 +217,7 @@ public class Registration {
 		lblCity.setBounds(146, 285, 101, 21);
 		frame.getContentPane().add(lblCity);
 		
-		
-		
-		
-		
+		//button listener	
 		btnSignUp.addActionListener(new ActionListener()
 		{
 			@Override
@@ -237,11 +235,11 @@ public class Registration {
 				
 				
 				//Create an instance of Validate class and pass all the inputs given by the user
-				Validate validate = new Validate(userName, encryptedPassword , gender, city);
+				Validate validate = new Validate(userName, password , gender, city);
 				if(validate.isSignUpDataValid())
 				{
 					System.out.println("All the inputs are valid.");
-					Authenticate auth = new Authenticate();
+					Authenticate auth = new Authenticate("Registration Task");
 					auth.setUsername(userName);
 					if(auth.matchUserName())
 					{
@@ -250,9 +248,9 @@ public class Registration {
 					}else
 					{
 						//store the user inputs in the user_Info table
-						db.insertNewUser(userName, encryptedPassword, gender, city);
+						registrationDAO.insertNewUser(userName, encryptedPassword, gender, city);
 						ArrayList<String> newList = new ArrayList<>();
-						newList = db.getUserProfile(userName);
+						newList = registrationDAO.getUserProfile(userName);
 						
 						//to see the profile of newly added user
 						for(String str: newList)
