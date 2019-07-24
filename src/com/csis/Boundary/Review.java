@@ -6,19 +6,26 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.List;
 import javax.swing.JScrollPane;
+import java.awt.TextArea;
 
 public class Review {
 
 	private JFrame frame;
-	private JTextField textFieldreview;
     private String review; 
 	/**
 	 * Launch the application.
@@ -48,32 +55,26 @@ public class Review {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 820, 415);
+		frame.setBounds(100, 100, 528, 345);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		textFieldreview = new JTextField();
-		textFieldreview.setBounds(219, 13, 473, 23);
-		frame.getContentPane().add(textFieldreview);
-		textFieldreview.setColumns(10);
-		
 		JLabel lblWhatYouThink = new JLabel("What you think about our service:");
-		lblWhatYouThink.setBounds(10, 11, 199, 27);
+		lblWhatYouThink.setBounds(43, 11, 208, 50);
 		frame.getContentPane().add(lblWhatYouThink);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(219, 72, 575, 240);
-		frame.getContentPane().add(scrollPane);
+		TextArea textAreaReview = new TextArea();
+		textAreaReview.setBounds(43, 67, 380, 160);
+		frame.getContentPane().add(textAreaReview);
 		
-		List list = new List();
-		scrollPane.setViewportView(list);
-
+		
+		
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				review = textFieldreview.getText();
+				review = textAreaReview.getText();
 				String File_name = review;
 				byte [] buff = File_name.getBytes();
 				try {
@@ -81,14 +82,35 @@ public class Review {
 					RandomAccessFile raf  = new RandomAccessFile("File_name.txt" , "rw");
 					raf.write(buff);
 					raf.seek(3);
+					
+					
+					
 				}catch(IOException ex){
 					ex.printStackTrace();
 				}
 				
+				try {
+				  File archivo = new File("C:/Temp/Group6_HotelManagementSystem/File_name.txt");
+				    FileReader fr = new FileReader(archivo);
+				    BufferedReader br = new BufferedReader(fr);
+
+				    Vector<String> lines = new Vector<String>();
+
+				    String line;
+				    while ((line = br.readLine()) != null) {
+				      lines.add(line);
+				    }
+				   
+				    JOptionPane.showMessageDialog(null, new JScrollPane(new JList(lines)));
+				    fr.close();
+				  }catch(IOException ex){
+				         ex.printStackTrace();
 			}
+		}
 		});
-		btnSubmit.setBounds(705, 13, 89, 23);
+		btnSubmit.setBounds(335, 254, 89, 23);
 		frame.getContentPane().add(btnSubmit);
+		
 		
 		
 		
