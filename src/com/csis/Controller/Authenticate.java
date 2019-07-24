@@ -1,28 +1,25 @@
  package com.csis.Controller;
 
 import java.util.ArrayList;
-import com.csis.Boundary.DBHelper;
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
 
 public class Authenticate {
 
 	private String username = "";
 	private String password = "";
-	private DBHelper db = new DBHelper();
+	private String purpose = "";
 	private HomeDAO homeDAO = new HomeDAO();
+	private RegistrationDAO registrationDAO =  new RegistrationDAO();
 	
-	//for deccryption
-	private static final String key = "aesEncryptionKey";
-	private static final String initVector = "encryptionIntVec";
+	//default constructor
+	public Authenticate() {	
+		
+	}
 	/**
-	 * @param username
-	 * @param password
+	 * @param purpose 
 	 */
-	public Authenticate() {
+	public Authenticate(String purpose) {
 		super();
+		this.purpose = purpose;
 	}
 	
 	/**
@@ -60,11 +57,15 @@ public class Authenticate {
 	public boolean matchUserName()
 	{
 		ArrayList<String> list = new ArrayList<>();
-		list = homeDAO.listUserNames();
-		
+		if(purpose.equals("Login Task"))
+			list = homeDAO.listUserNames();
+		if(purpose.equals("Registration Task"))
+			list = registrationDAO.listUserNames();
+		if(purpose.equals(""))
+			list = homeDAO.listUserNames();
+			
 		for(String str: list)
 		{
-			System.out.println("User: " + str);
 			if(username.equals(str))
 				return true;
 		}		
@@ -78,12 +79,11 @@ public class Authenticate {
 	public boolean matchpassword()
 	{
 		String pswrd = homeDAO.getPassword(username);
-		System.out.println("P: " + password + "         D:" +pswrd );
+		
 			if(password.equals(pswrd))
 			{
 				return true;
-			}
-	
+			}	
 		return false;		
 	}
 
