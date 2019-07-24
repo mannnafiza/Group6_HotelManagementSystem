@@ -1,14 +1,22 @@
  package com.csis.Controller;
 
 import java.util.ArrayList;
-
 import com.csis.Boundary.DBHelper;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
 
 public class Authenticate {
 
 	private String username = "";
 	private String password = "";
 	private DBHelper db = new DBHelper();
+	private HomeDAO homeDAO = new HomeDAO();
+	
+	//for deccryption
+	private static final String key = "aesEncryptionKey";
+	private static final String initVector = "encryptionIntVec";
 	/**
 	 * @param username
 	 * @param password
@@ -46,14 +54,17 @@ public class Authenticate {
 	}
 
 	//method to verify username input
+	/**
+	 * @return the boolean value whether username verified or not
+	 */
 	public boolean matchUserName()
 	{
 		ArrayList<String> list = new ArrayList<>();
-		list = db.listUserNames();
+		list = homeDAO.listUserNames();
 		
 		for(String str: list)
 		{
-			//System.out.println("User: " + str);
+			System.out.println("User: " + str);
 			if(username.equals(str))
 				return true;
 		}		
@@ -61,13 +72,18 @@ public class Authenticate {
 	}
 	
 	//method to verify password input
+	/**
+	 * @return the boolean value whether password verified or not
+	 */
 	public boolean matchpassword()
 	{
-		String pswrd = db.getPassword(username);
-		
+		String pswrd = homeDAO.getPassword(username);
+		System.out.println("P: " + password + "         D:" +pswrd );
 			if(password.equals(pswrd))
+			{
 				return true;
-		//}		
+			}
+	
 		return false;		
 	}
 
