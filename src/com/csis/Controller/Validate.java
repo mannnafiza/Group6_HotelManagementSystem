@@ -1,5 +1,7 @@
 package com.csis.Controller;
 
+import javax.swing.JOptionPane;
+
 public class Validate {
 
 	private String userName = "";
@@ -43,6 +45,10 @@ public class Validate {
 		this.userName = userName;
 		this.password = password;
 	}
+	
+	/**
+	 * @param userName
+	 */
 	//constructor for room service class
 	public Validate(String userName) {
 		super();
@@ -62,21 +68,29 @@ public class Validate {
 	
 	
 	 // default constructor
-	 
-	public Validate(int cardNumber2, String expirydate, int code) {
+	/**
+	 * @param cardNumber
+	 * @param expirydate
+	 * @param code
+	 */
+	public Validate(int cardNumber, String expirydate, int code) {
 		super();
 		// TODO Auto-generated constructor stub
-		this.cardNumber = cardNumber2;
+		this.cardNumber = cardNumber;
 		this.expiryDate = expirydate;
 		this.code = code;
 		
 	}
 
 	//method to validate the registration page's user credentials
+	/**
+	 * @return boolean value as per Registration data validation results
+	 */
 	public boolean isSignUpDataValid()
 	{
 		if(userName.equals("") || password.equals("") || gender.equals("") || city.equals(""))
 		{
+			JOptionPane.showMessageDialog(null,"No field should be empty");
 			System.out.println("No field should be empty....");
 			return false;
 		}
@@ -88,10 +102,14 @@ public class Validate {
 	}
 	
 	//method to validate the Home(or Login) page's user credentials
+	/**
+	 * @return boolean value as per Login data validation results
+	 */
 	public boolean isLoginDataValid()
 	{
 		if(userName.equals("") || password.equals(""))
 		{
+			JOptionPane.showMessageDialog(null,"No field should be empty");
 			System.out.println("No field should be empty....");
 			return false;
 		}
@@ -113,6 +131,9 @@ public class Validate {
 		return true;
 	}
 	
+	/**
+	 * @return boolean value as per transaction data validation results
+	 */
 	public boolean istransactionDataValid() {
 		// TODO Auto-generated method stub
 		if(cardNumber==0 || expiryDate.equals("") || code==0)
@@ -126,13 +147,19 @@ public class Validate {
 	}	
 	
 	//method to validate if the password meets all the minimum requirements
+	/**
+	 * @param password the password to be validated
+	 * @return boolean value as per password validation results
+	 */
 	private boolean checkPassword(String password) {
 		// TODO Auto-generated method stub
 		
+		String errorMsg = "";
 		boolean containsDigit = false;
 		boolean isValid = true;
 		if((password.length() < 5))
 		{
+			errorMsg += "Password should contain atleast 5 characters!!\n";
 			System.out.println("Password should contain atleast 5 characters!!");
 			isValid = false;
 		}
@@ -140,6 +167,7 @@ public class Validate {
 		String p = password.toUpperCase();
 		if(!(password.charAt(0) == (p.charAt(0))))
 		{
+			errorMsg += "Password should begin with an uppercase!!\n";
 			System.out.println("Password should begin with an uppercase!!");
 			isValid = false;
 		}
@@ -154,10 +182,14 @@ public class Validate {
 
 		if(!containsDigit)
 		{
+			errorMsg += "Password must contain atleast one digit!!\n";
 			System.out.println("Password must contain atleast one digit!!");
 			isValid = false;
 		}
 	
+		if(errorMsg != "")
+			JOptionPane.showMessageDialog(null,errorMsg);
+		
 		if(!isValid)
 			return false;
 		

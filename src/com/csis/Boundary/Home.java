@@ -272,7 +272,7 @@ public class Home {
 			  
 				
 			  //Create an instance of Validate class and pass all the inputs given by the user
-			  Validate validate = new Validate(userName,encryptedPassword);
+			  Validate validate = new Validate(userName,password);
 			  
 			  if(validate.isLoginDataValid()) 
 			  {
