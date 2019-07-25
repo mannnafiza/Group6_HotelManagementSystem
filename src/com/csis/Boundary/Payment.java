@@ -39,12 +39,13 @@ public class Payment {
 	private JTextField textFieldcardNum;
 	private JTextField textFieldExpiryDate;
 	String modeOfPayment = "";
-	int cardNumber;
+	String cardNumber;
 	String expirydate;
-	int code;
+	String code;
 	DBHelper helper = new DBHelper();
 	Transaction t = new Transaction();
 	PaymentDAO paymentDAO = new PaymentDAO();
+	JOptionPane jop = new JOptionPane();
 	
 	/**
 	 * Launch the application.
@@ -199,39 +200,19 @@ public class Payment {
 				
 					panel.setVisible(false);	
 			}
-		});
+		});	 
 		
-		
-	    
-	    class RoomItemListener implements ItemListener {
-   			@Override
-	public void itemStateChanged(ItemEvent ex) {
-		// TODO Auto-generated method stub
-		String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
-        boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
-        if(item.equals("Cash")) {
-        	modeOfPayment = "Cash";
-	      }else {
-	    	  modeOfPayment = "Card";
-	      }
-	}
-    }
-	    
-	    ItemListener il = new RoomItemListener();
-		//rdbtnCard.addItemListener(il);
-	//	rdbtnCash.addItemListener(il);
-		 
 		btnCancel.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				cardNumber = 0;
+				cardNumber = "";
 				expirydate = "";
-				code = 0;
-				textFieldcardNum.setText("");
-				textFieldExpiryDate.setText("");
-				textFieldSecurityCode.setText("");
+				code = "";
+				textFieldcardNum.setText("Card Number");
+				textFieldExpiryDate.setText("MM/YY");
+				textFieldSecurityCode.setText("Security Code");
 			}
 		});
 		
@@ -254,9 +235,15 @@ public class Payment {
 				
 				if(modeOfPayment.equals("Card"))
 				{
-					 cardNumber = Integer.parseInt(textFieldcardNum.getText());
+					if(textFieldcardNum.getText().equals("Card Number") || textFieldExpiryDate.getText().equals("MM/YY") || textFieldSecurityCode.getText().equals("Security Code"))
+					{
+						jop.showMessageDialog(null," Blank input found.");
+					}
+					else
+					{
+					 cardNumber = textFieldcardNum.getText();
 					 expirydate =  textFieldExpiryDate.getText();
-					 code = Integer.parseInt(textFieldSecurityCode.getText());
+					 code = textFieldSecurityCode.getText();
 					 System.out.println("Mode: "+ modeOfPayment);
 						System.out.println("CardNum: "+ cardNumber);
 						System.out.println("Expiry Date: "+ expirydate);
@@ -267,33 +254,53 @@ public class Payment {
 					if(validate.istransactionDataValid())
 					{
 
-						t.setCardNumber(cardNumber);
+						t.setCardNumber(Integer.parseInt(cardNumber));
 						t.setExpiryDate(expirydate);
-						t.setCode(code);
-					}				
+						t.setCode(Integer.parseInt(code));
+					
+					//set current date and time as class field values for Transaction class
+					Date currentDate = new Date();
+					String date = DateFormat.getDateInstance().format(currentDate); 
+					t.setDate(date);
+					String time = DateFormat.getTimeInstance().format(currentDate);
+					t.setTime(time);
+					
+					
+					jop.showMessageDialog(null," Payment Successful.");
+					
+					//method call to add transaction to the database
+					paymentDAO.addtransactionEntry(t);
+					PaymentReceipt.main(null,t, user);
+					
+					frame.dispose();
+					}
+					}
+					
 				}else
 				{
 					System.out.println("Mode: "+ modeOfPayment);
 					t.setCardNumber(0);
 					t.setExpiryDate(null);
 					t.setCode(0);
+					
+					//set current date and time as class field values for Transaction class
+					Date currentDate = new Date();
+					String date = DateFormat.getDateInstance().format(currentDate); 
+					t.setDate(date);
+					String time = DateFormat.getTimeInstance().format(currentDate);
+					t.setTime(time);
+					
+					
+					jop.showMessageDialog(null," Payment Successful.");
+					
+					//method call to add transaction to the database
+					paymentDAO.addtransactionEntry(t);
+					PaymentReceipt.main(null,t, user);
+					
+					frame.dispose();
 				}
 				
-				//set current date and time as class field values for Transaction class
-				Date currentDate = new Date();
-				String date = DateFormat.getDateInstance().format(currentDate); 
-				t.setDate(date);
-				String time = DateFormat.getTimeInstance().format(currentDate);
-				t.setTime(time);
 				
-				JOptionPane jop = new JOptionPane();
-				jop.showMessageDialog(null," Payment Successful.");
-				
-				//method call to add transaction to the database
-				paymentDAO.addtransactionEntry(t);
-				PaymentReceipt.main(null,t, user);
-				
-				frame.dispose();
 			}
 		});
 	}
