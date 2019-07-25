@@ -261,7 +261,7 @@ public class RoomReservationDAO {
 							btnCalculateMyBill.addActionListener(new ActionListener() {
 
 								public void actionPerformed(ActionEvent arg0) {
-									BillCalculator billCalculate = new BillCalculator();
+									BillCalculatorDAO billCalculate = new BillCalculatorDAO();
 									billCalculate.calculate(user);
 									
 									frame.dispose();
