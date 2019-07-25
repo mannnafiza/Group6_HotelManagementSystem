@@ -117,30 +117,31 @@ public class PaymentReceipt {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(201, 210, 218));
-		panel.setBounds(104, 209, 263, 58);
+		panel.setBounds(104, 209, 323, 115);
 		frame.getContentPane().add(panel);
 		panel.setVisible(false);
 		panel.setLayout(null);
 
 		JLabel lblCard = new JLabel("Card Number");
 		lblCard.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCard.setBounds(30, 0, 95, 22);
+		lblCard.setBounds(28, 0, 95, 22);
 		lblCard.setForeground(color);
 		panel.add(lblCard);
 
-		JLabel lblCardNum = new JLabel("1213");
-		lblCardNum.setBounds(186, 0, 67, 22);
+		JLabel lblCardNum = new JLabel("");
+		lblCardNum.setBounds(182, 0, 67, 22);
 		lblCardNum.setForeground(color);
 		panel.add(lblCardNum);
 
 		JLabel lblExpiryDate = new JLabel("Expiry Date");
+		lblExpiryDate.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblExpiryDate.setForeground(color);
 		lblExpiryDate.setBounds(30, 33, 82, 22);
-
 		panel.add(lblExpiryDate);
 
-		JLabel lblExpDateValue = new JLabel("");
-		lblExpDateValue.setBounds(116, 33, 82, 22);
+		JLabel lblExpDateValue = new JLabel("00");
+		lblExpDateValue.setForeground(color);
+		lblExpDateValue.setBounds(181, 33, 82, 22);
 		panel.add(lblExpDateValue);
 
 		JLabel lbldate = new JLabel("Date");
@@ -156,7 +157,7 @@ public class PaymentReceipt {
 		frame.getContentPane().add(lblTime);
 
 		JLabel lblDateValue = new JLabel("");
-		lblDateValue.setBounds(462, 22, 67, 22);
+		lblDateValue.setBounds(462, 22, 107, 22);
 		lblDateValue.setForeground(color);
 		frame.getContentPane().add(lblDateValue);
 
@@ -182,12 +183,15 @@ public class PaymentReceipt {
 		lblName.setText(user.getUsername());
 		lblAmountValue.setText(Float.toString(t.getAmountPaid()));
 		lblModeOfPayment.setText(t.getPaymentMode());
-		if (lblModeOfPayment.equals("Cash"))
+		if (lblModeOfPayment.getText().equals("Cash"))
 			panel.setVisible(false);
-		else
+		else if(lblModeOfPayment.getText().equals("Card"))
+		{
+			
+			lblCardNum.setText(Integer.toString(t.getCardNumber()));
+			lblExpDateValue.setText(t.getExpiryDate());
 			panel.setVisible(true);
-		lblCardNum.setText(Integer.toString(t.getCardNumber()));
-		lblExpiryDate.setText(t.getExpiryDate());
+		}
 
 		JButton btnSaveReceipt = new JButton("Save Purchase");
 		btnSaveReceipt.addActionListener(new ActionListener() {
