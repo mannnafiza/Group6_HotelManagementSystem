@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import com.csis.Entities.AddProperty;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.OrderNewInventory;
-import com.csis.Entities.Reviews;
+import com.csis.Entities.Review;
 import com.csis.Entities.Service;
 import com.csis.Entities.Staff;
 import com.csis.Entities.Transaction;
@@ -1118,9 +1118,9 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 	
 	
 	//method for review list
-			public ArrayList<Reviews> listReview() 
+			public ArrayList<Review> listReview() 
 			{
-				ArrayList<Reviews> s1 = new ArrayList<Reviews>();
+				ArrayList<Review> s1 = new ArrayList<Review>();
 
 				String sql = "SELECT * FROM review_Info";
 				try {
@@ -1132,7 +1132,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 					while (rs.next())
 					{   
 						 
-						Reviews s = new Reviews();
+						Review s = new Review();
 						
 						//Get the right type (string) from the right column ("itemId");
 						s.setId((rs.getInt("Id")));
@@ -1155,7 +1155,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 
 	
 			//method to review
-			public int AddReview(Reviews rm)	{
+			public int AddReview(Review rm)	{
 				 int reviewNo = 0;		
 				
 				String sql = "Insert into review_Info(Comment )" 
@@ -1186,9 +1186,9 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 			}
 			
 			
-			public Reviews getReviews(int id) {
+			public Review getReviews(int id) {
 				
-				Reviews review = new Reviews();
+				Review review = new Review();
 					
 					String sql = "SELECT * FROM review_Info WHERE id  = ?";
 					
@@ -1227,7 +1227,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 
 			public void updateReview(String rvs)	{		
 
-				Reviews rv = new Reviews();
+				Review rv = new Review();
 				String updateSql = "UPDATE review_Info SET " + 
 						"Comment  = ? " +
 						"WHERE id = ?";

@@ -253,7 +253,7 @@ public class AdminHome {
 		btnLogOut.setBounds(527, 11, 89, 23);
 		frame.getContentPane().add(btnLogOut);
 		
-		String[] reportArray = { "Reservation", "Inventory", "Transactions"};
+		String[] reportArray = { "Reservation", "Inventory", "Transactions", "Reviews"};
 		
 		JComboBox comboBox = new JComboBox(reportArray);
 		comboBox.setRenderer(new MyComboBoxRenderer("REPORT"));
@@ -299,6 +299,10 @@ public class AdminHome {
 					ArrayList<String> transactionData = null;
 					transactionData = getTransactionData();
 					writeToFile("Transaction_Report", transactionData);
+				} else if(choice.equals("Reviews")) {
+					ArrayList<String> reviewData = null;
+					reviewData = getReviewList();
+					writeToFile("Reviews_Report", reviewData);
 				}
 				else {
 					btnGenerateReport.setVisible(false);
@@ -487,6 +491,42 @@ public class AdminHome {
 		    return this;
 		  }
 	}
+	
+	
+	
+	/**
+	 * 
+	 * @return list of reviews as arraylist
+	 */
+	public ArrayList<String> getReviewList(){
+		ArrayList<String> s1 = new ArrayList<String>();
+		  
+		  String sql = "SELECT * FROM review_info";
+		  
+		  try {
+			  helper.connectDB();
+			  this.stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next())
+				{
+				
+				  s1.add("Review Id: " + rs.getInt("id") + "\n" + "Review : " + rs.getString("Comment") );
+				  System.out.println(s1);
+			  }	  
+		  helper.disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return s1;
+		
+	}
+
 	
 
 }

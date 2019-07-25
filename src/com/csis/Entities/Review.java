@@ -2,7 +2,7 @@ package com.csis.Entities;
 
 import java.util.Vector;
 
-public class Reviews {
+public class Review {
 
 	private Integer Id = 0;
     private String Comment;

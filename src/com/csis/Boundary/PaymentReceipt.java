@@ -210,7 +210,7 @@ public class PaymentReceipt {
 		JButton btnGiveReview = new JButton("Give Review");
 		btnGiveReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Review.main(null);
+				ReviewGUI.main(null);
 			}
 		});
 		btnGiveReview.setForeground(new Color(85, 96, 128));
