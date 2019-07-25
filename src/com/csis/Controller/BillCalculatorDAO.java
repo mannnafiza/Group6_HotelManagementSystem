@@ -166,6 +166,10 @@ public class BillCalculatorDAO {
 		String time = DateFormat.getTimeInstance().format(currentDate);
 		bill.setTime(time);
 
+		if(isAStaffMemeber(user.getUsername()))
+			bill.setDiscount(10.00f);
+		else
+			bill.setDiscount(0.00f);
 		//method call to display receipt to the user in next frame
 		CustomerBill.main(null,bill,user);
 	}
@@ -176,7 +180,6 @@ public class BillCalculatorDAO {
 	 * @param type, reservationType for this user
 	 * @return list of rooms/banquet/restaurant/meeting hall reserved by this user
 	 */
-	 //method to obtain data from reservation_info table
 	public ArrayList<String> getReservationData(UserInfo user, String type) {
 	  
 	  String sql = "SELECT * FROM reservation_info where userName = ? and resType = ?";
@@ -225,7 +228,6 @@ public class BillCalculatorDAO {
 	 * @param type, reservationType for this user
 	 * @return list of rooms/banquet additional services ordered by this user
 	 */
-	//method to obtain data from roomservice_info table
 		public ArrayList<String> getRoomServiceData(UserInfo user, String type) {
 			// TODO Auto-generated method stub
 			
@@ -261,6 +263,11 @@ public class BillCalculatorDAO {
 			  return list;
 		}
 
+		/**
+		 * 
+		* @param user, instance of UserInfo Entity class
+		 * @param bill,instance of BillingData containing bill details for this user
+		 */
 		public void addBillEntry(UserInfo user, BillingData bill) {
 			// TODO Auto-generated method stub
 			
@@ -316,5 +323,39 @@ public class BillCalculatorDAO {
 				  System.out.println(sx.getErrorCode());
 				  System.out.println(sx.getSQLState());
 			  }
+		}
+		
+		
+		public boolean isAStaffMemeber(String name)
+		{
+			ArrayList<String> s1 = new ArrayList<String>();
+
+			String sql = "SELECT username FROM staff_Info";
+			try {
+				// connect to the database
+				helper.connectDB();
+				this.stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next())
+				{
+					s1.add(rs.getString("username"));	
+					System.out.println("Staff: " + s1);
+				}
+
+				helper.disconnectDB();
+			} catch (SQLException sx) {
+				System.out.println("Error fetching data from the database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+
+			for(String s: s1)
+			{
+				if(s.equals(name))
+					return true;
+			}
+			return false;
 		}
 }
