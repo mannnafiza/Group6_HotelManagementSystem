@@ -194,7 +194,7 @@ public class AdminHome {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				ManageInventory.main(null);
+				ManageInventory.main(null, user);
 			}
 
 			@Override

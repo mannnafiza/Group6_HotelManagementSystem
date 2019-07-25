@@ -97,7 +97,7 @@ create table staff_info (
 
 create table review_Info(
 	id INT AUTO_INCREMENT PRIMARY KEY, 
-	CommentVARCHAR(50);
+	Comment VARCHAR(50));
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Ybx420ouUsfak+MtRRxWHg==', 'Male', 'Victoria');

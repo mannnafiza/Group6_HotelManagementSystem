@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.ManageInventory;
 import com.csis.Entities.AddProperty;
-
+import com.csis.Entities.UserInfo;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -36,6 +36,7 @@ public class AddPropertyInventory {
 	boolean inputValid = true;
 	String errorMsg;
 	AddProperty AddPropertyData = new AddProperty(); 
+	UserInfo user;
 	
 	private JTextField textFieldItem;
 	private JTextField textFieldType;
@@ -47,11 +48,11 @@ public class AddPropertyInventory {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddPropertyInventory window = new AddPropertyInventory();
+					AddPropertyInventory window = new AddPropertyInventory(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +64,8 @@ public class AddPropertyInventory {
 	/**
 	 * Create the application.
 	 */
-	public AddPropertyInventory() {
+	public AddPropertyInventory(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -336,7 +338,7 @@ public class AddPropertyInventory {
 				          ns.setCategory(textFieldCategory.getText());
 				          ns.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
 				          sd.AddPropertyInv(ns);
-				       ManageInventory.main(null);
+				       ManageInventory.main(null, user);
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 						JOptionPane jop = new JOptionPane();
@@ -353,7 +355,7 @@ public class AddPropertyInventory {
 		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageInventory.main(null);
+				ManageInventory.main(null, user);
 			}
 		});
 		btnBack.setBounds(273, 393, 89, 23);

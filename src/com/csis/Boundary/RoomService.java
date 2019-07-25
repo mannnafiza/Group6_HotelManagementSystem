@@ -323,6 +323,8 @@ public class RoomService {
 				//checkboxMeal;
 				//checkboxHouseKeeping.disable();
 				//rdbtnNonveg , rdbtnVeg , checkboxMeal, checkboxHouseKeeping
+				
+				Reservation.main(null, user);
 			}
 		});
 		btnCancel.setBounds(404, 391, 89, 23);

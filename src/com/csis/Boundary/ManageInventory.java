@@ -17,6 +17,7 @@ import com.csis.Controller.AddOrderInventory;
 import com.csis.Controller.AddPropertyInventory;
 import com.csis.Controller.ChangeInventory;
 import com.csis.Entities.AddProperty;
+import com.csis.Entities.UserInfo;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -33,16 +34,17 @@ public class ManageInventory {
 	private DefaultTableModel tm = new DefaultTableModel();
 	private DBHelper sd = new DBHelper();
 	private ListSelectionListener lsl ;
+	UserInfo user;
 
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ManageInventory window = new ManageInventory();
+					ManageInventory window = new ManageInventory(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +56,8 @@ public class ManageInventory {
 	/**
 	 * Create the application.
 	 */
-	public ManageInventory() {
+	public ManageInventory(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -79,7 +82,7 @@ public class ManageInventory {
 		btnAddInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//panel.setVisible(true);
-				AddPropertyInventory.main(null);
+				AddPropertyInventory.main(null, user);
 			}
 		});
 		btnAddInventory.setBounds(22, 49, 130, 23);
@@ -91,7 +94,7 @@ public class ManageInventory {
 		btnNewOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//table.setVisible(true);
-				AddOrderInventory.main(null);
+				AddOrderInventory.main(null, user);
 				
 			}
 		});
@@ -104,7 +107,7 @@ public class ManageInventory {
 		btnChangeInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ChangeInventory.main(null);
+				ChangeInventory.main(null, user);
 			}
 		});
 		btnChangeInventory.setBounds(22, 99, 130, 23);
@@ -113,6 +116,17 @@ public class ManageInventory {
 		table = new JTable();
 		table.setBounds(176, 37, 424, 296);
 		frame.getContentPane().add(table);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AdminHome.main(null, user);
+			}
+		});
+		btnBack.setForeground(new Color(85, 96, 128));
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBack.setBounds(22, 339, 130, 23);
+		frame.getContentPane().add(btnBack);
 		
 		updateTable();
 	}
@@ -153,5 +167,4 @@ private void updateTable()	{
 		//Add the ListSelectionListener back to the table
 		table.getSelectionModel().addListSelectionListener(lsl);
 	}
-	
 }

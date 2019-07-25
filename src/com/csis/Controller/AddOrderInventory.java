@@ -16,6 +16,7 @@ import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.ManageInventory;
 import com.csis.Entities.AddProperty;
 import com.csis.Entities.OrderNewInventory;
+import com.csis.Entities.UserInfo;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -38,15 +39,17 @@ public class AddOrderInventory {
 	private DefaultTableModel tm = new DefaultTableModel();
 	private DBHelper sd = new DBHelper();
 	private ListSelectionListener lsl ;
+	
+	UserInfo user;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddOrderInventory window = new AddOrderInventory();
+					AddOrderInventory window = new AddOrderInventory(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +61,8 @@ public class AddOrderInventory {
 	/**
 	 * Create the application.
 	 */
-	public AddOrderInventory() {
+	public AddOrderInventory(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -275,7 +279,7 @@ public class AddOrderInventory {
 		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageInventory.main(null);
+				ManageInventory.main(null, user);
 			}
 		});
 		btnBack.setBounds(21, 325, 89, 23);

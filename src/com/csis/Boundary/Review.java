@@ -1,5 +1,6 @@
 package com.csis.Boundary;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import java.awt.List;
 import javax.swing.JScrollPane;
 import java.awt.TextArea;
 import javax.swing.JTable;
+import java.awt.Font;
 
 public class Review {
 
@@ -75,9 +77,13 @@ public class Review {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 633, 432);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setForeground(new Color(0, 0, 0));
+		frame.getContentPane().setBackground(new Color(201, 210, 218));
+		frame.setBounds(100, 100, 642, 464);
 		frame.getContentPane().setLayout(null);
+		
+		Color color = new Color(85, 96, 128);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		lsl = (new ListSelectionListener() {
@@ -104,15 +110,16 @@ public class Review {
 		
 		
 		JLabel lblWhatYouThink = new JLabel("What you think about our service:");
-		lblWhatYouThink.setBounds(25, 11, 208, 50);
+		lblWhatYouThink.setBounds(25, 58, 208, 50);
+		lblWhatYouThink.setForeground(color);
 		frame.getContentPane().add(lblWhatYouThink);
 		
 		 textAreaReview = new TextArea();
-		textAreaReview.setBounds(25, 67, 380, 113);
+		textAreaReview.setBounds(25, 114, 380, 113);
 		frame.getContentPane().add(textAreaReview);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 247, 375, 131);
+		scrollPane.setBounds(25, 283, 568, 131);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -120,6 +127,7 @@ public class Review {
 	
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setForeground(color);
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -154,11 +162,12 @@ public class Review {
 					jop.showMessageDialog(null," Please enter all empty Fields.");
 			}
 		}});
-		btnSubmit.setBounds(43, 213, 89, 23);
+		btnSubmit.setBounds(411, 114, 89, 23);
 		frame.getContentPane().add(btnSubmit);
 		
-		JButton btnEditComment = new JButton("Delete Comment");
-		btnEditComment.addActionListener(new ActionListener() {
+		JButton btnDeleteComment = new JButton("Delete Comment");
+		btnDeleteComment.setForeground(color);
+		btnDeleteComment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				/*
 			    Reviews us = new Reviews();
@@ -179,8 +188,14 @@ public class Review {
 				
 			}
 		});
-		btnEditComment.setBounds(245, 213, 138, 23);
-		frame.getContentPane().add(btnEditComment);
+		btnDeleteComment.setBounds(455, 249, 138, 23);
+		frame.getContentPane().add(btnDeleteComment);
+		
+		JLabel lblReview = new JLabel("Review");
+		lblReview.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
+		lblReview.setBounds(289, 11, 116, 50);
+		lblReview.setForeground(color);
+		frame.getContentPane().add(lblReview);
 		
 		updateTable();
 		

@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.ManageInventory;
 import com.csis.Entities.AddProperty;
+import com.csis.Entities.UserInfo;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,15 +38,17 @@ public class ChangeInventory {
 	private JTextField textFieldType;
 	private JTextField textFieldItem;
 	private JTextField textFieldItemId;
+	
+	UserInfo user;
 
 	/**     
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChangeInventory window = new ChangeInventory();
+					ChangeInventory window = new ChangeInventory(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +60,8 @@ public class ChangeInventory {
 	/**
 	 * Create the application.
 	 */
-	public ChangeInventory() {
+	public ChangeInventory(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -222,7 +226,7 @@ public class ChangeInventory {
 		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageInventory.main(null);
+				ManageInventory.main(null, user);
 			}
 		});
 		btnBack.setBounds(10, 204, 89, 23);
