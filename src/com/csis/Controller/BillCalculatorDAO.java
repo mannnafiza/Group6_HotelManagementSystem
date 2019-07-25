@@ -1,5 +1,9 @@
 package com.csis.Controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,10 +13,13 @@ import com.csis.Boundary.DBHelper;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.UserInfo;
 
-public class BillCalculator {
+public class BillCalculatorDAO {
 
 	DBHelper helper = new DBHelper();
 	BillingData bill = new BillingData();
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
 	ArrayList<String> roomlist = new ArrayList<>();
 	ArrayList<String> banquetlist = new ArrayList<>();
 	ArrayList<String> restaurantlist = new ArrayList<>();
@@ -29,7 +36,7 @@ public class BillCalculator {
 		bill.setName(user.getUsername());
 		bill.setUserId(user.getId());
 		//processing room reservation entries
-		roomlist = helper.getReservationData(user,"room");
+		roomlist = getReservationData(user,"room");
 		for(String str: roomlist)
 		{
 			System.out.println("Item: "+ str);
@@ -55,7 +62,7 @@ public class BillCalculator {
 			if(adServiceStatus.equals("1"))
 			{
 				bill.setRoomAdditionalServiceNeeded(true);
-				adServiceList = helper.getRoomServiceData(user, "Room");
+				adServiceList = getRoomServiceData(user, "Room");
 				for(String str: adServiceList)
 				{
 					System.out.println("Item: "+ str);
@@ -77,7 +84,7 @@ public class BillCalculator {
 			bill.setRoomReserved(false);
 			
 		//processing banquet reservation entries
-		banquetlist = helper.getReservationData(user,"banquet");
+		banquetlist = getReservationData(user,"banquet");
 		for(String str: banquetlist)
 		{
 			System.out.println("Item: "+ str);
@@ -98,7 +105,7 @@ public class BillCalculator {
 			if(adServiceStatus.equals("1"))
 			{
 				bill.setBanquetAdditionalServiceNeeded(true);
-				adServiceList = helper.getRoomServiceData(user, "Banquet");
+				adServiceList = getRoomServiceData(user, "Banquet");
 				if(adServiceList.size() > 0)
 				{
 				if(adServiceList.get(1).equals("Yes"))
@@ -112,7 +119,7 @@ public class BillCalculator {
 			bill.setBanquetReserved(false);
 		
 		//processing restaurant reservation entries
-		restaurantlist = helper.getReservationData(user,"restaurant");
+		restaurantlist = getReservationData(user,"restaurant");
 		for(String str: restaurantlist)
 		{
 			System.out.println("Item: "+ str);
@@ -131,7 +138,7 @@ public class BillCalculator {
 
 		
 		//processing meeting hall reservation entries
-		meetinghalllist = helper.getReservationData(user,"meeting");
+		meetinghalllist = getReservationData(user,"meeting");
 		for(String str: meetinghalllist)
 		{
 			System.out.println("Item: "+ str);
@@ -162,6 +169,151 @@ public class BillCalculator {
 		CustomerBill.main(null,bill,user);
 	}
 	
+	/**
+	 * 
+	 * @param user, instance of UserInfo Entity class
+	 * @param type, reservationType for this user
+	 * @return list of rooms/banquet/restaurant/meeting hall reserved by this user
+	 */
+	 //method to obtain data from reservation_info table
+	public ArrayList<String> getReservationData(UserInfo user, String type) {
+	  
+	  String sql = "SELECT * FROM reservation_info where userName = ? and resType = ?";
+	  ArrayList<String> list = new ArrayList<>();
+	  
+	  try {
+		  helper.connectDB();
+	  
+		  //create statement 
+		  pstmt = helper.getConnection().prepareStatement(sql);
+	  	  
+		  pstmt.setString(1, user.getUsername());
+		  pstmt.setString(2, type);
+		  rs = pstmt.executeQuery(); 
+		  while(rs.next())
+		  {
+			  list.add(rs.getString("userName"));
+			  list.add(rs.getString("resType"));
+			  list.add(rs.getString("roomType"));
+			  list.add(Integer.toString(rs.getInt("stayDuration")));
+			  list.add(rs.getString("mealStatus"));
+			  list.add(rs.getString("mealType"));
+			  list.add(rs.getDate("resDate").toString());
+			  list.add(rs.getString("resTime"));
+			  list.add(Integer.toString(rs.getInt("meetingDuration")));
+			  list.add(Integer.toString(rs.getInt("addService")));
+			  list.add(Integer.toString(rs.getInt("noGuest")));
+			  list.add(rs.getString("resFor"));
+		  }
+	  
+	  helper.disconnectDB();
+	  }catch(SQLException sx)
+	  {
+		  System.out.println("Error fetching data from the database");
+		  System.out.println(sx.getMessage());
+		  System.out.println(sx.getErrorCode());
+		  System.out.println(sx.getSQLState()); 
+	  }
+	  
+	  return list;  
+	}
 	
-	
+	/**
+	 * 
+	* @param user, instance of UserInfo Entity class
+	 * @param type, reservationType for this user
+	 * @return list of rooms/banquet additional services ordered by this user
+	 */
+	//method to obtain data from roomservice_info table
+		public ArrayList<String> getRoomServiceData(UserInfo user, String type) {
+			// TODO Auto-generated method stub
+			
+			String sql = "SELECT * FROM roomservice_info where customerName = ? and resType = ?";
+			  ArrayList<String> list = new ArrayList<>();
+			  
+			  try {
+				  helper.connectDB();
+			  
+				  //create statement 
+				  pstmt = helper.getConnection().prepareStatement(sql);
+			  	  
+				  pstmt.setString(1, user.getUsername());
+				  pstmt.setString(2, type);
+				  rs = pstmt.executeQuery(); 
+				  while(rs.next())
+				  {
+					  list.add(Integer.toString(rs.getInt("roomNumber")));
+					  list.add(rs.getString("mealNeeded"));
+					  list.add(rs.getString("houseKeepingNeeded"));
+					  list.add(rs.getString("mealType"));
+				  }
+			  
+			  helper.disconnectDB();
+			  }catch(SQLException sx)
+			  {
+				  System.out.println("Error fetching data from the database");
+				  System.out.println(sx.getMessage());
+				  System.out.println(sx.getErrorCode());
+				  System.out.println(sx.getSQLState()); 
+			  }
+			  
+			  return list;
+		}
+
+		public void addBillEntry(UserInfo user, BillingData bill) {
+			// TODO Auto-generated method stub
+			
+			 String insertSql = "INSERT INTO expenses_info (Date, Time, userId, userName, isRoomReserved, isRestaurantReserved, isBanquetReserved, isHallReserved, roomTotal, restaurantTotal, banquetTotal,  hallTotal, totalAmount, discount, finalAmount) " +
+		  				"values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			  
+			  try {
+				  helper.connectDB();
+				  
+				  //create statement
+				  pstmt = helper.getConnection().prepareStatement(insertSql);
+				  
+				  //set the parameters of query
+				  pstmt.setString(1, bill.getDate());
+				  pstmt.setString(2, bill.getTime());
+				  pstmt.setInt(3, user.getId());
+				  pstmt.setString(4, user.getUsername());
+				  if(bill.isRoomReserved())
+					  pstmt.setString(5, "yes");
+				  else
+					  pstmt.setString(5, "no");
+				  
+				  if(bill.isRestaurantReserved())
+					  pstmt.setString(6, "yes");
+				  else
+					  pstmt.setString(6, "no");
+				  
+				  if(bill.isBanquetReserved())
+					  pstmt.setString(7, "yes");
+				  else
+					  pstmt.setString(7, "no");
+				  
+				  if(bill.isHallReserved())
+					  pstmt.setString(8, "yes");
+				  else
+					  pstmt.setString(8, "no");
+				  
+				  pstmt.setFloat(9, bill.getRoomFee());
+				  pstmt.setFloat(10, bill.getRestaurantFee());
+				  pstmt.setFloat(11, bill.getBanquetFee());
+				  pstmt.setFloat(12, bill.getMeetingHallFee());
+				  pstmt.setFloat(13, bill.getTotalFee());
+				  pstmt.setFloat(14, bill.getDiscount());
+				  pstmt.setFloat(15, bill.getFinalAmount());
+				  
+				  //execute			  
+				  pstmt.executeUpdate();
+				  
+				  helper.disconnectDB();
+			  } catch(SQLException sx) {
+				  System.out.println("Error inserting data into the expenses table");
+				  System.out.println(sx.getMessage()); 
+				  System.out.println(sx.getErrorCode());
+				  System.out.println(sx.getSQLState());
+			  }
+		}
 }
