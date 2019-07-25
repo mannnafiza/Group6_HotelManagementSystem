@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
+import com.csis.Controller.PaymentDAO;
 import com.csis.Controller.Validate;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.Transaction;
@@ -43,6 +44,7 @@ public class Payment {
 	int code;
 	DBHelper helper = new DBHelper();
 	Transaction t = new Transaction();
+	PaymentDAO paymentDAO = new PaymentDAO();
 	
 	/**
 	 * Launch the application.
@@ -216,8 +218,8 @@ public class Payment {
     }
 	    
 	    ItemListener il = new RoomItemListener();
-		rdbtnCard.addItemListener(il);
-		rdbtnCash.addItemListener(il);
+		//rdbtnCard.addItemListener(il);
+	//	rdbtnCash.addItemListener(il);
 		 
 		btnCancel.addActionListener(new ActionListener() {
 			
@@ -242,6 +244,12 @@ public class Payment {
 				t.setUserId(bill.getUserId());
 				t.setUserName(bill.getName());
 				t.setAmountPaid(bill.getFinalAmount());
+				
+				if(rdbtnCash.isSelected()) {
+		        	modeOfPayment = "Cash";
+			      }else if(rdbtnCard.isSelected()) {
+			    	  modeOfPayment = "Card";
+			      }
 				t.setPaymentMode(modeOfPayment);
 				
 				if(modeOfPayment.equals("Card"))
@@ -254,6 +262,7 @@ public class Payment {
 						System.out.println("Expiry Date: "+ expirydate);
 						System.out.println("code: "+ code);
 						
+					//method to check for blank user inputs
 					Validate validate = new Validate(cardNumber,expirydate,code);
 					if(validate.istransactionDataValid())
 					{
@@ -264,6 +273,7 @@ public class Payment {
 					}				
 				}else
 				{
+					System.out.println("Mode: "+ modeOfPayment);
 					t.setCardNumber(0);
 					t.setExpiryDate(null);
 					t.setCode(0);
@@ -280,7 +290,7 @@ public class Payment {
 				jop.showMessageDialog(null," Payment Successful.");
 				
 				//method call to add transaction to the database
-				helper.addtransactionEntry(t);
+				paymentDAO.addtransactionEntry(t);
 				PaymentReceipt.main(null,t, user);
 				
 				frame.dispose();
