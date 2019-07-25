@@ -23,7 +23,7 @@ class UnitTestBillingData {
 	
 	@Test
 	void testBillOwnerName() {
-		bill.setName("Willy");;
+		bill.setName("Willy");
 		assertEquals("Willy", bill.getName());
 	}
 
