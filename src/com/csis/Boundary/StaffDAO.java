@@ -226,6 +226,7 @@ public class StaffDAO {
 				//setGender(setGenderListener(rdbtnMale, rdbtnFemale));
 				System.out.println("TO ADD GENDER: " + option);
 				createStaff(txtUsername.getText(), encryptPass, option , txtCity.getText());
+				insertNewUser(txtUsername.getText(), encryptPass, option, txtCity.getText());
 				updateStaffTable();
 			}
 		});
@@ -525,7 +526,43 @@ public class StaffDAO {
 			}
 		}
 	  
-	  
+	  /**
+		 * 
+		 * @param usrname, name of the user
+		 * @param pswd, password of user
+		 * @param gendr, gender of user
+		 * @param city, city of user
+		 */
+		  public void insertNewUser(String usrnm, String pswd, String gendr, String city)
+		  { // TODO Auto-generated method stub
+
+			  String insertSql = "INSERT INTO user_Info (userName,password,gender,city) " +
+				  				"values (?,?,?,?)";
+		  
+			  try { 
+				  helper.connectDB();
+		  
+				  // create statement
+				  pstmt = helper.getConnection().prepareStatement(insertSql);
+		  
+				  // declare the parameter starting at 1 
+				  pstmt.setString(1,usrnm);			
+				  pstmt.setString(2, pswd);
+				  pstmt.setString(3, gendr);
+				  pstmt.setString(4, city);
+					  
+				  pstmt.executeUpdate();
+		  
+				  helper.disconnectDB(); 
+			  } catch (SQLException sx)
+			  {
+				  System.out.println("Error inserting data into the database");
+				  System.out.println(sx.getMessage()); 
+				  System.out.println(sx.getErrorCode());
+				  System.out.println(sx.getSQLState());
+			  }
+		  }
+		  
 	  /***
 		 * 
 		 * @param value is the original password in string format
