@@ -197,6 +197,17 @@ public class Review {
 		lblReview.setForeground(color);
 		frame.getContentPane().add(lblReview);
 		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Home.main(null);
+			}
+		});
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOut.setForeground(new Color(85, 96, 128));
+		btnLogOut.setBounds(527, 11, 89, 23);
+		frame.getContentPane().add(btnLogOut);
+		
 		updateTable();
 		
 	}

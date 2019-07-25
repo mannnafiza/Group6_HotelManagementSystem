@@ -206,6 +206,17 @@ public class PaymentReceipt {
 		btnSaveReceipt.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSaveReceipt.setBounds(413, 351, 203, 23);
 		frame.getContentPane().add(btnSaveReceipt);
+		
+		JButton btnGiveReview = new JButton("Give Review");
+		btnGiveReview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Review.main(null);
+			}
+		});
+		btnGiveReview.setForeground(new Color(85, 96, 128));
+		btnGiveReview.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGiveReview.setBounds(413, 385, 203, 23);
+		frame.getContentPane().add(btnGiveReview);
 
 		btnContinue.addActionListener(new ActionListener() {
 

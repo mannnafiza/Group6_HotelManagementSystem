@@ -39,7 +39,6 @@ public class RoomService {
 	private JFrame frame;
 	private JTextField textFieldTime;
 	private JTextField textFieldCustomerName;
-	private JTextField textFieldRoomNumber;
     String	customerName  = "";
     String errorMsg;
 	boolean inputValid = false;
@@ -155,12 +154,6 @@ public class RoomService {
 		lblCustomerName.setForeground(color);
 		frame.getContentPane().add(lblCustomerName);
 		
-		JLabel lblRoomNumber = new JLabel("Room Number(1 to 100) :");
-		lblRoomNumber.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblRoomNumber.setBounds(316, 193, 177, 22);
-		lblRoomNumber.setForeground(color);
-		frame.getContentPane().add(lblRoomNumber);
-		
 		textFieldCustomerName = new JTextField();
 		textFieldCustomerName.addKeyListener(new KeyAdapter() {
 			@Override
@@ -176,32 +169,8 @@ public class RoomService {
 		textFieldCustomerName.setBounds(148, 194, 111, 20);
 		frame.getContentPane().add(textFieldCustomerName);
 		textFieldCustomerName.setColumns(10);
+		
 
-		
-		textFieldRoomNumber = new JTextField();
-		textFieldRoomNumber.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				char roomnumberValue = arg0.getKeyChar();
-				if(!Character.isDigit(roomnumberValue) ||  roomnumberValue == KeyEvent.VK_BACK_SPACE   || roomnumberValue ==KeyEvent.VK_DELETE  ) {
-					//getToolkit().beep();   
-					arg0.consume();
-				}
-				
-			}
-		});
-		textFieldRoomNumber.setBounds(492, 195, 111, 20);
-		frame.getContentPane().add(textFieldRoomNumber);
-		textFieldRoomNumber.setColumns(10);
-		
-//serviceData.getResType().equals("Banquet")
-		if(resType == "Banquet") {
-			textFieldRoomNumber.setVisible(false);
-			lblRoomNumber.setVisible(false);
-		}else {
-			textFieldRoomNumber.setVisible(true);
-			lblRoomNumber.setVisible(true);
-		}
 		
 		
 		JLabel lblIconLogo = new JLabel("");
@@ -319,7 +288,6 @@ public class RoomService {
 								
 				textFieldTime.setText("");
 				textFieldCustomerName.setText("");
-				textFieldRoomNumber.setText("");
 				//checkboxMeal;
 				//checkboxHouseKeeping.disable();
 				//rdbtnNonveg , rdbtnVeg , checkboxMeal, checkboxHouseKeeping
@@ -357,14 +325,8 @@ public class RoomService {
 						        serviceData.setResType(resType);
 								System.out.println("Valid Username");
 								serviceData.setCustomerName(textFieldCustomerName.getText());
-								//room number
-								int roomNo = Integer.parseInt(textFieldRoomNumber.getText());
 								float time = Float.parseFloat(textFieldTime.getText());
-								if( roomNo>=1  &&  roomNo<100 ) {
-									serviceData.setRoomNumber(roomNo);
-								}else {
-									JOptionPane.showMessageDialog(frame, "Please enter a valid room number");
-							      }
+								
 								if(time >=1.00) {
 								    serviceData.setTime(Float.parseFloat(textFieldTime.getText()));
 								}
@@ -427,10 +389,7 @@ public class RoomService {
 								ns.setCustomerName(textFieldCustomerName.getText());
 								System.out.println("Res TYPE: "+ serviceData.getResType());
 								ns.setResType(serviceData.getResType());
-								if(ns.getResType().equals("Room"))
-									ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
-								else
-									ns.setRoomNumber(Integer.parseInt("0"));
+								
 								ns.setMealNeeded(serviceData.getMealNeeded());
 								ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
 								ns.setMealType(serviceData.getMealType() );  

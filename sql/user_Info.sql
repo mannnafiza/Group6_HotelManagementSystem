@@ -29,7 +29,6 @@ create table roomService_Info (
         rmserid INT AUTO_INCREMENT PRIMARY KEY,
         customerName VARCHAR(50),
         resType VARCHAR(50),
-	roomNumber INT,
         mealNeeded VARCHAR(50),
         houseKeepingNeeded VARCHAR(50),
         mealType VARCHAR(50),

@@ -23,6 +23,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 
 public class AdminLogin {
@@ -149,6 +151,52 @@ public class AdminLogin {
 		lblAdmin.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
 		lblAdmin.setBounds(256, 159, 101, 23);
 		frame.getContentPane().add(lblAdmin);
+		
+		JLabel lblUserLogin = new JLabel("");
+		lblUserLogin.setBounds(10, 11, 80, 62);
+		lblUserLogin.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				Home.main(null);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
+		Image imgUser = new ImageIcon(this.getClass().getResource("/user.png")).getImage().getScaledInstance(80, 55, Image.SCALE_SMOOTH);
+		lblUserLogin.setIcon(new ImageIcon(imgUser));
+		frame.getContentPane().add(lblUserLogin);
+		
+		JLabel lblUserLogin_1 = new JLabel("User Login");
+		lblUserLogin_1.setForeground(color);
+		lblUserLogin_1.setBounds(20, 71, 80, 14);
+		frame.getContentPane().add(lblUserLogin_1);
 	}
 	
 	/***
