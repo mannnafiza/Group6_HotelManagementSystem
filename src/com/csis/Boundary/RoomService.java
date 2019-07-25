@@ -28,6 +28,10 @@ import com.csis.Entities.UserInfo;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 
 import javax.swing.JPanel;
@@ -45,6 +49,10 @@ public class RoomService {
 	Service serviceData = new Service();
 	UserInfo user = new UserInfo();
     String resType;
+    DBHelper helper = new DBHelper();
+    private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
     
     
 	/**
@@ -309,9 +317,9 @@ public class RoomService {
 					
 				  //Create an instance of Validate class and pass all the inputs given by the user
 				  Validate validate = new Validate(customerName );
-					DBHelper helper = new DBHelper();
+					
 					user.setUsername(customerName);
-					user.setId(helper.getUserId(customerName));
+					user.setId(getUserId(customerName));
 
 			
 					  //create an instance of Authenticate class to verify userName and password inputs
@@ -395,7 +403,7 @@ public class RoomService {
 								ns.setMealType(serviceData.getMealType() );  
 								ns.setTime(Float.parseFloat((textFieldTime.getText())));
 								
-								helper.roomService(ns);
+								roomService(ns);
 		
 			}
 			
@@ -403,7 +411,69 @@ public class RoomService {
 				
 	}
 
+	
+	//method to get id of user
+	  public int getUserId(String username) 
+		{
+		  int userId = 0;
+		  
+		  String sql = "SELECT * FROM user_Info where userName = ?";
+		  
+		  try {
+			  helper.connectDB();
+		  
+			  //create statement 
+			  pstmt = helper.getConnection().prepareStatement(sql);
+		  	  
+			  pstmt.setString(1, username);
+			  rs = pstmt.executeQuery(); 
+			  while(rs.next())
+			  {
+				  userId =  rs.getInt("id");
+			  }
+		  
+		  helper.disconnectDB();
+		  }catch(SQLException sx)
+		  {
+			  System.out.println("Error fetching data from the database");
+			  System.out.println(sx.getMessage());
+			  System.out.println(sx.getErrorCode());
+			  System.out.println(sx.getSQLState()); 
+		  }
+		  
+		  return userId;
+		}
 
+	//method to add user room service info into the roomService_Info  table at the time of reservation
+	  public int roomService(Service serviceData)	{ //, serviceType  .   "','" + serviceData.isServiceType() +  
+	  	 int roomService = 0;		
+	  	//Get all the shoes! Shoes for days!
+	  	String sql = "Insert into roomService_Info (customerName , resType , mealNeeded , houseKeepingNeeded , mealType, time  )" 
+	  			+ " VALUES ('" + serviceData.getCustomerName()  + "','" + serviceData.getResType()  + "','"  + serviceData.getMealNeeded() 
+	  			+ "','" + serviceData.getHouseKeepingNeeded() + "','" + serviceData.getMealType() +"','" + serviceData.getTime() +"');";
+	  	
+	  	try {
+	  		//Connect to the database
+	  		helper.connectDB();
+	  		
+	  		//Create the statement
+	  		this.stmt = helper.getConnection().createStatement();
+	  		
+	  		//Execute the statement
+	  		roomService = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
 
+	  		helper.disconnectDB();			
+	  		
+	  	} catch (SQLException sx) {
+	  		System.out.println("Error Connecting to Database");
+	  		System.out.println(sx.getMessage());
+	  		System.out.println(sx.getErrorCode());
+	  		System.out.println(sx.getSQLState());
+	  		
+	  	}
+	  	System.out.println("Inserted new Room Service: " + roomService);
+	  	return roomService;
+	  	
+	  }  
 	
 }

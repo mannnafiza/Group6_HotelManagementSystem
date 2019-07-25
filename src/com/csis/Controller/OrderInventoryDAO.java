@@ -25,10 +25,14 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class AddOrderInventory {
+public class OrderInventoryDAO {
 
 	private JFrame frame;
 	private JTextField textFieldItem;
@@ -39,6 +43,10 @@ public class AddOrderInventory {
 	private DefaultTableModel tm = new DefaultTableModel();
 	private DBHelper sd = new DBHelper();
 	private ListSelectionListener lsl ;
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
+
 	
 	UserInfo user;
 
@@ -49,7 +57,7 @@ public class AddOrderInventory {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddOrderInventory window = new AddOrderInventory(user);
+					OrderInventoryDAO window = new OrderInventoryDAO(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +69,7 @@ public class AddOrderInventory {
 	/**
 	 * Create the application.
 	 */
-	public AddOrderInventory(UserInfo user) {
+	public OrderInventoryDAO(UserInfo user) {
 		this.user = user;
 		initialize();
 	}
@@ -245,7 +253,7 @@ public class AddOrderInventory {
 						          ns.setUnitPrice(Float.parseFloat(textFieldUnitPrice.getText()));
 						          ns.setAmount(Float.parseFloat(textFieldAmount.getText()));
 
-						          sd.AddOrderInventory(ns);
+						          AddOrderInventory(ns);
 						     //  ManageInventory.main(null);
 							} catch(Exception ex) {
 								System.out.println("Error in inserting " + ex.getMessage());
@@ -311,7 +319,7 @@ private void updateTable()	{
 		ArrayList<OrderNewInventory> sl = new ArrayList<OrderNewInventory>();
 		
 		//Populate the arraylist with the getShoes
-		sl = sd.listAddOrderInventory();
+		sl = listAddOrderInventory();
 		
 		for (OrderNewInventory s : sl)	{
 			tm.addRow(s.getVector());
@@ -323,5 +331,77 @@ private void updateTable()	{
 		table.getSelectionModel().addListSelectionListener(lsl);
 	}
 
+//method to add order inventory
+		public int AddOrderInventory(OrderNewInventory ap)	{
+			 int propertyInv = 0;		
+			
+			String sql = "Insert into neworderinventory_info(Item   ,Quantity  , UnitPrice , Amount )" 
+					+ " VALUES ('" + ap.getItem() + "','" + ap.getQuantity() + "','" + ap.getUnitPrice() + "','" + ap.getAmount()+  "');";
+			
+			try { // itemId , Item , Type , Quantity , Price , Category , Unitprice
+				//Connect to the database
+				sd.connectDB();
+				
+				//Create the statement
+				this.stmt = sd.getConnection().createStatement();
+				
+				//Execute the statement
+				propertyInv = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+				sd.disconnectDB();			
+				
+			} catch (SQLException sx) {
+				System.out.println("Error Connecting to Database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+				
+			}
+			System.out.println("Inserted new Property Inventory: " + propertyInv);
+			return propertyInv;
+			
+		}
+		
+		
+		 //add new order inventory
+		//method to list order 
+				public ArrayList<OrderNewInventory> listAddOrderInventory() 
+				{
+					ArrayList<OrderNewInventory> s1 = new ArrayList<OrderNewInventory>();
+
+					String sql = "SELECT * FROM neworderinventory_info";
+					try {
+						// connect to the database
+						sd.connectDB();
+						this.stmt = sd.getConnection().createStatement();
+						rs = stmt.executeQuery(sql);
+
+						while (rs.next())
+						{      //itemId, Item , Type , Quantity , Price , Category , Unitprice
+							 
+							OrderNewInventory s = new OrderNewInventory();
+							
+							//Get the right type (string) from the right column ("itemId");
+							s.setItem((rs.getString("Item")));
+							s.setQuantity((rs.getInt("Quantity")));
+							s.setUnitPrice((rs.getFloat("Unitprice")));
+							s.setAmount((rs.getFloat("Amount")));
+
+				
+							s1.add(s);
+							 // System.out.println(s1);
+
+						}
+
+						sd.disconnectDB();
+					} catch (SQLException sx) {
+						System.out.println("Error fetching data from the database");
+						System.out.println(sx.getMessage());
+						System.out.println(sx.getErrorCode());
+						System.out.println(sx.getSQLState());
+					}
+
+					return s1;
+				}
 
 }

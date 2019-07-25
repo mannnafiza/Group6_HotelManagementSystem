@@ -23,10 +23,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
-public class AddPropertyInventory {
+public class PropertyInventoryDAO {
 
 	private JFrame frame;
 	
@@ -45,6 +49,10 @@ public class AddPropertyInventory {
 	private JTextField textFieldCategory;
 	private JTextField textFieldUnitPrice;
 	
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -52,7 +60,7 @@ public class AddPropertyInventory {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddPropertyInventory window = new AddPropertyInventory(user);
+					PropertyInventoryDAO window = new PropertyInventoryDAO(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +72,7 @@ public class AddPropertyInventory {
 	/**
 	 * Create the application.
 	 */
-	public AddPropertyInventory(UserInfo user) {
+	public PropertyInventoryDAO(UserInfo user) {
 		this.user = user;
 		initialize();
 	}
@@ -337,7 +345,7 @@ public class AddPropertyInventory {
 				          ns.setPrice(Float.parseFloat(textFieldPrice.getText()));
 				          ns.setCategory(textFieldCategory.getText());
 				          ns.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
-				          sd.AddPropertyInv(ns);
+				          AddPropertyInv(ns);
 				       ManageInventory.main(null, user);
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
@@ -404,5 +412,37 @@ public class AddPropertyInventory {
 		return inputValid;
 	}
 	
+	
+	//method to add property inventory
+		public int AddPropertyInv(AddProperty ap)	{
+			 int propertyInv = 0;		
+			
+			String sql = "Insert into propertyInventory_Info(Item  , Type  ,Quantity  ,Price , Category , Unitprice  )" 
+					+ " VALUES ('" + ap.getItem() + "','" + ap.getType() + "','" + ap.getQuantity() 
+					+ "','" + ap.getPrice() + "','" + ap.getCategory() + "','" + ap.getUnitprice() + "');";
+			
+			try { // itemId , Item , Type , Quantity , Price , Category , Unitprice
+				//Connect to the database
+				sd.connectDB();
+				
+				//Create the statement
+				this.stmt = sd.getConnection().createStatement();
+				
+				//Execute the statement
+				propertyInv = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+				sd.disconnectDB();			
+				
+			} catch (SQLException sx) {
+				System.out.println("Error Connecting to Database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+				
+			}
+			System.out.println("Inserted new Property Inventory: " + propertyInv);
+			return propertyInv;
+			
+		}
 	
 }
