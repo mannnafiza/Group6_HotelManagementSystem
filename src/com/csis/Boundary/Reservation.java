@@ -56,9 +56,9 @@ public class Reservation {
 		
 	}
 	
-	public Reservation() {
-		initialize();
-	}
+//	public Reservation() {
+//		initialize();
+//	}
 	
 	
 
@@ -154,8 +154,20 @@ public class Reservation {
 		});
 		btnLogOut.setForeground(new Color(85, 96, 128));
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnLogOut.setBounds(273, 326, 100, 23);
+		btnLogOut.setBounds(148, 329, 100, 23);
 		frame.getContentPane().add(btnLogOut);
+		
+		JButton btnGiveReview = new JButton("Give Review");
+		btnGiveReview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ReviewGUI.main(null);
+				frame.dispose();
+			}
+		});
+		btnGiveReview.setForeground(new Color(85, 96, 128));
+		btnGiveReview.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGiveReview.setBounds(323, 329, 127, 23);
+		frame.getContentPane().add(btnGiveReview);
 		
 	}
 

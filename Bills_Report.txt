@@ -1,0 +1,12 @@
+Bill Id: 1
+Date: 25 Jul, 2019, Time: 1:35:57 PM, User Name: Nafiza Room Status: yes, Meeting Hall Status:yes, Restaurant Status: yes Banquet Status: yes, Room Total: 145.99 Meeting Hall Total: 350.0, Restaurant Total: 38.96 Banquet Total: 650.49, Total Amount: 1175.44, Discount: 10.0, Final Amount: 1234.21
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bill Id: 2
+Date: 25 Jul, 2019, Time: 1:48:33 PM, User Name: Nafiza Room Status: yes, Meeting Hall Status:yes, Restaurant Status: yes Banquet Status: yes, Room Total: 145.99 Meeting Hall Total: 350.0, Restaurant Total: 38.96 Banquet Total: 650.49, Total Amount: 1175.44, Discount: 10.0, Final Amount: 1234.21
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bill Id: 3
+Date: 25 Jul, 2019, Time: 1:55:07 PM, User Name: Nafiza Room Status: yes, Meeting Hall Status:yes, Restaurant Status: yes Banquet Status: yes, Room Total: 145.99 Meeting Hall Total: 350.0, Restaurant Total: 38.96 Banquet Total: 650.49, Total Amount: 1175.44, Discount: 10.0, Final Amount: 1234.21
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
