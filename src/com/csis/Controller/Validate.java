@@ -15,9 +15,9 @@ public class Validate {
 	private String serviceTypeHouseKeeping = "";
 	private String mealType  = "";
 	private String time= "";
-	private int cardNumber;
+	private String cardNumber;
 	private String expiryDate;
-	private int code;
+	private String code;
 	
 	
 	/**
@@ -73,7 +73,7 @@ public class Validate {
 	 * @param expirydate
 	 * @param code
 	 */
-	public Validate(int cardNumber, String expirydate, int code) {
+	public Validate(String cardNumber, String expirydate, String code) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.cardNumber = cardNumber;
@@ -136,13 +136,68 @@ public class Validate {
 	 */
 	public boolean istransactionDataValid() {
 		// TODO Auto-generated method stub
-		if(cardNumber==0 || expiryDate.equals("") || code==0)
+		
+		boolean valid = true;
+		String errorMsg = "";
+		/*
+		 * if(cardNumber==0 || expiryDate.equals("") || code==0) {
+		 * System.out.println("No field should be empty...."); return false; }
+		 */
+		if(cardNumber.length() == 8)
 		{
-			System.out.println("No field should be empty....");
-			return false;
+			for(int i = 0; i<cardNumber.length(); i++)
+			{
+				if(!Character.isDigit(cardNumber.charAt(i)))
+				{
+					errorMsg += "CardNumber should contain only digits.\n";
+					valid = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			errorMsg += "CardNumber must be equal to 8 in length.\n";
+			valid = false;
 		}
 		
-		return true;
+		if(expiryDate.length() == 5)
+		{
+			String c = "/";
+			if(!(Character.isDigit(expiryDate.charAt(0)) && Character.isDigit(expiryDate.charAt(1))
+					&& String.valueOf(expiryDate.charAt(2)).contains(c) && Character.isDigit(expiryDate.charAt(3)) && Character.isDigit(expiryDate.charAt(4))))
+			{
+				errorMsg += "Expiry Date must be in format MM/YY.\n";
+				valid = false;
+			}
+					
+		}
+		else
+		{
+			errorMsg += "Expiry Date must be equal to 5 in length.\n";
+			valid = false;
+		}
+		
+		if(code.length() == 3)
+		{
+			for(int i = 0; i<code.length(); i++)
+			{
+				if(!Character.isDigit(code.charAt(i)))
+				{
+					errorMsg += "Security Code should contain only digits.\n";
+					valid = false;
+					break;
+				}
+			}
+		}else
+		{
+			errorMsg += "Security Code must be equal to 3 in length.\n";
+			valid = false;
+		}
+		
+		if(errorMsg != "")
+			JOptionPane.showMessageDialog(null,errorMsg);
+		return valid;
 		
 	}	
 	
