@@ -254,6 +254,7 @@ public class OrderInventoryDAO {
 						          ns.setAmount(Float.parseFloat(textFieldAmount.getText()));
 
 						          AddOrderInventory(ns);
+						          
 						     //  ManageInventory.main(null);
 							} catch(Exception ex) {
 								System.out.println("Error in inserting " + ex.getMessage());
@@ -266,7 +267,7 @@ public class OrderInventoryDAO {
 				
 			
 		});
-		btnAddOrder.setBounds(90, 245, 89, 23);
+		btnAddOrder.setBounds(34, 245, 145, 23);
 		frame.getContentPane().add(btnAddOrder);
 		
 		JLabel lblMakeOrder = new JLabel("Make Order");
@@ -288,6 +289,7 @@ public class OrderInventoryDAO {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ManageInventory.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(21, 325, 89, 23);

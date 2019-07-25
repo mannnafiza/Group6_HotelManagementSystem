@@ -237,6 +237,7 @@ public class ChangeInventoryDAO {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ManageInventory.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(10, 204, 89, 23);

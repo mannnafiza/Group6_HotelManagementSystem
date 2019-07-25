@@ -50,7 +50,7 @@ create table roomService_Info (
 create table propertyInventory_Info(
 	itemId INT AUTO_INCREMENT PRIMARY KEY,
 	Item VARCHAR(50),
-	Type VARCHAR(9),
+	Type VARCHAR(50),
 	Quantity INT,
 	Price FLOAT,
         Category VARCHAR(50),

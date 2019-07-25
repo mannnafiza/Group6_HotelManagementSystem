@@ -347,6 +347,7 @@ public class PropertyInventoryDAO {
 				          ns.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
 				          AddPropertyInv(ns);
 				       ManageInventory.main(null, user);
+				       frame.dispose();
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 						JOptionPane jop = new JOptionPane();
@@ -364,6 +365,7 @@ public class PropertyInventoryDAO {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ManageInventory.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(273, 393, 89, 23);

@@ -102,6 +102,7 @@ public class AdminHome {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				Reservation.main(null, user);
+				frame.dispose();
 			}
 
 			@Override
@@ -146,6 +147,7 @@ public class AdminHome {
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				StaffDAO.main(null);
+				frame.dispose();
 			}
 
 			@Override
@@ -195,6 +197,7 @@ public class AdminHome {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				ManageInventory.main(null, user);
+				frame.dispose();
 			}
 
 			@Override
