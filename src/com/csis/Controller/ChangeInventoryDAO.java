@@ -18,12 +18,18 @@ import javax.swing.table.DefaultTableModel;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.ManageInventory;
 import com.csis.Entities.AddProperty;
+import com.csis.Entities.UserInfo;
 
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class ChangeInventory {
+public class ChangeInventoryDAO {
 
 	private JFrame frame;
 	private JTable table;
@@ -37,15 +43,22 @@ public class ChangeInventory {
 	private JTextField textFieldType;
 	private JTextField textFieldItem;
 	private JTextField textFieldItemId;
+	
+	private Connection conn = null;
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
+	
+	UserInfo user;
 
 	/**     
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChangeInventory window = new ChangeInventory();
+					ChangeInventoryDAO window = new ChangeInventoryDAO(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +70,8 @@ public class ChangeInventory {
 	/**
 	 * Create the application.
 	 */
-	public ChangeInventory() {
+	public ChangeInventoryDAO(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -84,7 +98,7 @@ public class ChangeInventory {
 						int currId = (int) table.getValueAt(table.getSelectedRow(),0);
 						
 						//Grab the corresponding shoe from the database
-						AddProperty ts = sd.getProperty(currId);
+						AddProperty ts = getProperty(currId);
 						
 						//textFieldItem, textFieldType, textFieldQuantity , textFieldPrice , textFieldCategory , textFieldUnitPrice
 						textFieldItemId.setText((String.valueOf(ts.getItemId())));
@@ -127,7 +141,7 @@ public class ChangeInventory {
 				us.setCategory(textFieldCategory.getText());
 				us.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
 								
-				sd.updateInventory(us);
+				updateInventory(us);
 				
 				updateTable();
 				
@@ -141,7 +155,7 @@ public class ChangeInventory {
 		btnDeleteInventory.setForeground(color);
 		btnDeleteInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sd.deleteInventory(Integer.parseInt(textFieldItemId.getText()));
+				deleteInventory(Integer.parseInt(textFieldItemId.getText()));
 				updateTable();
 			}
 		});
@@ -222,7 +236,8 @@ public class ChangeInventory {
 		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageInventory.main(null);
+				ManageInventory.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(10, 204, 89, 23);
@@ -279,7 +294,7 @@ private void updateTable()	{
 		ArrayList<AddProperty> sl = new ArrayList<AddProperty>();
 		
 		//Populate the arraylist with the getShoes
-		sl = sd.listAddPropertyInventory();
+		sl = listAddPropertyInventory();
 		
 		for (AddProperty s : sl)	{
 			tm.addRow(s.getVector());
@@ -290,5 +305,167 @@ private void updateTable()	{
 		//Add the ListSelectionListener back to the table
 		table.getSelectionModel().addListSelectionListener(lsl);
 	}
+
+
+//method to get inventory 
+
+	public AddProperty getProperty(int itemId) {
+			
+		AddProperty ap = new AddProperty();
+			
+			String sql = "SELECT * FROM propertyInventory_Info  WHERE itemId  = ?";
+			
+			try {
+				
+				//Connect to the database
+				sd.connectDB();
+				
+				//Create the statement
+				pstmt = sd.getConnection().prepareStatement(sql);
+				
+				//Declare the parameter (starting at 1)
+				pstmt.setInt(1,itemId);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next())	{
+					
+					//Get the right type (string) from the right column ("");									
+					ap.setItemId((rs.getInt("itemId")));
+					ap.setItem((rs.getString("Item")));
+					ap.setType((rs.getString("Type")));
+					ap.setQuantity((rs.getInt("Quantity")));
+					ap.setPrice((rs.getFloat("Price")));
+					ap.setCategory((rs.getString("Category")));
+					ap.setUnitprice((rs.getFloat("Unitprice")));				
+				} 
+				
+				sd.disconnectDB();
+					
+				} catch (SQLException sx) {
+					System.out.println("Error Connecting to Database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+					
+				}
+				return ap;			
+			}
+	
+	public void updateInventory(AddProperty su)	{		
+
+		String updateSql = "UPDATE propertyInventory_Info SET " + 
+				"Item  = ?, " +
+				"Type = ?, " + 
+				"Quantity = ?, " +
+				"Price = ?, " +
+				"Category = ?, " +
+				"Unitprice = ? " +
+				
+				"WHERE itemId = ?";
+		
+		//itemId , Item , Type , Quantity , Price , Category , Unitprice
+		
+		try {
+				sd.connectDB();
+				
+				pstmt = sd.getConnection().prepareStatement(updateSql);
+		
+				
+				//pstmt.setInt(1, su.getVGID());  				
+				pstmt.setString(1, su.getItem());
+				pstmt.setString(2, su.getType());
+				pstmt.setInt(3, su.getQuantity());
+				pstmt.setFloat(4, su.getPrice());
+				pstmt.setString(5, su.getCategory());
+				pstmt.setFloat(6, su.getUnitprice());
+				pstmt.setInt(7, su.getItemId());  				
+				
+				pstmt.executeUpdate();
+				
+				sd.disconnectDB();
+				
+		} catch (SQLException sx) {
+			System.out.println("Error Connecting to Database");
+			System.out.println(sx.getMessage());
+			System.out.println(sx.getErrorCode());
+			System.out.println(sx.getSQLState());
+			
+		}	
+		
+	}
+		
+		
+		//method to delete inventory
+		public void deleteInventory(int id) {
+			
+			String sql = "DELETE FROM propertyInventory_Info  WHERE itemId = ?";
+			
+			try {
+				
+				//Connect to the database
+				sd.connectDB();
+				
+				//Create the statement
+				pstmt = sd.getConnection().prepareStatement(sql);
+				
+				//Declare the parameter (starting at 1)
+				pstmt.setInt(1,id);
+				
+				//Delete Data
+				pstmt.executeUpdate();
+				
+				sd.disconnectDB();
+					
+				} catch (SQLException sx) {
+					System.out.println("Error Connecting to Database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+					
+				}		
+			}
+		
+		
+		//method to add inventory 
+				public ArrayList<AddProperty> listAddPropertyInventory() 
+				{
+					ArrayList<AddProperty> s1 = new ArrayList<AddProperty>();
+
+					String sql = "SELECT * FROM propertyInventory_Info";
+					try {
+						// connect to the database
+						sd.connectDB();
+						this.stmt = sd.getConnection().createStatement();
+						rs = stmt.executeQuery(sql);
+
+						while (rs.next())
+						{      //itemId, Item , Type , Quantity , Price , Category , Unitprice
+							 
+			                AddProperty s = new AddProperty();
+							
+							//Get the right type (string) from the right column ("itemId");
+							s.setItemId((rs.getInt("itemId")));
+							s.setItem((rs.getString("Item")));
+							s.setType((rs.getString("Type")));
+							s.setQuantity((rs.getInt("Quantity")));
+							s.setPrice((rs.getFloat("Price")));
+							s.setCategory((rs.getString("Category")));
+							s.setUnitprice((rs.getFloat("Unitprice")));
+				
+							s1.add(s);
+							 // System.out.println(s1);
+						}
+
+						sd.disconnectDB();
+					} catch (SQLException sx) {
+						System.out.println("Error fetching data from the database");
+						System.out.println(sx.getMessage());
+						System.out.println(sx.getErrorCode());
+						System.out.println(sx.getSQLState());
+					}
+
+					return s1;
+				}
 
 }

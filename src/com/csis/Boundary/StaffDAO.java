@@ -242,6 +242,12 @@ public class StaffDAO {
 			public void actionPerformed(ActionEvent arg0) {
 				deleteStaffMember(Integer.parseInt(txtId.getText()));
 				updateStaffTable();
+				txtId.setText("");
+				txtUsername.setText("");
+				txtPassword.setText("");
+				txtCity.setText("");
+				rdbtnMale.setSelected(false);
+				rdbtnFemale.setSelected(false);
 			}
 		});
 		btnRemove.setForeground(color);

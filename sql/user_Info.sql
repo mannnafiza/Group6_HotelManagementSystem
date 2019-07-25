@@ -1,3 +1,12 @@
+create table admin_info(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	userName VARCHAR(50),
+	password VARCHAR(500),
+	gender VARCHAR(50),
+	city VARCHAR(9)
+);
+
+
 create table user_Info (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	userName VARCHAR(50),
@@ -29,7 +38,6 @@ create table roomService_Info (
         rmserid INT AUTO_INCREMENT PRIMARY KEY,
         customerName VARCHAR(50),
         resType VARCHAR(50),
-	roomNumber INT,
         mealNeeded VARCHAR(50),
         houseKeepingNeeded VARCHAR(50),
         mealType VARCHAR(50),
@@ -42,7 +50,7 @@ create table roomService_Info (
 create table propertyInventory_Info(
 	itemId INT AUTO_INCREMENT PRIMARY KEY,
 	Item VARCHAR(50),
-	Type VARCHAR(9),
+	Type VARCHAR(50),
 	Quantity INT,
 	Price FLOAT,
         Category VARCHAR(50),
@@ -97,9 +105,9 @@ create table staff_info (
 
 create table review_Info(
 	id INT AUTO_INCREMENT PRIMARY KEY, 
-	CommentVARCHAR(50);
+	Comment VARCHAR(50));
 
-insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
+insert into user_info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Ybx420ouUsfak+MtRRxWHg==', 'Male', 'Victoria');
 insert into user_Info (id, userName, password, gender, city) values (3, 'Bev', 'KszTy1QLxfs0ngAVCzDu3A==', 'Male', 'Richmond');
 insert into user_Info (id, userName, password, gender, city) values (4, 'Pauletta', '79OPV6GWGD+uaa9leZQBug==', 'Female', 'Burnaby');
@@ -120,4 +128,5 @@ insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 
 insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'ASXqI5h+S7CfrWtL0JcRVA==', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'vRSHKvtElYHCK75l/hvnMA==', 'Male', 'Victoria');
 
+insert into admin_info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
 

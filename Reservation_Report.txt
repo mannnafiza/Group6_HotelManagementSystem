@@ -1,52 +1,12 @@
-Id: 1
-UserId: 14, Name: Sarah, Reservation Type: restaurant, Room Type: -, Stay Duration: 0, Meal Status: -, MealType: Non-Veg, Date: 2019-07-20, Time: 09:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 2, Reservation For: Brunch
+Id: 28
+UserId: 24, Name: Nafiza, Reservation Type: room, Room Type: Executive King Double, Stay Duration: 2, Meal Status: yes, MealType: -, Date: 2019-07-26, Time: 03:00:00, Meeting Duration: 0, Additional Service: 1, No. of Guests: 0, Reservation For: -
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 2
-UserId: 14, Name: Sarah, Reservation Type: room, Room Type: Executive Queen Double, Stay Duration: 2, Meal Status: yes, MealType: -, Date: 2019-07-19, Time: 03:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
+Id: 29
+UserId: 24, Name: Nafiza, Reservation Type: meeting, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-26, Time: 05:00:00, Meeting Duration: 2, Additional Service: 0, No. of Guests: 0, Reservation For: -
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 3
-UserId: 14, Name: Sarah, Reservation Type: banquet, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-20, Time: 03:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 4
-UserId: 14, Name: Sarah, Reservation Type: meeting, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-27, Time: 22:00:00, Meeting Duration: 2, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 5
-UserId: 14, Name: Sarah, Reservation Type: room, Room Type: Executive Queen Double, Stay Duration: 1, Meal Status: yes, MealType: -, Date: 2019-07-19, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 6
-UserId: 14, Name: Sarah, Reservation Type: room, Room Type: Executive Queen Double, Stay Duration: 1, Meal Status: yes, MealType: -, Date: 2019-07-19, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 7
-UserId: 14, Name: Sarah, Reservation Type: room, Room Type: Executive Queen Double, Stay Duration: 1, Meal Status: no, MealType: -, Date: 2019-07-19, Time: 01:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 8
-UserId: 14, Name: Sarah, Reservation Type: room, Room Type: Deluxe King Double, Stay Duration: 2, Meal Status: yes, MealType: -, Date: 2019-07-26, Time: 15:00:00, Meeting Duration: 0, Additional Service: 1, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 9
-UserId: 14, Name: Sarah, Reservation Type: room, Room Type: Deluxe Queen Double, Stay Duration: 1, Meal Status: yes, MealType: -, Date: 2019-07-19, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 10
-UserId: 14, Name: Sarah, Reservation Type: banquet, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-31, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 11
-UserId: 1, Name: admin, Reservation Type: meeting, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-30, Time: 02:00:00, Meeting Duration: 1, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 12
-UserId: 14, Name: Sarah, Reservation Type: banquet, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-26, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Id: 13
-UserId: 14, Name: Sarah, Reservation Type: banquet, Room Type: -, Stay Duration: 0, Meal Status: yes, MealType: -, Date: 2019-07-22, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 0, Reservation For: -
+Id: 30
+UserId: 24, Name: Nafiza, Reservation Type: restaurant, Room Type: -, Stay Duration: 0, Meal Status: -, MealType: Non-Veg, Date: 2019-07-30, Time: 02:00:00, Meeting Duration: 0, Additional Service: 0, No. of Guests: 2, Reservation For: Breakfast
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

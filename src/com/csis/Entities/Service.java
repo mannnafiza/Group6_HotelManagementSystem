@@ -4,7 +4,6 @@ public class Service {
 	
 	private String customerName  = "";
 	private String resType;
-	private int roomNumber  = 0 ;
 	private String mealNeeded ; 
 	private String houseKeepingNeeded ; 
 	private String mealType;
@@ -25,18 +24,7 @@ public class Service {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	/**
-	 * @return the roomNumber
-	 */
-	public int getRoomNumber() {
-		return roomNumber;
-	}
-	/**
-	 * @param roomNumber the roomNumber to set
-	 */
-	public void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
-	}
+	
 	/**
 	 * @return the time
 	 */

@@ -35,6 +35,7 @@ public class BillCalculatorDAO {
 		//set name of user for receipt
 		bill.setName(user.getUsername());
 		bill.setUserId(user.getId());
+		
 		//processing room reservation entries
 		roomlist = getReservationData(user,"room");
 		for(String str: roomlist)

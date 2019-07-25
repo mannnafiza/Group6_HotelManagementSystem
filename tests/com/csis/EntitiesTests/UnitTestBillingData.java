@@ -16,12 +16,14 @@ class UnitTestBillingData {
 		assertEquals(true, bill.isRoomReserved());
 	}
 	
+
 	@Test
 	void testDateHallReservedFor() {
 		Date d = new Date();
 		bill.setDateHallReservedFor(d.toString());		
 		assertEquals(d.toString(), bill.getDateHallReservedFor());
 	}
+
 	
 	@Test
 	void testBillOwnerName() {

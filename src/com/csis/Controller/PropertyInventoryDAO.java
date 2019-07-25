@@ -17,16 +17,20 @@ import javax.swing.table.DefaultTableModel;
 import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.ManageInventory;
 import com.csis.Entities.AddProperty;
-
+import com.csis.Entities.UserInfo;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
-public class AddPropertyInventory {
+public class PropertyInventoryDAO {
 
 	private JFrame frame;
 	
@@ -36,6 +40,7 @@ public class AddPropertyInventory {
 	boolean inputValid = true;
 	String errorMsg;
 	AddProperty AddPropertyData = new AddProperty(); 
+	UserInfo user;
 	
 	private JTextField textFieldItem;
 	private JTextField textFieldType;
@@ -44,14 +49,18 @@ public class AddPropertyInventory {
 	private JTextField textFieldCategory;
 	private JTextField textFieldUnitPrice;
 	
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, UserInfo user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddPropertyInventory window = new AddPropertyInventory();
+					PropertyInventoryDAO window = new PropertyInventoryDAO(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +72,8 @@ public class AddPropertyInventory {
 	/**
 	 * Create the application.
 	 */
-	public AddPropertyInventory() {
+	public PropertyInventoryDAO(UserInfo user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -335,8 +345,9 @@ public class AddPropertyInventory {
 				          ns.setPrice(Float.parseFloat(textFieldPrice.getText()));
 				          ns.setCategory(textFieldCategory.getText());
 				          ns.setUnitprice(Float.parseFloat(textFieldUnitPrice.getText()));
-				          sd.AddPropertyInv(ns);
-				       ManageInventory.main(null);
+				          AddPropertyInv(ns);
+				       ManageInventory.main(null, user);
+				       frame.dispose();
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
 						JOptionPane jop = new JOptionPane();
@@ -353,7 +364,8 @@ public class AddPropertyInventory {
 		btnBack.setForeground(color);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageInventory.main(null);
+				ManageInventory.main(null, user);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(273, 393, 89, 23);
@@ -402,5 +414,37 @@ public class AddPropertyInventory {
 		return inputValid;
 	}
 	
+	
+	//method to add property inventory
+		public int AddPropertyInv(AddProperty ap)	{
+			 int propertyInv = 0;		
+			
+			String sql = "Insert into propertyInventory_Info(Item  , Type  ,Quantity  ,Price , Category , Unitprice  )" 
+					+ " VALUES ('" + ap.getItem() + "','" + ap.getType() + "','" + ap.getQuantity() 
+					+ "','" + ap.getPrice() + "','" + ap.getCategory() + "','" + ap.getUnitprice() + "');";
+			
+			try { // itemId , Item , Type , Quantity , Price , Category , Unitprice
+				//Connect to the database
+				sd.connectDB();
+				
+				//Create the statement
+				this.stmt = sd.getConnection().createStatement();
+				
+				//Execute the statement
+				propertyInv = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+				sd.disconnectDB();			
+				
+			} catch (SQLException sx) {
+				System.out.println("Error Connecting to Database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+				
+			}
+			System.out.println("Inserted new Property Inventory: " + propertyInv);
+			return propertyInv;
+			
+		}
 	
 }

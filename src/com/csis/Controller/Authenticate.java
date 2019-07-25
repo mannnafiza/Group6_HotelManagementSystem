@@ -8,6 +8,7 @@ public class Authenticate {
 	private String password = "";
 	private String purpose = "";
 	private HomeDAO homeDAO = new HomeDAO();
+	private AdminDAO adminDAO = new AdminDAO();
 	private RegistrationDAO registrationDAO =  new RegistrationDAO();
 	
 	//default constructor
@@ -87,6 +88,43 @@ public class Authenticate {
 		return false;		
 	}
 
+	
+	
+	//method to verify username input
+		/**
+		 * @return the boolean value whether username verified or not
+		 */
+		public boolean matchAdminUserName()
+		{
+			ArrayList<String> list = new ArrayList<>();
+			if(purpose.equals("Login Task"))
+				list = adminDAO.listAdminUserNames();
+			
+			if(purpose.equals(""))
+				list = homeDAO.listUserNames();
+				
+			for(String str: list)
+			{
+				if(username.equals(str))
+					return true;
+			}		
+			return false;		
+		}
+		
+		//method to verify password input
+		/**
+		 * @return the boolean value whether password verified or not
+		 */
+		public boolean matchAdminpassword()
+		{
+			String pswrd = adminDAO.getAdminPassword(username);
+			
+				if(password.equals(pswrd))
+				{
+					return true;
+				}	
+			return false;		
+		}
 	
 	
 }
