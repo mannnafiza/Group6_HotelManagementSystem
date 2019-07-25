@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.csis.Entities.AddProperty;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.OrderNewInventory;
+import com.csis.Entities.Reviews;
 import com.csis.Entities.Service;
 import com.csis.Entities.Staff;
 import com.csis.Entities.Transaction;
@@ -1116,5 +1117,174 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 	}
 	
 	
+	//method for review list
+			public ArrayList<Reviews> listReview() 
+			{
+				ArrayList<Reviews> s1 = new ArrayList<Reviews>();
+
+				String sql = "SELECT * FROM review_Info";
+				try {
+					// connect to the database
+					connectDB();
+					this.stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+
+					while (rs.next())
+					{   
+						 
+						Reviews s = new Reviews();
+						
+						//Get the right type (string) from the right column ("itemId");
+						s.setId((rs.getInt("Id")));
+						s.setComment((rs.getString("Comment")));
+									
+						s1.add(s);
+						 // System.out.println(s1);
+					}
+
+					disconnectDB();
+				} catch (SQLException sx) {
+					System.out.println("Error fetching data from the database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+				}
+
+				return s1;
+			}
+
 	
+			//method to review
+			public int AddReview(Reviews rm)	{
+				 int reviewNo = 0;		
+				
+				String sql = "Insert into review_Info(Comment )" 
+						+ " VALUES ('" + rm.getComment()  + "');";
+				
+				try { 
+					//Connect to the database
+					connectDB();
+					
+					//Create the statement
+					this.stmt = this.conn.createStatement();
+					
+					//Execute the statement
+					reviewNo = stmt.executeUpdate(sql , Statement.RETURN_GENERATED_KEYS);
+
+					disconnectDB();			
+					
+				} catch (SQLException sx) {
+					System.out.println("Error Connecting to Database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+					
+				}
+				System.out.println("Inserted new COmment: " + reviewNo);
+				return reviewNo;
+				
+			}
+			
+			
+			public Reviews getReviews(int id) {
+				
+				Reviews review = new Reviews();
+					
+					String sql = "SELECT * FROM review_Info WHERE id  = ?";
+					
+					try {
+						
+						//Connect to the database
+						connectDB();
+						
+						//Create the statement
+						pstmt = conn.prepareStatement(sql);
+						
+						//Declare the parameter (starting at 1)
+						pstmt.setInt(1,id);
+						
+						rs = pstmt.executeQuery();
+						
+						while (rs.next())	{
+							
+							//Get the right type (string) from the right column ("");									
+							review.setId((rs.getInt("id")));
+							review.setComment((rs.getString("Comment")));
+										
+						} 
+						
+						disconnectDB();
+							
+						} catch (SQLException sx) {
+							System.out.println("Error Connecting to Database");
+							System.out.println(sx.getMessage());
+							System.out.println(sx.getErrorCode());
+							System.out.println(sx.getSQLState());
+							
+						}
+						return review;			
+					}
+
+			public void updateReview(String rvs)	{		
+
+				Reviews rv = new Reviews();
+				String updateSql = "UPDATE review_Info SET " + 
+						"Comment  = ? " +
+						"WHERE id = ?";
+				
+				//itemId , Item , Type , Quantity , Price , Category , Unitprice
+				
+				try {
+						connectDB();
+						
+						pstmt = conn.prepareStatement(updateSql);
+				
+						
+					//	pstmt.setInt(1, rv.getId());  				
+						pstmt.setString(1, rv.getComment());
+						
+						pstmt.executeUpdate();
+						
+						disconnectDB();
+						
+				} catch (SQLException sx) {
+					System.out.println("Error Connecting to Database");
+					System.out.println(sx.getMessage());
+					System.out.println(sx.getErrorCode());
+					System.out.println(sx.getSQLState());
+					
+				}	
+			}
+			
+			
+			//method to delete Comments
+			public void deleteReview(String Comment) {
+				
+				String sql = "DELETE FROM review_Info  WHERE  Comment = ?";
+				
+				try {
+					
+					//Connect to the database
+					connectDB();
+					
+					//Create the statement
+					pstmt = conn.prepareStatement(sql);
+					
+					//Declare the parameter (starting at 1)
+					pstmt.setString(1,Comment);
+					
+					//Delete Data
+					pstmt.executeUpdate();
+					
+					disconnectDB();
+						
+					} catch (SQLException sx) {
+						System.out.println("Error Connecting to Database");
+						System.out.println(sx.getMessage());
+						System.out.println(sx.getErrorCode());
+						System.out.println(sx.getSQLState());
+						
+					}		
+				}
+			
 }
