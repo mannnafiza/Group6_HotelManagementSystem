@@ -1,3 +1,12 @@
+create table admin_info(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	userName VARCHAR(50),
+	password VARCHAR(500),
+	gender VARCHAR(50),
+	city VARCHAR(9)
+);
+
+
 create table user_Info (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	userName VARCHAR(50),
@@ -98,7 +107,7 @@ create table review_Info(
 	id INT AUTO_INCREMENT PRIMARY KEY, 
 	Comment VARCHAR(50));
 
-insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
+insert into user_info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Ybx420ouUsfak+MtRRxWHg==', 'Male', 'Victoria');
 insert into user_Info (id, userName, password, gender, city) values (3, 'Bev', 'KszTy1QLxfs0ngAVCzDu3A==', 'Male', 'Richmond');
 insert into user_Info (id, userName, password, gender, city) values (4, 'Pauletta', '79OPV6GWGD+uaa9leZQBug==', 'Female', 'Burnaby');
@@ -119,4 +128,5 @@ insert into user_Info (id, userName, password, gender, city) values (18, 'Gil', 
 insert into user_Info (id, userName, password, gender, city) values (19, 'Clywd', 'ASXqI5h+S7CfrWtL0JcRVA==', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (20, 'Peterus', 'vRSHKvtElYHCK75l/hvnMA==', 'Male', 'Victoria');
 
+insert into admin_info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
 

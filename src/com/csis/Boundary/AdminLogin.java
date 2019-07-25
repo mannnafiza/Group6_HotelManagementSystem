@@ -125,7 +125,7 @@ public class AdminLogin {
 					auth.setUsername(username);
 					auth.setPassword(encrypt(password));
 						
-						if(auth.matchUserName() && auth.matchpassword())
+						if(auth.matchAdminUserName() && auth.matchAdminpassword())
 						{
 							System.out.println("Login Successful");
 							JOptionPane.showMessageDialog(null," Admin Login Successful");
