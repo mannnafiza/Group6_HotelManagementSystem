@@ -15,8 +15,8 @@ create table reservation_Info(
 	stayDuration INT,
 	mealStatus VARCHAR(10),
 	mealType VARCHAR(15),
-	resDate String,
-	resTime String,
+	resDate VARCHAR(15),
+	resTime VARCHAR(15),
 	meetingDuration INT,
 	addService BOOLEAN,
 	noGuest INT,
@@ -90,10 +90,14 @@ create table transactions_Info (
 
 create table staff_info (
 	id INT AUTO_INCREMENT PRIMARY KEY, 
-	userName VARCHAR,
+	userName VARCHAR(50),
 	password VARCHAR(500),
-	gender VARCHAR,
+	gender VARCHAR(8),
 	city VARCHAR(50));
+
+create table review_Info(
+	id INT AUTO_INCREMENT PRIMARY KEY, 
+	CommentVARCHAR(50);
 
 insert into user_Info (id, userName, password, gender, city) values (1, 'admin', 'Ir/fUTgc8U2xRkMahklhpA==', 'Male', 'Surrey');
 insert into user_Info (id, userName, password, gender, city) values (2, 'Willy', 'Ybx420ouUsfak+MtRRxWHg==', 'Male', 'Victoria');
