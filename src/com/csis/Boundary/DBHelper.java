@@ -984,7 +984,7 @@ public int roomService(Service serviceData)	{ //, serviceType  .   "','" + servi
 		  
 	}
 
-		 //method to obtain data from roomservice_info table
+	//method to obtain data from roomservice_info table
 	public ArrayList<String> getRoomServiceData(UserInfo user, String type) {
 		// TODO Auto-generated method stub
 		

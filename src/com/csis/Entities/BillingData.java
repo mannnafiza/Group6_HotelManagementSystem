@@ -756,7 +756,7 @@ public class BillingData {
 		
 		
 		//code to give discount to staff members
-		//discount = 10.00f;
+		discount = 10.00f;
 		sb.append("\t\t\t\t\tDiscount:\t$" + df.format(discount) + "\n");
 		totalFee -= discount;
 		sb.append("\t\t\t\t\tGST / PST(5%):\t$" + df.format(totalFee * 0.05) + "\n");

@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import com.csis.Controller.BillCalculatorDAO;
 import com.csis.Entities.BillingData;
 import com.csis.Entities.UserInfo;
 
@@ -33,6 +34,7 @@ public class CustomerBill {
 	DBHelper helper = new DBHelper();
 	private JScrollPane scrollPane;
 	private UserInfo user = new UserInfo();
+	private BillCalculatorDAO billCalculatorDAO = new BillCalculatorDAO();
 
 	/**
 	 * Launch the application.
@@ -115,7 +117,7 @@ public class CustomerBill {
 		show(bill);
 		
 		//method to store billing details in expenses table
-		int id = helper.addBillEntry(user,bill);
+		billCalculatorDAO.addBillEntry(user,bill);
 		btnPayBill.addActionListener(new ActionListener()
 		{		
 			@Override
