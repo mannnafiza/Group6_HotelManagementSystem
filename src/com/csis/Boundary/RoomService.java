@@ -150,7 +150,7 @@ public class RoomService {
 		frame.getContentPane().add(textFieldTime);
 		textFieldTime.setColumns(10);
 		
-		JLabel lblMinutes = new JLabel("Minutes");
+		JLabel lblMinutes = new JLabel("Hours");
 		lblMinutes.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblMinutes.setBounds(529, 253, 60, 14);
 		lblMinutes.setForeground(color);
