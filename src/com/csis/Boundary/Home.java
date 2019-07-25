@@ -36,14 +36,10 @@ public class Home {
 	private String password = "";
 	private String encryptedPassword = "";
 	
-	
-	
-	//for deccryption
+	//for encryption
 	private static final String key = "aesEncryptionKey";
 	private static final String initVector = "encryptionIntVec";
 	
-	
-
 	/**
 	 * Launch the application
 	 * @param args
@@ -121,14 +117,12 @@ public class Home {
 		txtFieldName.setBounds(320, 189, 199, 25);
 		frame.getContentPane().add(txtFieldName);
 		txtFieldName.setColumns(10);
-		//txtFieldName.setText("Kulbirk");
 		txtFieldName.setFont(new Font("Serif",Font.PLAIN,16));		
 		txtFieldName.setForeground(color);
 
 		pswrdField = new JPasswordField();
 		pswrdField.setBounds(320, 246, 199, 25);
 		frame.getContentPane().add(pswrdField);
-		//pswrdField.setText("Kul1irk");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,14));		
 		pswrdField.setForeground(color);
 		
@@ -136,8 +130,6 @@ public class Home {
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLogin.setBounds(236, 326, 80, 23);
 		frame.getContentPane().add(btnLogin);
-		//btnLogin.setBorder(new CustomBorder(8,2));
-		//btnLogin.setBackground(new Color(255,255,255));
 		btnLogin.setForeground(color);
 	
 		
@@ -145,7 +137,6 @@ public class Home {
 		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnCancel.setBounds(362, 326, 80, 23);
 		frame.getContentPane().add(btnCancel);
-		//btnCancel.setBackground(new Color(105,205,105));
 		btnCancel.setForeground(color);
 		
 		JLabel lblNewMember = new JLabel("New Member?");
@@ -189,8 +180,7 @@ public class Home {
 		label_1.setBounds(523, 253, 46, 14);
 		frame.getContentPane().add(label_1);
 		
-		
-		
+				
 		lblAdminIcon.addMouseListener(new MouseListener() {
 
 			@Override
@@ -284,7 +274,7 @@ public class Home {
 				  Authenticate auth = new Authenticate("Login Task");
 					auth.setUsername(userName);
 					auth.setPassword(encryptedPassword);
-					
+					System.out.println("P:  "+ auth.getPassword());
 					if(auth.matchUserName() && auth.matchpassword())
 					{
 						System.out.println("Login Successful");
@@ -295,7 +285,7 @@ public class Home {
 						DBHelper helper = new DBHelper();
 						user.setUsername(userName);
 						user.setId(helper.getUserId(userName));
-//						
+					
 						//reservation class to be called upon successful login 
 						Reservation.main(null,user);
 						frame.dispose();
