@@ -219,7 +219,7 @@ private void updateTable()	{
 		
 		//writeTo Review File
 		reviewList = getReviewList();
-		writeToFile("Review", reviewList);
+		writeToFile("Reviews_Report", reviewList);
 		
 	}
 
