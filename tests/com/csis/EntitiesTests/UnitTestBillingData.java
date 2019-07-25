@@ -1,6 +1,8 @@
 package com.csis.EntitiesTests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Date;
 import org.junit.jupiter.api.Test;
 import com.csis.Entities.BillingData;
 
@@ -16,9 +18,9 @@ class UnitTestBillingData {
 	
 	@Test
 	void testDateHallReservedFor() {
-		bill.setDateHallReservedFor(new Date());
 		Date d = new Date();
-		assertEquals(d, bill.getDateHallReservedFor());
+		bill.setDateHallReservedFor(d.toString());		
+		assertEquals(d.toString(), bill.getDateHallReservedFor());
 	}
 	
 	@Test
