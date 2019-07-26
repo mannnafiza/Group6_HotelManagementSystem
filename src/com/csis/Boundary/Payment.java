@@ -31,13 +31,16 @@ import javax.swing.JButton;
 
 public class Payment {
 
-	private JFrame frame;
+	public JFrame frame;
 	UserInfo user;
 	BillingData bill = new BillingData();
-	private ButtonGroup btngrp = new ButtonGroup();
-	private JTextField textFieldSecurityCode;
-	private JTextField textFieldcardNum;
-	private JTextField textFieldExpiryDate;
+	public ButtonGroup btngrp = new ButtonGroup();
+	public JTextField textFieldSecurityCode;
+	public JTextField textFieldcardNum;
+	public JTextField textFieldExpiryDate;
+	public JRadioButton rdbtnCard;
+	public JRadioButton rdbtnCash;
+	public JButton btnPay;
 	String modeOfPayment = "";
 	String cardNumber;
 	String expirydate;
@@ -106,14 +109,14 @@ public class Payment {
 		lblPaymentMethod.setBounds(58, 65, 136, 22);
 		frame.getContentPane().add(lblPaymentMethod);
 		
-		JRadioButton rdbtnCard = new JRadioButton("Card");
+		rdbtnCard = new JRadioButton("Card");
 		rdbtnCard.setBounds(275, 64, 68, 23);
 		frame.getContentPane().add(rdbtnCard);
 		rdbtnCard.setBackground(new Color(201, 210, 218));
 		rdbtnCard.setForeground(color);
 		rdbtnCard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JRadioButton rdbtnCash = new JRadioButton("Cash");
+		rdbtnCash = new JRadioButton("Cash");
 		rdbtnCash.setSelected(true);
 		rdbtnCash.setBackground(new Color(201, 210, 218));
 		rdbtnCash.setForeground(color);
@@ -176,7 +179,7 @@ public class Payment {
 		btnCancel.setForeground(color);
 		frame.getContentPane().add(btnCancel);
 		
-		JButton btnPay = new JButton("Pay Now");
+		btnPay = new JButton("Pay Now");
 		btnPay.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnPay.setForeground(color);
 		btnPay.setBounds(358, 354, 89, 23);
