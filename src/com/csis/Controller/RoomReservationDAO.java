@@ -41,7 +41,6 @@ import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
 import com.csis.Boundary.RoomService;
 import com.csis.Entities.Room;
-import com.csis.Entities.Service;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 
@@ -60,7 +59,7 @@ public class RoomReservationDAO {
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
 	
-
+	public String msg = "";
 	RoomService service = new RoomService();
 	
 
@@ -237,7 +236,7 @@ public class RoomReservationDAO {
 		btnConfirm.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setStayDuration(spinDuration);
+					setStayDuration(spinDuration);
 				
 				validateInfo(roomData.getRoomType(), roomData.getReserveDate(), roomData.getDuration(), roomData.isMeal());
 				if(inputValid) {
@@ -430,10 +429,15 @@ public class RoomReservationDAO {
 	 * set the stay duration
 	 * @param spinDuration
 	 */
-	protected void setStayDuration(JSpinner spinDuration) {
+	public void setStayDuration(JSpinner spinDuration) {
 		// TODO Auto-generated method stub
 		int spinnerValue = Integer.parseInt(spinDuration.getValue().toString());
-		roomData.setDuration(spinnerValue);
+		if(spinnerValue > 0)
+			roomData.setDuration(spinnerValue);
+		else {
+			msg = "Enter a valid stay duration";
+			JOptionPane.showMessageDialog(null, msg);
+		}
 	}
 
 	/**

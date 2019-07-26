@@ -53,6 +53,8 @@ public class MeetingReservationDAO {
 	private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
+	
+	public String msg = "";
 
 	/**
 	 * Launch the application.
@@ -299,9 +301,17 @@ public class MeetingReservationDAO {
 	 * set the reservation hours 
 	 * @param spinner
 	 */
-	protected void setMeetingDuration(JSpinner spinner) {
+	public void setMeetingDuration(JSpinner spinner) {
 		// TODO Auto-generated method stub
-		meetingData.setDuration(Integer.parseInt(spinner.getValue().toString()));
+		int value = Integer.parseInt(spinner.getValue().toString());
+		if(value > 0)
+			meetingData.setDuration(value);
+		else {
+			msg = "Enter a valid meeting duration";
+			JOptionPane.showMessageDialog(null, msg );
+		}
+			
+		
 	}
 
 	/**
