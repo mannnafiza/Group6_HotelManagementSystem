@@ -36,8 +36,7 @@ class AdminModuleTest {
 		user.setId(loginId);
 		
 		AdminHome.main(null, user);
-		
-		
+	
 	}
 	
 

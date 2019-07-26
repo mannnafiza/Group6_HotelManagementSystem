@@ -151,7 +151,7 @@ public class ManageInventory {
 				frame.dispose();
 			}
 		});
-		btnChangeInventory.setBounds(22, 99, 130, 23);
+		btnChangeInventory.setBounds(10, 99, 158, 23);
 		frame.getContentPane().add(btnChangeInventory);
 		
 		JButton btnBack = new JButton("Back");
@@ -209,7 +209,7 @@ private void updateTable()	{
 		{
 			ArrayList<AddProperty> s1 = new ArrayList<AddProperty>();
 
-			String sql = "SELECT * FROM propertyInventory_Info";
+			String sql = "SELECT * FROM propertyInventory_Info order by propertyInventory_Info.itemId";
 			try {
 				// connect to the database
 				sd.connectDB();
