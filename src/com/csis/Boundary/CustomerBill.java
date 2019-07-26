@@ -25,13 +25,14 @@ import javax.swing.JScrollPane;
 public class CustomerBill {
 
 	private JFrame frame;
-	private JLabel lblBillFor;
+	public JLabel lblBillFor;
 	JLabel lblYourReservations;
-	JTextArea textAreaEntries;
+	public JTextArea textAreaEntries;
 	JLabel lblDateValue;
 	BillingData bill = new BillingData();
 	BillingData bill2 = new BillingData();
 	DBHelper helper = new DBHelper();
+	public JButton btnPayBill;
 	private JScrollPane scrollPane;
 	private UserInfo user = new UserInfo();
 	private BillCalculatorDAO billCalculatorDAO = new BillCalculatorDAO();
@@ -93,7 +94,7 @@ public class CustomerBill {
 		scrollPane.setViewportView(textAreaEntries);
 		textAreaEntries.setForeground(color);
 		
-		JButton btnPayBill = new JButton("Pay Bill");
+		btnPayBill = new JButton("Pay Bill");
 		btnPayBill.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnPayBill.setForeground(color);
 		btnPayBill.setBounds(361, 415, 89, 23);
@@ -131,7 +132,7 @@ public class CustomerBill {
 		
 	}
 
-	private void show(BillingData bill) {
+	public void show(BillingData bill) {
 		// TODO Auto-generated method stub
 		lblBillFor.setText("Bill for " + bill.getName());
 		lblDateValue.setText(bill.getDate());

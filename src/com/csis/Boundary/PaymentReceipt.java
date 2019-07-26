@@ -28,11 +28,14 @@ public class PaymentReceipt {
 
 	private JFrame frame;
 	private Transaction t;
+	public JLabel lblModeOfPayment;
+	public JButton btnSaveReceipt;
 	DBHelper helper = new DBHelper();
 	private ResultSet rs = null;
 	private PreparedStatement pstmt = null;
 	UserInfo user;
 	PaymentReceiptDAO paymentReceiptDAO = new PaymentReceiptDAO();
+	
 
 	/**
 	 * Launch the application.
@@ -110,7 +113,7 @@ public class PaymentReceipt {
 		lblPaymentMode.setForeground(color);
 		frame.getContentPane().add(lblPaymentMode);
 
-		JLabel lblModeOfPayment = new JLabel("Card");
+		lblModeOfPayment = new JLabel("Card");
 		lblModeOfPayment.setBounds(281, 163, 67, 22);
 		lblModeOfPayment.setForeground(color);
 		frame.getContentPane().add(lblModeOfPayment);
@@ -193,7 +196,7 @@ public class PaymentReceipt {
 			panel.setVisible(true);
 		}
 
-		JButton btnSaveReceipt = new JButton("Save Receipt");
+		btnSaveReceipt = new JButton("Save Receipt");
 		btnSaveReceipt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<String> billsData = null;

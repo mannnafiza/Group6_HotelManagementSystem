@@ -23,7 +23,7 @@ public class BillCalculatorDAO {
 	ArrayList<String> roomlist = new ArrayList<>();
 	ArrayList<String> banquetlist = new ArrayList<>();
 	ArrayList<String> restaurantlist = new ArrayList<>();
-	ArrayList<String> meetinghalllist = new ArrayList<>();
+	public ArrayList<String> meetinghalllist = new ArrayList<>();
 	ArrayList<String> adServiceList = new ArrayList<>();
 	String resType = "";
 	

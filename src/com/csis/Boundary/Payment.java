@@ -41,11 +41,12 @@ public class Payment {
 	public JRadioButton rdbtnCard;
 	public JRadioButton rdbtnCash;
 	public JButton btnPay;
-	String modeOfPayment = "";
-	String cardNumber;
+	public JLabel lblAmountValue;
+	public String modeOfPayment = "";
+	public String cardNumber;
 	String expirydate;
 	String code;
-	DBHelper helper = new DBHelper();
+	//DBHelper helper = new DBHelper();
 	Transaction t = new Transaction();
 	PaymentDAO paymentDAO = new PaymentDAO();
 	JOptionPane jop = new JOptionPane();
@@ -96,7 +97,7 @@ public class Payment {
 		lblAmount.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		frame.getContentPane().add(lblAmount);
 		
-		JLabel lblAmountValue = new JLabel("");
+		lblAmountValue = new JLabel("");
 		lblAmountValue.setForeground(color);
 		lblAmountValue.setText(Float.toString(bill.getFinalAmount()));
 		lblAmountValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
