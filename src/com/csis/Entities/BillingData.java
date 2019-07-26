@@ -64,7 +64,7 @@ public class BillingData {
 	private float banquetAdditionalCharges = 0.0f;
 	private float totalFee = 0.0f;
 	private float discount = 0.0f;
-	private float finalAmount;
+	private float finalAmount = 0.0f;
 	
 	private float banquetUnitFee = 150.49f;
 	private float seatBookingFee = 14.99f;
@@ -75,7 +75,6 @@ public class BillingData {
 	private static float HALL_MEAL_COST = 250;
 	private static float BANQUET_MEAL__COST = 500;
 	DecimalFormat df = new DecimalFormat("#.00");
-	//private BillCalculatorDAO billCalculatorDAO = new BillCalculatorDAO();
 	
 	/**
 	 * @return the userId
