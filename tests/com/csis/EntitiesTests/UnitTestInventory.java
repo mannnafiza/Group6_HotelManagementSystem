@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.csis.Entities.AddProperty;
 
-class UnitTestAddProperty {
+class UnitTestInventory {
 
 	AddProperty addproperty = new AddProperty();
 	
@@ -48,3 +48,4 @@ class UnitTestAddProperty {
 	}
 	
 }
+

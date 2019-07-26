@@ -47,3 +47,4 @@ class UnitTestRoomService {
 		assertEquals(12 , service.getTime());
 	}
 }
+

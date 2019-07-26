@@ -12,6 +12,7 @@ class WhiteBoxPasswordTest {
 	
 	@Test
 	void testPasswordHashing() {
+		
 		String encryptedPass = Home.encrypt("password");
 		
 		assertEquals("password", Home.decrypt(encryptedPass));

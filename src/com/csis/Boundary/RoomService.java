@@ -406,7 +406,6 @@ public class RoomService {
 								ns.setTime(Float.parseFloat((textFieldTime.getText())));
 							*/	
 							//	roomService(ns);
-						Service ns = new Service();
 						addData(ns);
 		
 
