@@ -270,16 +270,16 @@ public class ChangeInventoryDAO {
 		//updateTable();
 	}
 	
-	
-private void updateTable()	{
+	/**
+	 * Update the table entries
+	 */
+	private void updateTable()	{
 		
 		//Remove the List Selection Listern to the table
 		table.getSelectionModel().removeListSelectionListener(lsl);
 		
 		tm = new DefaultTableModel();
 		
-		//textFieldItem, textFieldType, textFieldQuantity , textFieldPrice , textFieldCategory , textFieldUnitPrice
-
 		//Add the columns
 		tm.addColumn("ID");
 		tm.addColumn("Item");
@@ -307,7 +307,11 @@ private void updateTable()	{
 	}
 
 
-//method to get inventory 
+	/**
+	 * 
+	 * @param itemId is the id of the specific inventory item
+	 * @return the inventory item details
+	 */
 
 	public AddProperty getProperty(int itemId) {
 			
@@ -352,6 +356,10 @@ private void updateTable()	{
 				return ap;			
 			}
 	
+	/**
+	 * 
+	 * @param su is the object for inventory
+	 */
 	public void updateInventory(AddProperty su)	{		
 
 		String updateSql = "UPDATE propertyInventory_Info SET " + 
@@ -396,7 +404,10 @@ private void updateTable()	{
 	}
 		
 		
-		//method to delete inventory
+		/**
+		 * 
+		 * @param id is the inventory item id
+		 */
 		public void deleteInventory(int id) {
 			
 			String sql = "DELETE FROM propertyInventory_Info  WHERE itemId = ?";
@@ -427,7 +438,10 @@ private void updateTable()	{
 			}
 		
 		
-		//method to add inventory 
+		/**
+		 *  
+		 * @return the list of inventory items
+		 */
 				public ArrayList<AddProperty> listAddPropertyInventory() 
 				{
 					ArrayList<AddProperty> s1 = new ArrayList<AddProperty>();

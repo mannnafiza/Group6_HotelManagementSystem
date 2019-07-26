@@ -53,9 +53,9 @@ public class StaffDAO {
 	private DefaultTableModel tm = new DefaultTableModel();
 	
 	//for deccryption
-		private static final String key = "aesEncryptionKey";
-		private static final String initVector = "encryptionIntVec";
-		private String encryptPass = "";
+	private static final String key = "aesEncryptionKey";
+	private static final String initVector = "encryptionIntVec";
+	private String encryptPass = "";
 	
 	DBHelper helper = new DBHelper();
 	private ResultSet rs = null;
@@ -382,8 +382,6 @@ public class StaffDAO {
 	
 	
 	
-	
-	
 	 /**
 	   * create a new staff member
 	   * @param username
@@ -414,6 +412,7 @@ public class StaffDAO {
 				System.out.println(sx.getSQLState());
 			}
 		}	  
+	  
 	  /**
 	   * 
 	   * @return list of all staff members
@@ -446,6 +445,7 @@ public class StaffDAO {
 			
 			return staffArr;
 		}	  
+	  
 	  /**
 	   * 
 	   * @param id
@@ -478,7 +478,9 @@ public class StaffDAO {
 			}
 			
 			return s;
-		}	  
+		}	
+
+	  
 	  /**
 	   * delete a staff member
 	   * @param id
@@ -500,6 +502,8 @@ public class StaffDAO {
 				System.out.println(sx.getSQLState());
 			}
 		}	  
+	  
+	  
 	  /**
 	   * update a staff member information
 	   * @param s
@@ -525,6 +529,7 @@ public class StaffDAO {
 				System.out.println(sx.getSQLState());
 			}
 		}
+	  
 	  
 	  /**
 		 * 

@@ -14,7 +14,13 @@ public class Transaction {
 	private String date;
 	private String time;
 	
-	//getters and setters
+	/**
+	 * constructor
+	 */
+	public Transaction() {
+		
+	}
+	
 	/**
 	 * @return the transactionId
 	 */

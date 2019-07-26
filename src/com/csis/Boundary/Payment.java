@@ -186,6 +186,7 @@ public class Payment {
 		btnPay.setBounds(358, 354, 89, 23);
 		frame.getContentPane().add(btnPay);
 		
+		
 		rdbtnCard.addActionListener(new ActionListener()
 		{	
 			@Override
@@ -206,6 +207,9 @@ public class Payment {
 			}
 		});	 
 		
+		/**
+		 * event listener for button
+		 */
 		btnCancel.addActionListener(new ActionListener() {
 			
 			@Override
@@ -219,7 +223,10 @@ public class Payment {
 				textFieldSecurityCode.setText("Security Code");
 			}
 		});
-		
+
+		/**
+		 * event listener for button
+		 */
 		btnPay.addActionListener(new ActionListener() {
 
 			@Override
@@ -245,6 +252,7 @@ public class Payment {
 					}
 					else
 					{
+						//accepts the customer details
 					 cardNumber = textFieldcardNum.getText();
 					 expirydate =  textFieldExpiryDate.getText();
 					 code = textFieldSecurityCode.getText();

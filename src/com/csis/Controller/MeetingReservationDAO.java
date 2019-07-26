@@ -188,8 +188,6 @@ public class MeetingReservationDAO {
 		btnCalculateMyBill.setForeground(color);
 		frame.getContentPane().add(btnCalculateMyBill);
 		
-		
-		
 		/**
 		 * set listeners
 		 */

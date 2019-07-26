@@ -260,25 +260,12 @@ public class RoomReservationDAO {
 						if(!checkAvailability(sqlDate, roomData.getRoomType())) {
 							insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
 							
-
-							RoomService service = new RoomService();
-							Service ns = new Service();
-							/*
-							ns.setCustomerName(ns.getCustomerName());
-							ns.setHouseKeepingNeeded(ns.getHouseKeepingNeeded());
-							ns.setMealNeeded(ns.getMealNeeded());
-							ns.setMealType(ns.getMealType());
-							ns.setResType(ns.getResType());
-							ns.setTime(ns.getTime());
-							service.roomService(ns);*/
-						//	service.addData(ns);
-
-							//send confirmation message to additional services
-							
+							//set the status of reservation confirmation for additional services
 							service.setConfirmationStatus(true);
+							
+							//signal the Room Service class to insert the additional service data
 							service.insertDataAfterConfirm();
 							
-
 							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
 							
 							btnCalculateMyBill.addActionListener(new ActionListener() {
@@ -308,8 +295,6 @@ public class RoomReservationDAO {
 					JOptionPane.showMessageDialog(null, errorMsg);
 				}
 				
-				
-				//TODO: get and Validate all data
 				
 			}
 		});
@@ -355,26 +340,18 @@ public class RoomReservationDAO {
 			
 	}
 	
-	
+	/**
+	 * 
+	 * @param sqlDate is the date of reservation in database
+	 * @param roomType is the type of room reserved
+	 * @return the status if room is available or not
+	 */
 	protected boolean checkAvailability(java.sql.Date sqlDate, String roomType) {
 		//boolean result = false;
 		ArrayList<String> rooms = new ArrayList<>();
 		rooms = getRoomList(sqlDate);
 		
 		return rooms.contains(roomType);
-		
-//		if(rooms.contains(roomType)) {
-//			int duration = helper.getStayDuration(sqlDate, roomType);
-//			java.sql.Date resEndDate = helper.getDate(sqlDate, duration);
-//			
-//			for(int i = 0; i < duration ; i++) {
-//				if(resEndDate == helper.getDate(sqlDate, i)) {
-//					result =  true;
-//				} else
-//					result =  false;
-//			}
-//		}
-//		return result;
 	}
 	
 
@@ -655,6 +632,5 @@ public class RoomReservationDAO {
 		  }
 		  return roomType;
 	  }
-	
 	
 }

@@ -20,7 +20,7 @@ public class RegistrationDAO {
 
 
 	/**
-	  * @return list of usernames
+	  * @return list of user names
 	  */
 		public ArrayList<String> listUserNames() 
 		{

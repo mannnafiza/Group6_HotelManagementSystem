@@ -63,32 +63,31 @@ public class OrderNewInventory {
 	public Vector getVector() {
 		Vector v = new Vector();
 		
-		//	itemId, Item, Type, Quantity , Category , Unitprice , Price
-
-		
-		//v.add(itemId);
 		v.add(Item);
 		v.add(Quantity);
 		v.add(UnitPrice);
 		v.add(Amount);
-	
-		
+
 		return v;
 	}
 	
-public boolean isEmpty() {
-		
-	if(Item.equals("") || Quantity.equals(""))
-	{
-		System.out.println("No field should be empty....room");
-		return false;
-	}
-
 	
-	return true;
+	/**
+	 * 
+	 * @return the status if empty
+	 */
+	public boolean isEmpty() {
+			
+		if(Item.equals("") || Quantity.equals(""))
+		{
+			System.out.println("No field should be empty....room");
+			return false;
+		}
+
+		return true;
 		
-		
-	}
+			
+		}
 
 
 }

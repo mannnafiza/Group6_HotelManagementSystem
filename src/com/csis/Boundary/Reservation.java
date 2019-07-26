@@ -56,11 +56,6 @@ public class Reservation {
 		
 	}
 	
-//	public Reservation() {
-//		initialize();
-//	}
-	
-	
 
 	/**
 	 * Initialize the contents of the frame.

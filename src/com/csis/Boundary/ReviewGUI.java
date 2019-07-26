@@ -99,7 +99,9 @@ public class ReviewGUI {
 		Color color = new Color(85, 96, 128);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
+		/**
+		 * define the listener
+		 */
 		lsl = (new ListSelectionListener() {
 
 			@Override
@@ -143,23 +145,16 @@ public class ReviewGUI {
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//insert into review table
-				
-						
-				
-            Review rw = new Review();
+				//insert into review table		
+				Review rw = new Review();
 				
 				try {
 			          rw.setComment(textAreaReview.getText());
-		      
 		           	  AddReview(rw);
-		           	  
-		           	updateTable();
-			      // ManageInventory.main(null);
+		           	  updateTable();
 				} catch(Exception ex) {
 					System.out.println("Error in inserting " + ex.getMessage());
-					JOptionPane jop = new JOptionPane();
-					jop.showMessageDialog(null," Please enter all empty Fields.");
+					JOptionPane.showMessageDialog(null," Please enter all empty Fields.");
 			}
 		}});
 		btnSubmit.setBounds(411, 114, 89, 23);
@@ -186,27 +181,22 @@ public class ReviewGUI {
 		
 	}
 	
-private void updateTable()	{
+	private void updateTable()	{
 		
 		//Remove the List Selection Listern to the table
 		table.getSelectionModel().removeListSelectionListener(lsl);
-		
 		tm = new DefaultTableModel();
 		
-		//textFieldItem, textFieldType, textFieldQuantity , textFieldPrice , textFieldCategory , textFieldUnitPrice
-
+		
 		//Add the columns
 		tm.addColumn("ID");
 		tm.addColumn("Comments");
 		
-		
-				
 		//Add the rows
 		ArrayList<Review> sl = new ArrayList<Review>();
 		
 		//Populate the arraylist with the getShoes
 		sl = listReview();
-		//Reviews r = new Reviews();
 		
 		for (Review r : sl)	{
 			tm.addRow(r.getVector());

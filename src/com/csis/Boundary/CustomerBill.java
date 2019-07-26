@@ -114,7 +114,7 @@ public class CustomerBill {
 		lblDateValue.setBounds(660, 15, 161, 20);
 		frame.getContentPane().add(lblDateValue);
 				
-		
+		//display the bill data
 		show(bill);
 		
 		//method to store billing details in expenses table
@@ -132,6 +132,10 @@ public class CustomerBill {
 		
 	}
 
+	/**
+	 * 
+	 * @param bill is the object containing all data for customer bill
+	 */
 	public void show(BillingData bill) {
 		// TODO Auto-generated method stub
 		lblBillFor.setText("Bill for " + bill.getName());

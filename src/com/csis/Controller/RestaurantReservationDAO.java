@@ -335,9 +335,6 @@ public class RestaurantReservationDAO {
 		btnLogOut.setBounds(84, 354, 89, 23);
 		frame.getContentPane().add(btnLogOut);
 		
-		
-		
-		
 	}
 
 	/**
@@ -384,7 +381,6 @@ public class RestaurantReservationDAO {
 			public void itemStateChanged(ItemEvent ex) {
 				// TODO Auto-generated method stub
 				String item = ((AbstractButton) ex.getItemSelectable()).getActionCommand();
-		        //boolean selected = (ex.getStateChange() == ItemEvent.SELECTED);
 		        if(item.equals("Veg")) {
 			    	  restaurantData.setMealType("Veg");
 			      }else {

@@ -73,6 +73,11 @@ public class RoomService {
 		});
 	}
 	
+	/**
+	 * 
+	 * @param args
+	 * @param resType is the reservation type chose by user
+	 */
 	public static void main(String[] args, String resType) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -94,6 +99,10 @@ public class RoomService {
 		initialize();
 	}
 	
+	/**
+	 * 
+	 * @param resType is the reservation type chose by user
+	 */
 	public RoomService(String resType) {
 		this.resType = resType;
 		initialize();
@@ -180,19 +189,12 @@ public class RoomService {
 		textFieldCustomerName.setColumns(10);
 		
 
-		
-		
 		JLabel lblIconLogo = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/rsLogo.png")).getImage().getScaledInstance(180, 85, Image.SCALE_SMOOTH);
 		lblIconLogo.setIcon(new ImageIcon(img));		
 		//lblIconLogo.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblIconLogo.setBounds(121, 0, 177, 176);
 		frame.getContentPane().add(lblIconLogo);
-		
-//		frame.add(btnProceed);
-//		frame.pack();
-//      frame.setVisible(true);
-		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(95, 158, 160));
@@ -264,7 +266,6 @@ public class RoomService {
 		});
 	
 		
-		
 		Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
         calendar.set(Calendar.MINUTE, 0);
@@ -273,21 +274,6 @@ public class RoomService {
         SpinnerDateModel model = new SpinnerDateModel();
         model.setValue(calendar.getTime());
 
-//        JSpinner spinnerTime = new JSpinner(model);
-//		/*spinnerTime.setBounds(414, 283, 50, 20);
-//		frame.getContentPane().add(spinnerTime);*/
-//
-//        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinnerTime, "HH:mm"); //add "HH:mm a" for am/pm
-//        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
-//        formatter.setAllowsInvalid(false); 
-//        formatter.setOverwriteMode(true);
-//
-//        spinnerTime.setEditor(editor);
-//        spinnerTime.setForeground(Color.WHITE);
-//        spinnerTime.setBounds(470, 284, 60, 25);
-//		frame.getContentPane().add(spinnerTime);
-		
-	//setMealListener(rdbtnVeg , rdbtnNonveg);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -297,9 +283,6 @@ public class RoomService {
 								
 				textFieldTime.setText("");
 				textFieldCustomerName.setText("");
-				//checkboxMeal;
-				//checkboxHouseKeeping.disable();
-				//rdbtnNonveg , rdbtnVeg , checkboxMeal, checkboxHouseKeeping
 				
 				Reservation.main(null, user);
 			}
@@ -312,25 +295,24 @@ public class RoomService {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				
-						        
+				  
 				customerName  = textFieldCustomerName.getText();
 					
-				  //Create an instance of Validate class and pass all the inputs given by the user
-				  Validate validate = new Validate(customerName );
+				 //Create an instance of Validate class and pass all the inputs given by the user
+				 Validate validate = new Validate(customerName );
 					
-					user.setUsername(customerName);
-					user.setId(getUserId(customerName));
+				user.setUsername(customerName);
+				user.setId(getUserId(customerName));
 
 			
-					  //create an instance of Authenticate class to verify userName and password inputs
-					  Authenticate auth = new Authenticate();
-					  auth.setUsername(customerName );
+				//create an instance of Authenticate class to verify userName and password inputs
+					 Authenticate auth = new Authenticate();
+				auth.setUsername(customerName );
 						try {
 					   //  if(validate.isCustmerDataValid()) {
 					    	 
 					    	 if(auth.matchUserName()) {
-					    	    //customername
+					    	    //customer name
 						        serviceData.setResType(resType);
 								System.out.println("Valid Username");
 								serviceData.setCustomerName(textFieldCustomerName.getText());
@@ -342,7 +324,7 @@ public class RoomService {
 								 else {
 										JOptionPane.showMessageDialog(frame, "Please Enter a Valid Time");		
 										}
-									//mealstatus
+									//meal status
 							   if(checkboxMeal.isSelected()) {
 								  String mealStatus = "Yes";
 								  serviceData.setMealNeeded(mealStatus);
@@ -376,40 +358,15 @@ public class RoomService {
 					    	 				
 					    	 frame.dispose();
 					    	 
-					    	 /*Service ns = new Service();
-								ns.setCustomerName(textFieldCustomerName.getText());
-								ns.setResType(serviceData.getResType());
-								ns.setRoomNumber(Integer.parseInt(textFieldRoomNumber.getText()));
-								ns.setServiceTypeMeal(serviceData.getServiceTypeMeal());
-								ns.setServiceTypeHouseKeeping(serviceData.getServiceTypeHouseKeeping());
-								ns.setMealType(serviceData.getMealType() );  
-								ns.setTime(Float.parseFloat((textFieldTime.getText())));
-								
-								helper.roomService(ns);
-					    	 */
+					    	
 						} catch(Exception ex) {
 							System.out.println("Error in inserting " + ex.getMessage());
 							JOptionPane.showMessageDialog(null," Empty Fields .");
 							
 						}
 						
-
-					/*    	//Build the new 
-								Service ns = new Service();
-								ns.setCustomerName(textFieldCustomerName.getText());
-								System.out.println("Res TYPE: "+ serviceData.getResType());
-								ns.setResType(serviceData.getResType());
-								
-								ns.setMealNeeded(serviceData.getMealNeeded());
-								ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
-								ns.setMealType(serviceData.getMealType() );  
-								ns.setTime(Float.parseFloat((textFieldTime.getText())));
-							*/	
-							//	roomService(ns);
 						addData(ns);
-		
-
-					    	
+		 	
 						ns.setCustomerName(textFieldCustomerName.getText());
 						System.out.println("Res TYPE: "+ serviceData.getResType());
 						ns.setResType(serviceData.getResType());
@@ -417,8 +374,7 @@ public class RoomService {
 						ns.setMealNeeded(serviceData.getMealNeeded());
 						ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
 						ns.setMealType(serviceData.getMealType() );  
-						ns.setTime(Float.parseFloat((textFieldTime.getText())));
-							
+						ns.setTime(Float.parseFloat((textFieldTime.getText())));	
 
 
 			}
@@ -428,7 +384,9 @@ public class RoomService {
 	}
 	
 	
-	//insert the data
+	/**
+	 * insert the data
+	 */
 	public void insertDataAfterConfirm() {
 		if(getConfirmationStatus()) {
 			Service service = RoomService.ns;
@@ -439,7 +397,11 @@ public class RoomService {
 	}
 
 	
-	//method to get id of user
+	/**
+	 * 
+	 * @param username is the user's name
+	 * @return user's id
+	 */
 	  public int getUserId(String username) 
 		{
 		  int userId = 0;
@@ -471,8 +433,12 @@ public class RoomService {
 		  return userId;
 		}
 
-	//method to add user room service info into the roomService_Info  table at the time of reservation
-	  public int roomService(Service serviceData)	{ //, serviceType  .   "','" + serviceData.isServiceType() +  
+	  /**
+	   * 
+	   * @param serviceData is the data received, enterd by the user
+	   * @return the count of rows added
+	   */
+	  public int roomService(Service serviceData)	{   
 	  	 int roomService = 0;		
 	  	//Get all the shoes! Shoes for days!
 	  	String sql = "Insert into roomService_Info (customerName , resType , mealNeeded , houseKeepingNeeded , mealType, time  )" 
@@ -503,19 +469,30 @@ public class RoomService {
 	  	
 	  }  
 	  
-	  
+	  /**
+	   * 
+	   * @param status is the reservation confirmation signal received 
+	   */
 	  public void setConfirmationStatus(boolean status) {
 		  confirmationStatus = status;
 	  }
 	  
+	  /**
+	   * 
+	   * @return the reservation confirmation signal
+	   */
 	  public boolean getConfirmationStatus() {
 		  return confirmationStatus;
 		  }
 	
+	  /**
+	   * 
+	   * @param ns is the object of Service class
+	   * @return the count of data entered
+	   */
 	  public int addData(Service ns ) {
 		  
 		//Build the new 
-			//Service ns = new Service();
 			ns.setCustomerName(textFieldCustomerName.getText());
 			System.out.println("Res TYPE: "+ serviceData.getResType());
 			ns.setResType(serviceData.getResType());

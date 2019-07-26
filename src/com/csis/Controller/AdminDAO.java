@@ -14,13 +14,15 @@ public class AdminDAO {
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
 
-
+	/**
+	 * constructor
+	 */
 	public AdminDAO() {
 		
 	}
 	
 	/**
-	  * @return list of usernames
+	  * @return list of user names
 	  */
 		public ArrayList<String> listAdminUserNames() 
 		{
@@ -52,7 +54,7 @@ public class AdminDAO {
 		
 		/**
 		  * 
-		  * @param usernm, username for whom password is being fetched
+		  * @param usernm, user name for whom password is being fetched
 		  * @return password for specific user
 		  */
 		public String getAdminPassword(String usernm) {

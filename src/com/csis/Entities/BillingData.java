@@ -119,7 +119,6 @@ public class BillingData {
 		this.date = date;
 	}
 
-	
 	/**
 	 * @return the time
 	 */

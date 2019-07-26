@@ -293,8 +293,6 @@ public class BanquetReservationDAO {
 		frame.getContentPane().add(btnLogOut);
 		
 		
-		
-		
 	}
 	
 	/**

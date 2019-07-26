@@ -35,7 +35,7 @@ public class AdminLogin {
 	String username = "";
 	String password = "";
 
-	//for encryption
+	//fields for encryption
 	private static final String key = "aesEncryptionKey";
 	private static final String initVector = "encryptionIntVec";
 

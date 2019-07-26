@@ -186,6 +186,10 @@ public class PaymentReceipt {
 		lblName.setText(user.getUsername());
 		lblAmountValue.setText(Float.toString(t.getAmountPaid()));
 		lblModeOfPayment.setText(t.getPaymentMode());
+		
+		/**
+		 * Option card or cash for customer
+		 */
 		if (lblModeOfPayment.getText().equals("Cash"))
 			panel.setVisible(false);
 		else if(lblModeOfPayment.getText().equals("Card"))
@@ -195,7 +199,10 @@ public class PaymentReceipt {
 			lblExpDateValue.setText(t.getExpiryDate());
 			panel.setVisible(true);
 		}
-
+		
+		/**
+		 * button event listener
+		 */
 		btnSaveReceipt = new JButton("Save Receipt");
 		btnSaveReceipt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -209,7 +216,11 @@ public class PaymentReceipt {
 		btnSaveReceipt.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSaveReceipt.setBounds(413, 351, 203, 23);
 		frame.getContentPane().add(btnSaveReceipt);
-
+		
+		
+		/**
+		 * button event listener
+		 */
 		btnContinue.addActionListener(new ActionListener() {
 
 			@Override
@@ -219,7 +230,11 @@ public class PaymentReceipt {
 				Reservation.main(null, user);
 			}
 		});
-
+		
+		
+		/**
+		 * button event listener
+		 */
 		btnExit.addActionListener(new ActionListener() {
 
 			@Override

@@ -24,14 +24,14 @@ public class Authenticate {
 	}
 	
 	/**
-	 * @return the username
+	 * @return the user name
 	 */
 	public String getUsername() {
 		return username;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username the user name to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -51,9 +51,9 @@ public class Authenticate {
 		this.password = password;
 	}
 
-	//method to verify username input
+	//method to verify user name input
 	/**
-	 * @return the boolean value whether username verified or not
+	 * @return the boolean value whether user name verified or not
 	 */
 	public boolean matchUserName()
 	{
@@ -90,9 +90,9 @@ public class Authenticate {
 
 	
 	
-	//method to verify username input
+	//method to verify user name input
 		/**
-		 * @return the boolean value whether username verified or not
+		 * @return the boolean value whether user name verified or not
 		 */
 		public boolean matchAdminUserName()
 		{

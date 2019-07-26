@@ -10,8 +10,13 @@ public class Service {
 	private float time = 0;
 	
 	
-			
-
+	/**
+	 * constructor		
+	 */
+	public Service()
+	{
+		
+	}
 	/**
 	 * @return the customerName
 	 */

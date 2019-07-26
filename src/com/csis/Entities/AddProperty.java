@@ -103,9 +103,6 @@ public class AddProperty {
 	public Vector getVector() {
 		Vector v = new Vector();
 		
-		//	itemId, Item, Type, Quantity , Category , Unitprice , Price
-
-		
 		v.add(itemId);
 		v.add(Item);
 		v.add(Type);
@@ -114,15 +111,7 @@ public class AddProperty {
 		v.add(Category);
 		v.add(Unitprice);
 	
-		
 		return v;
 	}
-
-	public void isEmpty() {
-		
-		
-		
-	}
-	
 
 }

@@ -258,12 +258,11 @@ public class OrderInventoryDAO {
 						     //  ManageInventory.main(null);
 							} catch(Exception ex) {
 								System.out.println("Error in inserting " + ex.getMessage());
-								JOptionPane jop = new JOptionPane();
-								jop.showMessageDialog(null," Empty Fields .");
+								JOptionPane.showMessageDialog(null," Empty Fields .");
 						}
 							updateTable();
 		     
-               }//else { System.out.print("Please check input ");}
+               }
 				
 			
 		});
@@ -299,18 +298,17 @@ public class OrderInventoryDAO {
 		
 	}
 	
-	
-private void updateTable()	{
+	/**
+	 * update the table entries
+	 */
+	private void updateTable()	{
 		
-		//Remove the List Selection Listern to the table
+		//Remove the List Selection Listen to the table
 		table.getSelectionModel().removeListSelectionListener(lsl);
 		
 		tm = new DefaultTableModel();
 		
-		//textFieldItem, textFieldType, textFieldQuantity , textFieldPrice , textFieldCategory , textFieldUnitPrice
-
 		//Add the columns
-		//tm.addColumn("ID");
 		tm.addColumn("Item");
 		tm.addColumn("Quantity");
 		tm.addColumn("UnitPrice");
@@ -333,14 +331,18 @@ private void updateTable()	{
 		table.getSelectionModel().addListSelectionListener(lsl);
 	}
 
-//method to add order inventory
+		/**
+		 * 
+		 * @param ap is the inventory object
+		 * @return the count of inventory items
+		 */
 		public int AddOrderInventory(OrderNewInventory ap)	{
 			 int propertyInv = 0;		
 			
 			String sql = "Insert into neworderinventory_info(Item   ,Quantity  , UnitPrice , Amount )" 
 					+ " VALUES ('" + ap.getItem() + "','" + ap.getQuantity() + "','" + ap.getUnitPrice() + "','" + ap.getAmount()+  "');";
 			
-			try { // itemId , Item , Type , Quantity , Price , Category , Unitprice
+			try { 
 				//Connect to the database
 				sd.connectDB();
 				
@@ -365,8 +367,10 @@ private void updateTable()	{
 		}
 		
 		
-		 //add new order inventory
-		//method to list order 
+		 /**
+		  * 
+		  * @return the list of new inventory items
+		  */
 				public ArrayList<OrderNewInventory> listAddOrderInventory() 
 				{
 					ArrayList<OrderNewInventory> s1 = new ArrayList<OrderNewInventory>();

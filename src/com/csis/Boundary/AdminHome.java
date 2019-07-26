@@ -318,12 +318,6 @@ public class AdminHome {
 		btnGenerateReport.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnGenerateReport.setBounds(499, 104, 117, 23);
 		frame.getContentPane().add(btnGenerateReport);
-		
-		
-		
-		
-		
-		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -530,6 +524,5 @@ public class AdminHome {
 		
 	}
 
-	
 
 }

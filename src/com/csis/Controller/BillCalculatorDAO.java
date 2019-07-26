@@ -326,6 +326,7 @@ public class BillCalculatorDAO {
 		}
 		
 		
+		
 		public boolean isAStaffMemeber(String name)
 		{
 			ArrayList<String> s1 = new ArrayList<String>();

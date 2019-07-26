@@ -166,14 +166,14 @@ public class ManageInventory {
 		btnBack.setBounds(22, 339, 130, 23);
 		frame.getContentPane().add(btnBack);
 		
-		
-		
 		updateTable();
 	}
 	
 	
-	
-private void updateTable()	{
+	/**
+	 * add and display the data into the table
+	 */
+	private void updateTable()	{
 	 	table.getSelectionModel().removeListSelectionListener(listener);
 		tm = new DefaultTableModel();
 		
@@ -204,7 +204,10 @@ private void updateTable()	{
 	}
 
 
-//method to add inventory 
+		/**
+		 * lists all the data 
+		 * @return an object of AddInventory class
+		 */
 		public ArrayList<AddProperty> listAddPropertyInventory() 
 		{
 			ArrayList<AddProperty> s1 = new ArrayList<AddProperty>();

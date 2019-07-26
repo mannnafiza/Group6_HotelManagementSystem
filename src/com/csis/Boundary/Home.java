@@ -182,7 +182,9 @@ public class Home {
 		label_1.setBounds(523, 253, 46, 14);
 		frame.getContentPane().add(label_1);
 		
-				
+		/**
+		 * event listener
+		 */
 		lblAdminIcon.addMouseListener(new MouseListener() {
 
 			@Override
@@ -218,7 +220,9 @@ public class Home {
 			
 		});
 		
-		
+		/**
+		 * event listener
+		 */
 		lblAdmin.addMouseListener(new MouseListener() {
 
 			@Override

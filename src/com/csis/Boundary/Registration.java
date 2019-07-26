@@ -214,7 +214,9 @@ public class Registration {
 		lblCity.setBounds(146, 285, 101, 21);
 		frame.getContentPane().add(lblCity);
 		
-		//button listener	
+		/**
+		 * button event listener
+		 */
 		btnSignUp.addActionListener(new ActionListener()
 		{
 			@Override

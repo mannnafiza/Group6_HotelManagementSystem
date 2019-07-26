@@ -350,8 +350,7 @@ public class PropertyInventoryDAO {
 				       frame.dispose();
 					} catch(Exception ex) {
 						System.out.println("Error in inserting " + ex.getMessage());
-						JOptionPane jop = new JOptionPane();
-						jop.showMessageDialog(null," Please enter all empty Fields.");
+						JOptionPane.showMessageDialog(null," Please enter all empty Fields.");
 				}
 				}//else { System.out.print("Please check input ");}
 			}
@@ -371,8 +370,6 @@ public class PropertyInventoryDAO {
 		btnBack.setBounds(273, 393, 89, 23);
 		frame.getContentPane().add(btnBack);
 		
-		
-
 		
 	}
 	
@@ -415,7 +412,11 @@ public class PropertyInventoryDAO {
 	}
 	
 	
-	//method to add property inventory
+	/**
+	 * 
+	 * @param ap is the object of inventory items
+	 * @return the count of inventory items
+	 */
 		public int AddPropertyInv(AddProperty ap)	{
 			 int propertyInv = 0;		
 			
