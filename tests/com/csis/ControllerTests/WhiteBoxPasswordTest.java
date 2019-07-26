@@ -16,5 +16,6 @@ class WhiteBoxPasswordTest {
 		
 		assertEquals("password", Home.decrypt(encryptedPass));
 	}
+	
 
 }
