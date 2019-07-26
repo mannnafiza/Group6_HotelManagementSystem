@@ -14,6 +14,7 @@ import com.csis.Boundary.DBHelper;
 import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
 import com.csis.Entities.Meeting;
+import com.csis.Entities.Staff;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
@@ -481,5 +482,35 @@ public class MeetingReservationDAO {
 			  System.out.println(sx.getSQLState());
 		  }
 		 return type;
+	  }
+	  
+	  
+	  /**
+	   * 
+	   * @return all the resrevations for meeting type
+	   */
+	  public ArrayList<Meeting> listMeetingData(){
+		  ArrayList<Meeting> meeting = new ArrayList<>();
+		  
+		  String sql = "Select * from reservation_info where resType = 'meeting' order by reservation_info.resId";
+			try {
+				helper.connectDB();
+				stmt = helper.getConnection().createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					Meeting m = new Meeting();
+					
+					meeting.add(m);
+				}
+				helper.disconnectDB();
+			} catch(SQLException sx) {
+				System.out.println("Error in connecting database");
+				System.out.println(sx.getMessage());
+				System.out.println(sx.getErrorCode());
+				System.out.println(sx.getSQLState());
+			}
+			
+			return meeting;
 	  }
 }

@@ -36,6 +36,8 @@ class AdminInventoryTest {
 		user.setUsername("admin");
 		loginId = helper.getUserId("Admin");
 		user.setId(loginId);
+		
+		assertEquals("admin", user.getUsername());
 	}
 	
 	

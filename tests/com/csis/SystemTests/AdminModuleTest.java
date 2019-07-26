@@ -36,6 +36,8 @@ class AdminModuleTest {
 		user.setId(loginId);
 		
 		AdminHome.main(null, user);
+		
+		assertEquals("admin", user.getUsername());
 	
 	}
 	
@@ -76,7 +78,7 @@ class AdminModuleTest {
 		staffDAO.deleteStaffMember(AdminModuleTest.id);
 		
 		AdminModuleTest.member = staffDAO.listStaff();
-		assertEquals("Johny", AdminModuleTest.member.get(AdminModuleTest.member.size() - 1).getUsername());
+		assertEquals("Chandler", AdminModuleTest.member.get(AdminModuleTest.member.size() - 1).getUsername());
 		
 	}
 }
