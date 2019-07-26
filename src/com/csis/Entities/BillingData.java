@@ -2,6 +2,8 @@ package com.csis.Entities;
 
 import java.text.DecimalFormat;
 
+import com.csis.Controller.BillCalculatorDAO;
+
 public class BillingData {
 
 	private String name = "";
@@ -73,7 +75,7 @@ public class BillingData {
 	private static float HALL_MEAL_COST = 250;
 	private static float BANQUET_MEAL__COST = 500;
 	DecimalFormat df = new DecimalFormat("#.00");
-
+	//private BillCalculatorDAO billCalculatorDAO = new BillCalculatorDAO();
 	
 	/**
 	 * @return the userId
@@ -754,10 +756,8 @@ public class BillingData {
 		addHallEntryToReceipt();
 		sb.append("\n\n\t\t\t\t\tTotal Amount:\t$" + totalFee + "\n");
 		
-		
-		//code to give discount to staff members
-		discount = 10.00f;
-		sb.append("\t\t\t\t\tDiscount:\t$" + df.format(discount) + "\n");
+		if(discount == 10.00f)
+			sb.append("\t\t\t\tEmployee Discount:\t$" + discount + "\n");  
 		totalFee -= discount;
 		sb.append("\t\t\t\t\tGST / PST(5%):\t$" + df.format(totalFee * 0.05) + "\n");
 		finalAmount = (float) (totalFee + (totalFee * 0.05));
