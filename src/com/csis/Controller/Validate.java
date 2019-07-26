@@ -8,6 +8,7 @@ public class Validate {
 	private String password = "";
 	private String gender = "";
 	private String city = "";
+	public String errorMsg = "";
 	
 	//room service class
 	private String roomNumber = "";
@@ -90,6 +91,7 @@ public class Validate {
 	{
 		if(userName.equals("") || password.equals("") || gender.equals("") || city.equals(""))
 		{
+			errorMsg = "No field should be empty";
 			JOptionPane.showMessageDialog(null,"No field should be empty");
 			System.out.println("No field should be empty....");
 			return false;
@@ -109,6 +111,7 @@ public class Validate {
 	{
 		if(userName.equals("") || password.equals(""))
 		{
+			errorMsg = "No field should be empty";
 			JOptionPane.showMessageDialog(null,"No field should be empty");
 			System.out.println("No field should be empty....");
 			return false;
@@ -139,10 +142,7 @@ public class Validate {
 		
 		boolean valid = true;
 		String errorMsg = "";
-		/*
-		 * if(cardNumber==0 || expiryDate.equals("") || code==0) {
-		 * System.out.println("No field should be empty...."); return false; }
-		 */
+
 		if(cardNumber.length() == 8)
 		{
 			for(int i = 0; i<cardNumber.length(); i++)
@@ -157,7 +157,7 @@ public class Validate {
 		}
 		else
 		{
-			errorMsg += "CardNumber must be equal to 8 in length.\n";
+			errorMsg += "CardNumber must have length 8\n";
 			valid = false;
 		}
 		
@@ -197,6 +197,7 @@ public class Validate {
 		
 		if(errorMsg != "")
 			JOptionPane.showMessageDialog(null,errorMsg);
+		this.errorMsg = errorMsg;
 		return valid;
 		
 	}	
@@ -245,6 +246,7 @@ public class Validate {
 		if(errorMsg != "")
 			JOptionPane.showMessageDialog(null,errorMsg);
 		
+		this.errorMsg = errorMsg;
 		if(!isValid)
 			return false;
 		
