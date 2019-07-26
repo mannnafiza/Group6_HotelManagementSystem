@@ -41,6 +41,7 @@ import com.csis.Boundary.Home;
 import com.csis.Boundary.Reservation;
 import com.csis.Boundary.RoomService;
 import com.csis.Entities.Room;
+import com.csis.Entities.Service;
 import com.csis.Entities.UserInfo;
 import com.toedter.calendar.JDateChooser;
 
@@ -259,11 +260,25 @@ public class RoomReservationDAO {
 						if(!checkAvailability(sqlDate, roomData.getRoomType())) {
 							insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
 							
+
+							RoomService service = new RoomService();
+							Service ns = new Service();
+							/*
+							ns.setCustomerName(ns.getCustomerName());
+							ns.setHouseKeepingNeeded(ns.getHouseKeepingNeeded());
+							ns.setMealNeeded(ns.getMealNeeded());
+							ns.setMealType(ns.getMealType());
+							ns.setResType(ns.getResType());
+							ns.setTime(ns.getTime());
+							service.roomService(ns);*/
+						//	service.addData(ns);
+
 							//send confirmation message to additional services
 							
 							service.setConfirmationStatus(true);
 							service.insertDataAfterConfirm();
 							
+
 							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
 							
 							btnCalculateMyBill.addActionListener(new ActionListener() {

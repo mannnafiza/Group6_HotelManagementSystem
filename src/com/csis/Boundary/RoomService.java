@@ -393,6 +393,23 @@ public class RoomService {
 							
 						}
 						
+
+					/*    	//Build the new 
+								Service ns = new Service();
+								ns.setCustomerName(textFieldCustomerName.getText());
+								System.out.println("Res TYPE: "+ serviceData.getResType());
+								ns.setResType(serviceData.getResType());
+								
+								ns.setMealNeeded(serviceData.getMealNeeded());
+								ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
+								ns.setMealType(serviceData.getMealType() );  
+								ns.setTime(Float.parseFloat((textFieldTime.getText())));
+							*/	
+							//	roomService(ns);
+						Service ns = new Service();
+						addData(ns);
+		
+
 					    	
 						ns.setCustomerName(textFieldCustomerName.getText());
 						System.out.println("Res TYPE: "+ serviceData.getResType());
@@ -403,6 +420,7 @@ public class RoomService {
 						ns.setMealType(serviceData.getMealType() );  
 						ns.setTime(Float.parseFloat((textFieldTime.getText())));
 							
+
 
 			}
 			
@@ -495,4 +513,19 @@ public class RoomService {
 		  return confirmationStatus;
 		  }
 	
+	  public int addData(Service ns ) {
+		  
+		//Build the new 
+			//Service ns = new Service();
+			ns.setCustomerName(textFieldCustomerName.getText());
+			System.out.println("Res TYPE: "+ serviceData.getResType());
+			ns.setResType(serviceData.getResType());
+			
+			ns.setMealNeeded(serviceData.getMealNeeded());
+			ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
+			ns.setMealType(serviceData.getMealType() );  
+			ns.setTime(Float.parseFloat((textFieldTime.getText())));
+			
+			return roomService(ns);
+	  }
 }

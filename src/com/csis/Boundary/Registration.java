@@ -34,17 +34,21 @@ import javax.swing.JRadioButton;
 
 public class Registration {
 
-	private JFrame frame;
-	private JTextField txtFieldName;
-	private JPasswordField pswrdField;
-	private JTextField txtFieldCity;
-	private ButtonGroup btngrp = new ButtonGroup();
+	public JFrame frame;
+	public JTextField txtFieldName;
+	public JPasswordField pswrdField;
+	public JTextField txtFieldCity;
+	public ButtonGroup btngrp = new ButtonGroup();
+	public JRadioButton rdbtnMale;
+	public JRadioButton rdbtnFemale;
+	public JButton btnSignUp;
+	public JButton btnCancel;
 	private String userName = "";
 	private String password = "";
 	private String encryptedPassword = "";
-	private String gender = "";
+	public String gender = "";
 	private String city = "";
-	private RegistrationDAO registrationDAO =  new RegistrationDAO();
+	public RegistrationDAO registrationDAO =  new RegistrationDAO();
 	
 	//for encryption
 	private static final String key = "aesEncryptionKey";
@@ -111,35 +115,30 @@ public class Registration {
 		lblpasswordIcon.setIcon(new ImageIcon(img));
 		lblpasswordIcon.setBounds(101, 187, 42, 38);
 		frame.getContentPane().add(lblpasswordIcon);
-		
-		
-		
+			
 		txtFieldName = new JTextField();
 		txtFieldName.setBounds(257, 145, 199, 25);
 		frame.getContentPane().add(txtFieldName);
 		txtFieldName.setColumns(10);
-		//txtFieldName.setText("Kulbirk");
 		txtFieldName.setFont(new Font("Serif",Font.PLAIN,16));		
 		txtFieldName.setForeground(color);
 
 		pswrdField = new JPasswordField();
 		pswrdField.setBounds(257, 192, 199, 25);
 		frame.getContentPane().add(pswrdField);
-		//pswrdField.setText("hh");
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,12));		
 		pswrdField.setForeground(color);
 		
-		JButton btnSignUp = new JButton("Sign Up");
+		btnSignUp = new JButton("Sign Up");
 		btnSignUp.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSignUp.setBounds(222, 336, 80, 23);
 		frame.getContentPane().add(btnSignUp);
 		btnSignUp.setForeground(color);
 			
-		JButton btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnCancel.setBounds(326, 336, 80, 23);
 		frame.getContentPane().add(btnCancel);
-		//btnCancel.setBackground(new Color(105,205,105));
 		btnCancel.setForeground(color);
 		
 		JLabel lblExistingMember = new JLabel("Already a Member?");
@@ -152,10 +151,9 @@ public class Registration {
 		lblClickHereTo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblClickHereTo.setBounds(327, 389, 129, 25);
 		lblClickHereTo.setForeground(Color.DARK_GRAY);
-		//lblClickHereTo.setForeground(new Color(205,205,205));
 		frame.getContentPane().add(lblClickHereTo);
 		
-		JRadioButton rdbtnMale = new JRadioButton("Male");
+		rdbtnMale = new JRadioButton("Male");
 		rdbtnMale.setBounds(256, 238, 93, 23);
 		frame.getContentPane().add(rdbtnMale);
 		rdbtnMale.setBackground(new Color(201, 210, 218));
@@ -163,7 +161,7 @@ public class Registration {
 		rdbtnMale.setFont(new Font("Tahoma", Font.BOLD, 14));
 		rdbtnMale.setSelected(true);
 		
-		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale = new JRadioButton("Female");
 		rdbtnFemale.setBackground(new Color(201, 210, 218));
 		rdbtnFemale.setForeground(color);
 		rdbtnFemale.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -171,7 +169,6 @@ public class Registration {
 		frame.getContentPane().add(rdbtnFemale);
 		
 		txtFieldCity = new JTextField();
-		//txtFieldCity.setText("Burnaby");
 		txtFieldCity.setForeground(color);
 		txtFieldCity.setFont(new Font("Serif", Font.PLAIN, 16));
 		txtFieldCity.setColumns(10);
@@ -334,7 +331,7 @@ public class Registration {
 
 			byte[] encrypted = cipher.doFinal(value.getBytes());
 			return Base64.getEncoder().encodeToString(encrypted);
-			//return Base64.encodeBase64String(encrypted);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

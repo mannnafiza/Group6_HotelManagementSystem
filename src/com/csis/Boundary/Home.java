@@ -29,14 +29,16 @@ import java.awt.event.ActionEvent;
 
 public class Home {
 
-	private JFrame frame;
-	private JTextField txtFieldName;
-	private JPasswordField pswrdField;
+	public JFrame frame;
+	public JTextField txtFieldName;
+	public JPasswordField pswrdField;
 	private String userName = "";
 	private String password = "";
 	private String encryptedPassword = "";
+	public JButton btnLogin;
+	public String msg = "";
 	
-	//for encryption
+	//for decryption
 	private static final String key = "aesEncryptionKey";
 	private static final String initVector = "encryptionIntVec";
 	
@@ -126,7 +128,7 @@ public class Home {
 		pswrdField.setFont(new Font("Serif",Font.PLAIN,14));		
 		pswrdField.setForeground(color);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLogin.setBounds(236, 326, 80, 23);
 		frame.getContentPane().add(btnLogin);
@@ -274,11 +276,12 @@ public class Home {
 				  Authenticate auth = new Authenticate("Login Task");
 					auth.setUsername(userName);
 					auth.setPassword(encryptedPassword);
-					System.out.println("P:  "+ auth.getPassword());
+
 					if(auth.matchUserName() && auth.matchpassword())
 					{
 						System.out.println("Login Successful");
 						JOptionPane.showMessageDialog(null,"Login Successful");
+						msg = "Login Successful";
 						
 						//set user information
 						UserInfo user = new UserInfo();
@@ -294,9 +297,11 @@ public class Home {
 					{
 						System.out.println("Login Unsuccessful");
 						JOptionPane.showMessageDialog(null,"Wrong username or password.");
+						msg = "Wrong username or password.";
 					}
 						
-			  } 
+			  } else
+				  msg = validate.errorMsg;
 		  }
 		});
 		
