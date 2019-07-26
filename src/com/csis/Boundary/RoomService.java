@@ -393,7 +393,7 @@ public class RoomService {
 							
 						}
 						
-<<<<<<< HEAD
+
 					/*    	//Build the new 
 								Service ns = new Service();
 								ns.setCustomerName(textFieldCustomerName.getText());
@@ -409,7 +409,7 @@ public class RoomService {
 						Service ns = new Service();
 						addData(ns);
 		
-=======
+
 					    	
 						ns.setCustomerName(textFieldCustomerName.getText());
 						System.out.println("Res TYPE: "+ serviceData.getResType());
@@ -421,7 +421,7 @@ public class RoomService {
 						ns.setTime(Float.parseFloat((textFieldTime.getText())));
 							
 
->>>>>>> f7b1927b712a34cd78703655079dce0ba215f11e
+
 			}
 			
 		});
