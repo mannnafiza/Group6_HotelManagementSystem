@@ -1,3 +1,6 @@
 com.csis.Boundary
 com.csis.Controller
+com.csis.ControllerTests
 com.csis.Entities
+com.csis.EntitiesTests
+com.csis.SystemTests
