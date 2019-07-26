@@ -54,6 +54,8 @@ public class BanquetReservationDAO {
 	private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
+	
+	RoomService service = new RoomService();
 
 	/**
 	 * Launch the application
@@ -225,6 +227,12 @@ public class BanquetReservationDAO {
 						if(!checkBanquetAvailability(sqlDate)) {
 							insertReservationInformation(user.getId(), user.getUsername(), "banquet","-", 0, banquetData.isMeal(),
 									"-", sqlDate, sqlTime, 0, banquetData.isAddService(), 0, "-" );
+							
+							//send confirmation message to additional services
+							
+							service.setConfirmationStatus(true);
+							service.insertDataAfterConfirm();
+							
 							JOptionPane.showMessageDialog(null, "Banquet Reservation confirmed");
 							
 							btnCalculateMyBill.addActionListener(new ActionListener() {
@@ -237,6 +245,7 @@ public class BanquetReservationDAO {
 							});
 						} else {
 							JOptionPane.showMessageDialog(null, "Banquet already reserved on this date");
+							service.setConfirmationStatus(false);
 						}
 						
 					} catch(Exception ex) {

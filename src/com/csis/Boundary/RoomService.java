@@ -53,7 +53,8 @@ public class RoomService {
     private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
-    
+	private boolean confirmationStatus;
+	static Service ns = new Service();
     
 	/**
 	 * Launch the application
@@ -392,6 +393,7 @@ public class RoomService {
 							
 						}
 						
+<<<<<<< HEAD
 					/*    	//Build the new 
 								Service ns = new Service();
 								ns.setCustomerName(textFieldCustomerName.getText());
@@ -407,10 +409,34 @@ public class RoomService {
 						Service ns = new Service();
 						addData(ns);
 		
+=======
+					    	
+						ns.setCustomerName(textFieldCustomerName.getText());
+						System.out.println("Res TYPE: "+ serviceData.getResType());
+						ns.setResType(serviceData.getResType());
+						
+						ns.setMealNeeded(serviceData.getMealNeeded());
+						ns.setHouseKeepingNeeded(serviceData.getHouseKeepingNeeded());
+						ns.setMealType(serviceData.getMealType() );  
+						ns.setTime(Float.parseFloat((textFieldTime.getText())));
+							
+
+>>>>>>> f7b1927b712a34cd78703655079dce0ba215f11e
 			}
 			
 		});
 				
+	}
+	
+	
+	//insert the data
+	public void insertDataAfterConfirm() {
+		if(getConfirmationStatus()) {
+			Service service = RoomService.ns;
+			System.out.println(service.getCustomerName());
+			roomService(service);
+		}
+			
 	}
 
 	
@@ -477,6 +503,15 @@ public class RoomService {
 	  	return roomService;
 	  	
 	  }  
+	  
+	  
+	  public void setConfirmationStatus(boolean status) {
+		  confirmationStatus = status;
+	  }
+	  
+	  public boolean getConfirmationStatus() {
+		  return confirmationStatus;
+		  }
 	
 	  public int addData(Service ns ) {
 		  
