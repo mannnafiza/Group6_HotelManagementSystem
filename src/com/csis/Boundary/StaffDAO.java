@@ -421,7 +421,7 @@ public class StaffDAO {
 	  public ArrayList<Staff> listStaff(){
 			ArrayList<Staff> staffArr = new ArrayList<>();
 			
-			String sql = "Select * from staff_info";
+			String sql = "Select * from staff_info order by staff_info.id";
 			try {
 				helper.connectDB();
 				stmt = helper.getConnection().createStatement();
