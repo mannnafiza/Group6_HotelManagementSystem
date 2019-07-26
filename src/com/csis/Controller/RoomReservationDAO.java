@@ -60,6 +60,9 @@ public class RoomReservationDAO {
 	private PreparedStatement pstmt = null;
 	
 
+	RoomService service = new RoomService();
+	
+
 	/**
 	 * Launch the application.
 	 * accept current user's user name
@@ -256,6 +259,11 @@ public class RoomReservationDAO {
 						if(!checkAvailability(sqlDate, roomData.getRoomType())) {
 							insertReservationInformation(user.getId(), user.getUsername(), "room", roomData.getRoomType(), roomData.getDuration(), roomData.isMeal(), "-",sqlDate, sqlTime, 0, roomData.isAddService(), 0, "-");
 							
+							//send confirmation message to additional services
+							
+							service.setConfirmationStatus(true);
+							service.insertDataAfterConfirm();
+							
 							JOptionPane.showMessageDialog(null, "Reservation Confirmed");
 							
 							btnCalculateMyBill.addActionListener(new ActionListener() {
@@ -271,6 +279,8 @@ public class RoomReservationDAO {
 							
 						} else {
 							JOptionPane.showMessageDialog(null, "Room already reserved for this date");
+							service.setConfirmationStatus(false);
+							
 						}
 						
 						
